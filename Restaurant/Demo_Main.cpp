@@ -9,6 +9,7 @@ int main()
 	pRest->RunSimulation();
 	
 	delete pRest;
-	
+	int x;
+	x = 5;
 	return 0;
 }
