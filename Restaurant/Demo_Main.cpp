@@ -1,7 +1,8 @@
 //#include "Drawing.h"
 #include "Rest\Restaurant.h"
 #include "GUI\GUI.h"
-
+#include<iostream>
+using namespace std;
 int main()
 {
 	
