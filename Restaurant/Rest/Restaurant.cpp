@@ -10,6 +10,7 @@ using namespace std;
 Restaurant::Restaurant() 
 {
 	pGUI = NULL;
+	currentTimeStep = 0;
 }
 
 void Restaurant::RunSimulation()
@@ -29,6 +30,126 @@ void Restaurant::RunSimulation()
 		Just_A_Demo();
 
 	};
+
+}
+
+void Restaurant::LoadFromFile()
+{
+
+	loadFile.open("C:\\Users\\Fastoraaa\\Desktop\\y.txt");
+	if (!loadFile.is_open()) {
+		pGUI->PrintMessage("Load file doesn't exist in default directory! ");
+		return;
+	}
+	 
+		
+	int normalSpeed, veganSpeed, vipSpeed;
+	int normalCooks, veganCooks, vipCooks;
+	int breakPerCook, normalBreaks, veganBreaks, vipBreaks;
+	char eventType, orderType;
+	int eventTimeStep, eventId, orderSize, orderPrice;
+
+	loadFile >> normalCooks >> veganCooks >> vipCooks;
+	loadFile >> normalSpeed >> veganSpeed >> vipSpeed;
+	loadFile >> breakPerCook >> normalBreaks >> veganBreaks >> vipBreaks;
+	nCooks = normalCooks + veganCooks + vipCooks;
+
+
+			for (int i = 0; i < normalCooks; i++) {
+				
+				//create cook 
+				//fill cook list 
+				//ids from 1 to normalCooks , id=i+1
+				
+			}
+		
+			for (int i = 0; i < veganCooks; i++) {
+
+				//fill cook list 
+				//ids from normalCooks+1 to veganCooks, id=normalCooks+i+1
+			}
+			for (int i = 0; i < vipCooks; i++) {
+
+				//fill cook list 
+				//ids from veganCooks+1 to vipCooks, id=veganCooks+1+i
+			}
+			loadFile >> promoteAfter >> numEvents;
+			
+
+			for (int i = 0; i < numEvents; i++) {
+				loadFile >> eventType >> orderType;
+				
+				switch (eventType) {
+				
+				case('R'):
+					loadFile >> eventTimeStep >> eventId >> orderSize >> orderPrice;
+					if (orderType == 'N') {
+						
+						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_NRM);
+						addEvent(nEvent);
+					}
+					else if (orderType == 'G') {
+							
+						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VGAN);
+						addEvent(nEvent);
+					}
+					else if (orderType == 'V') {
+					
+						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VIP);
+						addEvent(nEvent);
+					}
+					break;
+				case('X'):
+					loadFile >> eventTimeStep >> eventId;
+					if (orderType == 'N') {
+					
+						//Cancellation event
+
+					}
+					else if (orderType == 'G') {
+					
+						//Cancellation event
+					}
+
+					else if (orderType == 'V') {
+					
+					//cancellation event
+					
+					}
+					break;
+
+				case('P'):
+					loadFile >> eventTimeStep >> eventId >> orderPrice;
+					if (orderType == 'N') {
+
+						//Promotion event
+
+					}
+					else if (orderType == 'G') {
+
+						//Promotion event
+					}
+
+					else if (orderType == 'V') {
+
+						//Promotion event
+
+					}
+					break;
+				default:
+					break;
+				}
+				
+			
+			}
+	
+	
+}
+
+void Restaurant::addEvent( Event* nEvent)
+{
+	EventsQueue.enqueue(nEvent);
+	return;
 
 }
 

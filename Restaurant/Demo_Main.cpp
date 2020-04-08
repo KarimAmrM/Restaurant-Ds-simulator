@@ -1,8 +1,8 @@
 //#include "Drawing.h"
 #include "Rest\Restaurant.h"
 #include "GUI\GUI.h"
-#include<iostream>
-using namespace std;
+
+
 int main()
 {
 	
@@ -11,9 +11,9 @@ int main()
 	
 	delete pRest;
 
-
-	int x;
-	x = 5;
+	
+	
+	
 
 	return 0;
 }
