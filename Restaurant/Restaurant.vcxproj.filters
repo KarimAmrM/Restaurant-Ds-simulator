@@ -24,6 +24,9 @@
     <Filter Include="Generic_DS">
       <UniqueIdentifier>{f9c05740-74ef-4242-8f5c-c406c492135c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Data Structers">
+      <UniqueIdentifier>{01cfbf35-4693-4361-8e19-b21f3f3d8609}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Defs.h" />
@@ -107,6 +110,18 @@
     </ClInclude>
     <ClInclude Include="Rest\Cook.h">
       <Filter>Restaurant</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\source\repos\BagADT\BagADT\Bag.h">
+      <Filter>Data Structers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\source\repos\BagADT\BagADT\ListBag.h">
+      <Filter>Data Structers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\source\repos\Stack\Stack\LinkedListStack.h">
+      <Filter>Data Structers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\source\repos\Stack\Stack\StackADT.h">
+      <Filter>Data Structers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -233,6 +248,18 @@
     </ClCompile>
     <ClCompile Include="Rest\Cook.cpp">
       <Filter>Restaurant</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\repos\BagADT\BagADT\ListBag.cpp">
+      <Filter>Data Structers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\repos\BagADT\BagADT\Bag.cpp">
+      <Filter>Data Structers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\repos\Stack\Stack\LinkedListStack.cpp">
+      <Filter>Data Structers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\repos\Stack\Stack\StackADT.cpp">
+      <Filter>Data Structers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

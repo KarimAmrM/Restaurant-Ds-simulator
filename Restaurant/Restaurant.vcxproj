@@ -76,6 +76,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\source\repos\BagADT\BagADT\Bag.h" />
+    <ClInclude Include="..\..\..\..\source\repos\BagADT\BagADT\ListBag.h" />
+    <ClInclude Include="..\..\..\..\source\repos\Stack\Stack\LinkedListStack.h" />
+    <ClInclude Include="..\..\..\..\source\repos\Stack\Stack\StackADT.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />
     <ClInclude Include="CMUgraphicsLib\colors.h" />
     <ClInclude Include="CMUgraphicsLib\error.h" />
@@ -106,6 +110,10 @@
     <ClInclude Include="Rest\Restaurant.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\source\repos\BagADT\BagADT\Bag.cpp" />
+    <ClCompile Include="..\..\..\..\source\repos\BagADT\BagADT\ListBag.cpp" />
+    <ClCompile Include="..\..\..\..\source\repos\Stack\Stack\LinkedListStack.cpp" />
+    <ClCompile Include="..\..\..\..\source\repos\Stack\Stack\StackADT.cpp" />
     <ClCompile Include="CMUgraphicsLib\CMUgraphics.cpp" />
     <ClCompile Include="CMUgraphicsLib\colors.cpp" />
     <ClCompile Include="CMUgraphicsLib\image.cpp" />
