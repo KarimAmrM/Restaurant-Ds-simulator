@@ -9,6 +9,10 @@ int main()
 	pRest->RunSimulation();
 	
 	delete pRest;
-	cout << "zeby manga";
+
+
+	int x;
+	x = 5;
+
 	return 0;
 }
