@@ -43,6 +43,7 @@ public:
 	void ExecuteEvents(int TimeStep);	//executes all events at current timestep
 	void RunSimulation();
 	void LoadFromFile();
+	void addEvent(Event* nEvent );
 		
 	
 	

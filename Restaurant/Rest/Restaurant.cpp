@@ -86,15 +86,17 @@ void Restaurant::LoadFromFile()
 					if (orderType == 'N') {
 						
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_NRM);
-
+						addEvent(nEvent);
 					}
 					else if (orderType == 'G') {
 							
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VGAN);
+						addEvent(nEvent);
 					}
 					else if (orderType == 'V') {
 					
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VIP);
+						addEvent(nEvent);
 					}
 					break;
 				case('X'):
@@ -142,6 +144,13 @@ void Restaurant::LoadFromFile()
 			}
 	
 	
+}
+
+void Restaurant::addEvent( Event* nEvent)
+{
+	EventsQueue.enqueue(nEvent);
+	return;
+
 }
 
 
