@@ -43,9 +43,9 @@ void Restaurant::LoadFromFile()
 	}
 	 
 		
-	int normalSpeed, veganSpeed, vipSpeed;
-	int normalCooks, veganCooks, vipCooks;
-	int breakPerCook, normalBreaks, veganBreaks, vipBreaks;
+	int normalSpeed, veganSpeed, vipSpeed;// speed of each cook
+	int normalCooks, veganCooks, vipCooks;// number of each cook
+	int breakPerCook, normalBreaks, veganBreaks, vipBreaks;// orders before break and number of breaks
 	char eventType, orderType;
 	int eventTimeStep, eventId, orderSize, orderPrice;
 
@@ -61,18 +61,33 @@ void Restaurant::LoadFromFile()
 				//create cook 
 				//fill cook list 
 				//ids from 1 to normalCooks , id=i+1
-				
+				Cook* nrmCook = new Cook;
+				nrmCook->setID(i + 1);
+				nrmCook->setType(TYPE_NRM);
+				//otherSeters
+				Cooks.add(nrmCook);
 			}
 		
 			for (int i = 0; i < veganCooks; i++) {
 
 				//fill cook list 
 				//ids from normalCooks+1 to veganCooks, id=normalCooks+i+1
+				Cook* vgnCook = new Cook;
+				vgnCook->setID(normalCooks + i + 1);
+				vgnCook->setID(TYPE_VGAN);
+				//otherSetters
+				Cooks.add(vgnCook);
+
 			}
 			for (int i = 0; i < vipCooks; i++) {
 
 				//fill cook list 
 				//ids from veganCooks+1 to vipCooks, id=veganCooks+1+i
+				Cook* vipCook = new Cook;
+				vipCook->setID(veganCooks + i + 1);
+				vipCook->setType(TYPE_VIP);
+				//others setters
+				Cooks.add(vipCook);
 			}
 
 			loadFile >> promoteAfter >> numEvents;
@@ -158,6 +173,21 @@ void Restaurant::addEvent( Event* nEvent)
 
 }
 
+void Restaurant::assignToCook()
+{
+
+	while (!vipOrders.isEmpty()) {
+		
+		Order* nOrder =vipOrders.peek();
+		if()
+	
+	}
+
+
+}
+
+
+
 
 
 //////////////////////////////////  Event handling functions   /////////////////////////////
@@ -217,6 +247,7 @@ void Restaurant::Just_A_Demo()
 	Order* pOrd;
 	Event* pEv;
 	srand(time(NULL));
+	LoadFromFile();
 
 	pGUI->PrintMessage("Just a Demo. Enter EVENTS Count(next phases should read I/P filename):");
 	EventCnt = atoi(pGUI->GetString().c_str());	//get user input as a string then convert to integer

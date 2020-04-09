@@ -60,7 +60,7 @@ public:
 	void RunSimulation();
 	void LoadFromFile();
 	void addEvent(Event* nEvent );
-		
+	void assignToCook();
 	
 	
 	

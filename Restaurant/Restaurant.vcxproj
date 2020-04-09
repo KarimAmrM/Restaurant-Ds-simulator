@@ -76,7 +76,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Bag.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />
     <ClInclude Include="CMUgraphicsLib\colors.h" />
     <ClInclude Include="CMUgraphicsLib\error.h" />
@@ -108,14 +107,9 @@
     <ClInclude Include="Generic_DS\Node.h" />
     <ClInclude Include="Generic_DS\Queue.h" />
     <ClInclude Include="GUI\GUI.h" />
-    <ClInclude Include="LinkedListStack.h" />
-    <ClInclude Include="ListBag.h" />
-    <ClInclude Include="PriorityQueue.h" />
-    <ClInclude Include="PriorNode.h" />
     <ClInclude Include="Rest\Cook.h" />
     <ClInclude Include="Rest\Order.h" />
     <ClInclude Include="Rest\Restaurant.h" />
-    <ClInclude Include="StackADT.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CMUgraphicsLib\CMUgraphics.cpp" />

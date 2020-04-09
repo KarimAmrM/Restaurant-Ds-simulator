@@ -1,7 +1,7 @@
 #pragma once
 #include<iostream>
 using namespace std;
-#include"Node.h"
+#include"..\Generic_DS\Node.h"
 #include"Bag.h"
 
 template<class T>
@@ -10,7 +10,7 @@ class ListBag:public Bag<T>
 private:
 	Node<T>* head;
 	int count;
-	Node<T>* getPtrTo(T item);
+	Node<T>* getPtrTo(const T& item);
 public:
 	int getCurrentSize();
 	bool isEmpty();
@@ -24,14 +24,14 @@ public:
 };
 
 template<class T>
-inline Node<T>* ListBag<T>::getPtrTo(T it)
+inline Node<T>* ListBag<T>::getPtrTo(const T& it)
 {
 	Node<T>* ptr = head;
 	while (ptr)
 	{
 		if (ptr->getItem() == it)
 			return ptr;
-		ptr = ptr->getnext();
+		ptr = ptr->getNext();
 	}
 	return NULL;
 }
@@ -71,7 +71,7 @@ inline bool ListBag<T>::remove(const T& item)
 		return false;
 	ptr->setItem(head->getItem());
 	Node<T>* temp = head;
-	head = head->getnext();
+	head = head->getNext();
 	delete temp;
 }
 
@@ -82,7 +82,7 @@ inline void ListBag<T>::clear()
 	while (head)
 	{
 		Node<T>* ptr = head;
-		head = head->getnext();
+		head = head->getNext();
 		delete ptr;
 		
 	}

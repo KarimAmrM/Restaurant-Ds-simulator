@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="CMUGraphicsLib">
       <UniqueIdentifier>{b270f77a-ae90-4739-be74-f6543b0fd219}</UniqueIdentifier>
     </Filter>
@@ -109,24 +105,6 @@
       <Filter>Events</Filter>
     </ClInclude>
     <ClInclude Include="Rest\Cook.h">
-      <Filter>Restaurant</Filter>
-    </ClInclude>
-    <ClInclude Include="Bag.h">
-      <Filter>Restaurant</Filter>
-    </ClInclude>
-    <ClInclude Include="LinkedListStack.h">
-      <Filter>Restaurant</Filter>
-    </ClInclude>
-    <ClInclude Include="ListBag.h">
-      <Filter>Restaurant</Filter>
-    </ClInclude>
-    <ClInclude Include="PriorityQueue.h">
-      <Filter>Restaurant</Filter>
-    </ClInclude>
-    <ClInclude Include="PriorNode.h">
-      <Filter>Restaurant</Filter>
-    </ClInclude>
-    <ClInclude Include="StackADT.h">
       <Filter>Restaurant</Filter>
     </ClInclude>
     <ClInclude Include="Data Structers\Bag.h">

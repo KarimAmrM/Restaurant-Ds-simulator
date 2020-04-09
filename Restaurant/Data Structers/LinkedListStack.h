@@ -1,6 +1,6 @@
 #pragma once
 #include"StackADT.h"
-#include"Node.h"
+#include"..\Generic_DS\Node.h"
 
 
 
