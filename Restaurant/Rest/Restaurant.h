@@ -7,7 +7,7 @@
 #include "..\Generic_DS\Queue.h"
 #include "..\Events\Event.h"
 #include"../Data Structers/LinkedListStack.h"
-#include"../Data Structers/ListBag.h"
+#include"../Data Structers/LinkedList.h"
 #include"../Data Structers\PriorityQueue.h"
 
 
@@ -24,7 +24,7 @@ private:
 
 	Queue<Event*> EventsQueue;	//Queue of all events that will be loaded from file
 
-	ListBag<Cook*> Cooks;
+	LinkedList<Cook*> Cooks;
 
 	Queue<Order*> normalOrders;
 	Queue<Order*> veganOrders;

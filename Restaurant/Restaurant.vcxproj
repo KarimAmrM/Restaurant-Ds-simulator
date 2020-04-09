@@ -95,9 +95,10 @@
     <ClInclude Include="CMUgraphicsLib\mousequeue.h" />
     <ClInclude Include="CMUgraphicsLib\version.h" />
     <ClInclude Include="CMUgraphicsLib\windowinput.h" />
-    <ClInclude Include="Data Structers\Bag.h" />
+    <ClInclude Include="Data Structers\ArrayList.h" />
+    <ClInclude Include="Data Structers\LinkedList.h" />
     <ClInclude Include="Data Structers\LinkedListStack.h" />
-    <ClInclude Include="Data Structers\ListBag.h" />
+    <ClInclude Include="Data Structers\ListAdt.h" />
     <ClInclude Include="Data Structers\PriorityQueue.h" />
     <ClInclude Include="Data Structers\PriorNode.h" />
     <ClInclude Include="Data Structers\StackADT.h" />
@@ -147,8 +148,10 @@
     <ClCompile Include="CMUgraphicsLib\keyqueue.cpp" />
     <ClCompile Include="CMUgraphicsLib\mousequeue.cpp" />
     <ClCompile Include="CMUgraphicsLib\windowinput.cpp" />
-    <ClCompile Include="Data Structers\Bag.cpp" />
+    <ClCompile Include="Data Structers\ArrayList.cpp" />
+    <ClCompile Include="Data Structers\LinkedList.cpp" />
     <ClCompile Include="Data Structers\LinkedListStack.cpp" />
+    <ClCompile Include="Data Structers\ListAdt.cpp" />
     <ClCompile Include="Data Structers\PriorityQueue.cpp" />
     <ClCompile Include="Data Structers\PriorNode.cpp" />
     <ClCompile Include="Data Structers\StackADT.cpp" />

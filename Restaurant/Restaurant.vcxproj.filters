@@ -107,13 +107,7 @@
     <ClInclude Include="Rest\Cook.h">
       <Filter>Restaurant</Filter>
     </ClInclude>
-    <ClInclude Include="Data Structers\Bag.h">
-      <Filter>Data Structers</Filter>
-    </ClInclude>
     <ClInclude Include="Data Structers\LinkedListStack.h">
-      <Filter>Data Structers</Filter>
-    </ClInclude>
-    <ClInclude Include="Data Structers\ListBag.h">
       <Filter>Data Structers</Filter>
     </ClInclude>
     <ClInclude Include="Data Structers\PriorityQueue.h">
@@ -123,6 +117,15 @@
       <Filter>Data Structers</Filter>
     </ClInclude>
     <ClInclude Include="Data Structers\StackADT.h">
+      <Filter>Data Structers</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structers\ArrayList.h">
+      <Filter>Data Structers</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structers\LinkedList.h">
+      <Filter>Data Structers</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structers\ListAdt.h">
       <Filter>Data Structers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -251,9 +254,6 @@
     <ClCompile Include="Rest\Cook.cpp">
       <Filter>Restaurant</Filter>
     </ClCompile>
-    <ClCompile Include="Data Structers\Bag.cpp">
-      <Filter>Data Structers</Filter>
-    </ClCompile>
     <ClCompile Include="Data Structers\LinkedListStack.cpp">
       <Filter>Data Structers</Filter>
     </ClCompile>
@@ -264,6 +264,15 @@
       <Filter>Data Structers</Filter>
     </ClCompile>
     <ClCompile Include="Data Structers\StackADT.cpp">
+      <Filter>Data Structers</Filter>
+    </ClCompile>
+    <ClCompile Include="Data Structers\ArrayList.cpp">
+      <Filter>Data Structers</Filter>
+    </ClCompile>
+    <ClCompile Include="Data Structers\LinkedList.cpp">
+      <Filter>Data Structers</Filter>
+    </ClCompile>
+    <ClCompile Include="Data Structers\ListAdt.cpp">
       <Filter>Data Structers</Filter>
     </ClCompile>
   </ItemGroup>

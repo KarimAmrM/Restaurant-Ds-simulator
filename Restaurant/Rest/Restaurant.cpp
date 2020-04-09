@@ -67,7 +67,7 @@ void Restaurant::LoadFromFile()
 				nrmCook->setID(i + 1);
 				nrmCook->setType(TYPE_NRM);
 				//otherSeters
-				Cooks.add(nrmCook);
+				Cooks.insert(nrmCook,i);
 			}
 		
 			for (int i = 0; i < veganCooks; i++) {
@@ -78,7 +78,7 @@ void Restaurant::LoadFromFile()
 				vgnCook->setID(normalCooks + i + 1);
 				vgnCook->setID(TYPE_VGAN);
 				//otherSetters
-				Cooks.add(vgnCook);
+				Cooks.insert(vgnCook,i+normalCooks);
 
 			}
 			for (int i = 0; i < vipCooks; i++) {
@@ -89,7 +89,7 @@ void Restaurant::LoadFromFile()
 				vipCook->setID(veganCooks + i + 1);
 				vipCook->setType(TYPE_VIP);
 				//others setters
-				Cooks.add(vipCook);
+				Cooks.insert(vipCook,i);
 			}
 
 			loadFile >> promoteAfter >> numEvents;
@@ -182,24 +182,42 @@ void Restaurant::addEvent( Event* nEvent)
 
 void Restaurant::assignToCook()
 {
-
 	while (!vipOrders.isEmpty()) {
-		
-		Order* nOrder =vipOrders.peek();
-		
-	
+
+		Order* orderToServe;
+
+		if (vipOrders.peek(orderToServe)) {
+
+			if (orderToServe->getStatus() == WAIT) {
+				for(int)
+
+				Cooks.getEntry()
+
+
+			}
+
+		}
+
+
 	}
-
-
 }
 
 void Restaurant::addOrder(Order* nOrder)
 {
 	if (nOrder->GetType()==TYPE_NRM) {
 	
-		
+		normalOrders.enqueue(nOrder);
 	}
+	else if (nOrder->GetType() == TYPE_VGAN) {
+	
+		veganOrders.enqueue(nOrder);
 
+
+	}
+	else if (nOrder->GetType() == TYPE_VIP) {
+	
+		vipOrders.enqueue(nOrder);
+	}
 
 }
 

@@ -15,7 +15,7 @@ public:
 	bool enqueue(T item, int p);  
 	bool dequeue(T& item);
 	bool isEmpty();
-	T peek();
+	bool peek(T& item);
 	~PriorityQueue();            // clearing
 	
 };
@@ -86,9 +86,15 @@ inline bool PriorityQueue<T>::isEmpty()
 }
 
 template<class T>
-inline T PriorityQueue<T>::peek()
+inline bool PriorityQueue<T>::peek(T& item)
 {
-	return front->getItem();
+	if (isEmpty()) {
+	
+		return false;
+
+	}
+	item = front->getItem();
+	return true;
 }
 
 template<class T>
