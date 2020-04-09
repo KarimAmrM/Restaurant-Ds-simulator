@@ -10,7 +10,9 @@ using namespace std;
 Restaurant::Restaurant() 
 {
 	pGUI = NULL;
-	currentTimeStep = 0;
+	currentTimeStep = 1;
+	nOrders = 0;
+	nCooks = 0;
 }
 
 void Restaurant::RunSimulation()
@@ -43,15 +45,16 @@ void Restaurant::LoadFromFile()
 	}
 	 
 		
-	int normalSpeed, veganSpeed, vipSpeed;
-	int normalCooks, veganCooks, vipCooks;
-	int breakPerCook, normalBreaks, veganBreaks, vipBreaks;
+	int normalSpeed, veganSpeed, vipSpeed;// speed of each cook
+	int normalCooks, veganCooks, vipCooks;// number of each cook
+	int breakPerCook, normalBreaks, veganBreaks, vipBreaks;// orders before break and number of breaks
 	char eventType, orderType;
 	int eventTimeStep, eventId, orderSize, orderPrice;
 
 	loadFile >> normalCooks >> veganCooks >> vipCooks;
 	loadFile >> normalSpeed >> veganSpeed >> vipSpeed;
 	loadFile >> breakPerCook >> normalBreaks >> veganBreaks >> vipBreaks;
+
 	nCooks = normalCooks + veganCooks + vipCooks;
 
 
@@ -60,61 +63,85 @@ void Restaurant::LoadFromFile()
 				//create cook 
 				//fill cook list 
 				//ids from 1 to normalCooks , id=i+1
-				
+				Cook* nrmCook = new Cook;
+				nrmCook->setID(i + 1);
+				nrmCook->setType(TYPE_NRM);
+				//otherSeters
+				Cooks.add(nrmCook);
 			}
 		
 			for (int i = 0; i < veganCooks; i++) {
 
 				//fill cook list 
 				//ids from normalCooks+1 to veganCooks, id=normalCooks+i+1
+				Cook* vgnCook = new Cook;
+				vgnCook->setID(normalCooks + i + 1);
+				vgnCook->setID(TYPE_VGAN);
+				//otherSetters
+				Cooks.add(vgnCook);
+
 			}
 			for (int i = 0; i < vipCooks; i++) {
 
 				//fill cook list 
 				//ids from veganCooks+1 to vipCooks, id=veganCooks+1+i
+				Cook* vipCook = new Cook;
+				vipCook->setID(veganCooks + i + 1);
+				vipCook->setType(TYPE_VIP);
+				//others setters
+				Cooks.add(vipCook);
 			}
+
 			loadFile >> promoteAfter >> numEvents;
 			
 
-			for (int i = 0; i < numEvents; i++) {
+			for (int i = 0; i < numEvents; i++) { // loop responsible for reading events 
+				//and queuing them
 				loadFile >> eventType >> orderType;
 				
 				switch (eventType) {
 				
-				case('R'):
+				case('R'): // Change constructor of arrivalEvent to fill order's info
 					loadFile >> eventTimeStep >> eventId >> orderSize >> orderPrice;
 					if (orderType == 'N') {
 						
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_NRM);
 						addEvent(nEvent);
+						nOrders++;
 					}
 					else if (orderType == 'G') {
 							
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VGAN);
 						addEvent(nEvent);
+						nOrders++;
 					}
 					else if (orderType == 'V') {
 					
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VIP);
 						addEvent(nEvent);
+						nOrders++;
 					}
+
+					
 					break;
 				case('X'):
 					loadFile >> eventTimeStep >> eventId;
 					if (orderType == 'N') {
 					
 						//Cancellation event
+						nOrders--;
 
 					}
 					else if (orderType == 'G') {
 					
 						//Cancellation event
+						nOrders--;
 					}
 
 					else if (orderType == 'V') {
 					
 					//cancellation event
-					
+						nOrders--;
 					}
 					break;
 
@@ -153,6 +180,31 @@ void Restaurant::addEvent( Event* nEvent)
 
 }
 
+void Restaurant::assignToCook()
+{
+
+	while (!vipOrders.isEmpty()) {
+		
+		Order* nOrder =vipOrders.peek();
+		
+	
+	}
+
+
+}
+
+void Restaurant::addOrder(Order* nOrder)
+{
+	if (nOrder->GetType()==TYPE_NRM) {
+	
+		
+	}
+
+
+}
+
+
+
 
 
 //////////////////////////////////  Event handling functions   /////////////////////////////
@@ -187,6 +239,9 @@ void Restaurant::FillDrawingList()
 	//It should get orders from orders lists/queues/stacks/whatever (same for Cooks)
 	//To add orders it should call function  void GUI::AddToDrawingList(Order* pOrd);
 	//To add Cooks it should call function  void GUI::AddToDrawingList(Cook* pCc);
+	
+
+	
 
 }
 
@@ -212,6 +267,7 @@ void Restaurant::Just_A_Demo()
 	Order* pOrd;
 	Event* pEv;
 	srand(time(NULL));
+	LoadFromFile();
 
 	pGUI->PrintMessage("Just a Demo. Enter EVENTS Count(next phases should read I/P filename):");
 	EventCnt = atoi(pGUI->GetString().c_str());	//get user input as a string then convert to integer

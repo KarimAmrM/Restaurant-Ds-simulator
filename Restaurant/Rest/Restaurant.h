@@ -6,6 +6,11 @@
 #include "..\GUI\GUI.h"
 #include "..\Generic_DS\Queue.h"
 #include "..\Events\Event.h"
+#include"../Data Structers/LinkedListStack.h"
+#include"../Data Structers/ListBag.h"
+#include"../Data Structers\PriorityQueue.h"
+
+
 #include<fstream>
 
 
@@ -16,13 +21,25 @@ class Restaurant
 {	
 private:
 	GUI *pGUI;
+
 	Queue<Event*> EventsQueue;	//Queue of all events that will be loaded from file
-	//list<cooks*>Cooks;
+
+	ListBag<Cook*> Cooks;
+
+	Queue<Order*> normalOrders;
+	Queue<Order*> veganOrders;
+	PriorityQueue<Order*> vipOrders;
+
+	LinkedListStack<Order*> finishedOrders;
+
 	ifstream  loadFile;
+	ofstream saveFile;
+
 	int nCooks;
 	int currentTimeStep;
 	int promoteAfter;
 	int numEvents;
+	int nOrders;
 	
 	/// ==> 
 	//	DEMO-related members. Should be removed in phases 1&2
@@ -44,7 +61,8 @@ public:
 	void RunSimulation();
 	void LoadFromFile();
 	void addEvent(Event* nEvent );
-		
+	void assignToCook();
+	void addOrder(Order* nOrder);
 	
 	
 	
