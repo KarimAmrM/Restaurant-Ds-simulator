@@ -6,9 +6,9 @@
 #include "..\GUI\GUI.h"
 #include "..\Generic_DS\Queue.h"
 #include "..\Events\Event.h"
-#include"..\DataStructers\LinkedListStack.h"
-#include"..\DataStructers\ListBag.h"
-#include"..\DataStructers\PriorityQueue.h"
+#include"../Data Structers/LinkedListStack.h"
+#include"../Data Structers/ListBag.h"
+#include"../Data Structers\PriorityQueue.h"
 
 
 #include<fstream>

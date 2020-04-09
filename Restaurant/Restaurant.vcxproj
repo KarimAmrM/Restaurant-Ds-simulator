@@ -76,12 +76,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\source\repos\BagADT\BagADT\Bag.h" />
-    <ClInclude Include="..\..\..\..\source\repos\BagADT\BagADT\ListBag.h" />
-    <ClInclude Include="..\..\..\..\source\repos\Queue\Queue\PriorityQueue.h" />
-    <ClInclude Include="..\..\..\..\source\repos\Queue\Queue\PriorNode.h" />
-    <ClInclude Include="..\..\..\..\source\repos\Stack\Stack\LinkedListStack.h" />
-    <ClInclude Include="..\..\..\..\source\repos\Stack\Stack\StackADT.h" />
+    <ClInclude Include="Bag.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />
     <ClInclude Include="CMUgraphicsLib\colors.h" />
     <ClInclude Include="CMUgraphicsLib\error.h" />
@@ -101,23 +96,28 @@
     <ClInclude Include="CMUgraphicsLib\mousequeue.h" />
     <ClInclude Include="CMUgraphicsLib\version.h" />
     <ClInclude Include="CMUgraphicsLib\windowinput.h" />
+    <ClInclude Include="Data Structers\Bag.h" />
+    <ClInclude Include="Data Structers\LinkedListStack.h" />
+    <ClInclude Include="Data Structers\ListBag.h" />
+    <ClInclude Include="Data Structers\PriorityQueue.h" />
+    <ClInclude Include="Data Structers\PriorNode.h" />
+    <ClInclude Include="Data Structers\StackADT.h" />
     <ClInclude Include="Defs.h" />
     <ClInclude Include="Events\ArrivalEvent.h" />
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Generic_DS\Node.h" />
     <ClInclude Include="Generic_DS\Queue.h" />
     <ClInclude Include="GUI\GUI.h" />
+    <ClInclude Include="LinkedListStack.h" />
+    <ClInclude Include="ListBag.h" />
+    <ClInclude Include="PriorityQueue.h" />
+    <ClInclude Include="PriorNode.h" />
     <ClInclude Include="Rest\Cook.h" />
     <ClInclude Include="Rest\Order.h" />
     <ClInclude Include="Rest\Restaurant.h" />
+    <ClInclude Include="StackADT.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\source\repos\BagADT\BagADT\Bag.cpp" />
-    <ClCompile Include="..\..\..\..\source\repos\BagADT\BagADT\ListBag.cpp" />
-    <ClCompile Include="..\..\..\..\source\repos\Queue\Queue\PriorityQueue.cpp" />
-    <ClCompile Include="..\..\..\..\source\repos\Queue\Queue\PriorNode.cpp" />
-    <ClCompile Include="..\..\..\..\source\repos\Stack\Stack\LinkedListStack.cpp" />
-    <ClCompile Include="..\..\..\..\source\repos\Stack\Stack\StackADT.cpp" />
     <ClCompile Include="CMUgraphicsLib\CMUgraphics.cpp" />
     <ClCompile Include="CMUgraphicsLib\colors.cpp" />
     <ClCompile Include="CMUgraphicsLib\image.cpp" />
@@ -153,6 +153,11 @@
     <ClCompile Include="CMUgraphicsLib\keyqueue.cpp" />
     <ClCompile Include="CMUgraphicsLib\mousequeue.cpp" />
     <ClCompile Include="CMUgraphicsLib\windowinput.cpp" />
+    <ClCompile Include="Data Structers\Bag.cpp" />
+    <ClCompile Include="Data Structers\LinkedListStack.cpp" />
+    <ClCompile Include="Data Structers\PriorityQueue.cpp" />
+    <ClCompile Include="Data Structers\PriorNode.cpp" />
+    <ClCompile Include="Data Structers\StackADT.cpp" />
     <ClCompile Include="Demo_Main.cpp" />
     <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Events\ArrivalEvent.cpp" />

@@ -111,22 +111,40 @@
     <ClInclude Include="Rest\Cook.h">
       <Filter>Restaurant</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\source\repos\BagADT\BagADT\Bag.h">
+    <ClInclude Include="Bag.h">
+      <Filter>Restaurant</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedListStack.h">
+      <Filter>Restaurant</Filter>
+    </ClInclude>
+    <ClInclude Include="ListBag.h">
+      <Filter>Restaurant</Filter>
+    </ClInclude>
+    <ClInclude Include="PriorityQueue.h">
+      <Filter>Restaurant</Filter>
+    </ClInclude>
+    <ClInclude Include="PriorNode.h">
+      <Filter>Restaurant</Filter>
+    </ClInclude>
+    <ClInclude Include="StackADT.h">
+      <Filter>Restaurant</Filter>
+    </ClInclude>
+    <ClInclude Include="Data Structers\Bag.h">
       <Filter>Data Structers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\source\repos\BagADT\BagADT\ListBag.h">
+    <ClInclude Include="Data Structers\LinkedListStack.h">
       <Filter>Data Structers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\source\repos\Stack\Stack\LinkedListStack.h">
+    <ClInclude Include="Data Structers\ListBag.h">
       <Filter>Data Structers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\source\repos\Stack\Stack\StackADT.h">
+    <ClInclude Include="Data Structers\PriorityQueue.h">
       <Filter>Data Structers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\source\repos\Queue\Queue\PriorityQueue.h">
+    <ClInclude Include="Data Structers\PriorNode.h">
       <Filter>Data Structers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\source\repos\Queue\Queue\PriorNode.h">
+    <ClInclude Include="Data Structers\StackADT.h">
       <Filter>Data Structers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -255,22 +273,19 @@
     <ClCompile Include="Rest\Cook.cpp">
       <Filter>Restaurant</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\source\repos\BagADT\BagADT\ListBag.cpp">
+    <ClCompile Include="Data Structers\Bag.cpp">
       <Filter>Data Structers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\source\repos\BagADT\BagADT\Bag.cpp">
+    <ClCompile Include="Data Structers\LinkedListStack.cpp">
       <Filter>Data Structers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\source\repos\Stack\Stack\LinkedListStack.cpp">
+    <ClCompile Include="Data Structers\PriorityQueue.cpp">
       <Filter>Data Structers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\source\repos\Stack\Stack\StackADT.cpp">
+    <ClCompile Include="Data Structers\PriorNode.cpp">
       <Filter>Data Structers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\source\repos\Queue\Queue\PriorNode.cpp">
-      <Filter>Data Structers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\source\repos\Queue\Queue\PriorityQueue.cpp">
+    <ClCompile Include="Data Structers\StackADT.cpp">
       <Filter>Data Structers</Filter>
     </ClCompile>
   </ItemGroup>
