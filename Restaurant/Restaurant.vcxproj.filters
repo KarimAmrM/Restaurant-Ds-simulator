@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
     <Filter Include="CMUGraphicsLib">
       <UniqueIdentifier>{b270f77a-ae90-4739-be74-f6543b0fd219}</UniqueIdentifier>
     </Filter>
@@ -20,12 +24,8 @@
     <Filter Include="Generic_DS">
       <UniqueIdentifier>{f9c05740-74ef-4242-8f5c-c406c492135c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="NewFilter1">
-      <UniqueIdentifier>{af962261-84bd-4728-b870-2f523e7b3f23}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Data Structers">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+      <UniqueIdentifier>{01cfbf35-4693-4361-8e19-b21f3f3d8609}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -111,22 +111,22 @@
     <ClInclude Include="Rest\Cook.h">
       <Filter>Restaurant</Filter>
     </ClInclude>
-    <ClInclude Include="DataStructers\StackADT.h">
+    <ClInclude Include="..\..\..\..\source\repos\BagADT\BagADT\Bag.h">
       <Filter>Data Structers</Filter>
     </ClInclude>
-    <ClInclude Include="DataStructers\PriorNode.h">
+    <ClInclude Include="..\..\..\..\source\repos\BagADT\BagADT\ListBag.h">
       <Filter>Data Structers</Filter>
     </ClInclude>
-    <ClInclude Include="DataStructers\PriorityQueue.h">
+    <ClInclude Include="..\..\..\..\source\repos\Stack\Stack\LinkedListStack.h">
       <Filter>Data Structers</Filter>
     </ClInclude>
-    <ClInclude Include="DataStructers\LinkedListStack.h">
+    <ClInclude Include="..\..\..\..\source\repos\Stack\Stack\StackADT.h">
       <Filter>Data Structers</Filter>
     </ClInclude>
-    <ClInclude Include="DataStructers\ListBag.h">
+    <ClInclude Include="..\..\..\..\source\repos\Queue\Queue\PriorityQueue.h">
       <Filter>Data Structers</Filter>
     </ClInclude>
-    <ClInclude Include="DataStructers\Bag.h">
+    <ClInclude Include="..\..\..\..\source\repos\Queue\Queue\PriorNode.h">
       <Filter>Data Structers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -255,17 +255,22 @@
     <ClCompile Include="Rest\Cook.cpp">
       <Filter>Restaurant</Filter>
     </ClCompile>
-    <ClCompile Include="DataStructers\Bag.cpp" />
-    <ClCompile Include="DataStructers\LinkedListStack.cpp">
+    <ClCompile Include="..\..\..\..\source\repos\BagADT\BagADT\ListBag.cpp">
       <Filter>Data Structers</Filter>
     </ClCompile>
-    <ClCompile Include="DataStructers\PriorityQueue.cpp">
+    <ClCompile Include="..\..\..\..\source\repos\BagADT\BagADT\Bag.cpp">
       <Filter>Data Structers</Filter>
     </ClCompile>
-    <ClCompile Include="DataStructers\PriorNode.cpp">
+    <ClCompile Include="..\..\..\..\source\repos\Stack\Stack\LinkedListStack.cpp">
       <Filter>Data Structers</Filter>
     </ClCompile>
-    <ClCompile Include="DataStructers\StackADT.cpp">
+    <ClCompile Include="..\..\..\..\source\repos\Stack\Stack\StackADT.cpp">
+      <Filter>Data Structers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\repos\Queue\Queue\PriorNode.cpp">
+      <Filter>Data Structers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\repos\Queue\Queue\PriorityQueue.cpp">
       <Filter>Data Structers</Filter>
     </ClCompile>
   </ItemGroup>
