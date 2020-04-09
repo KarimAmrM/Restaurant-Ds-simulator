@@ -6,6 +6,11 @@
 #include "..\GUI\GUI.h"
 #include "..\Generic_DS\Queue.h"
 #include "..\Events\Event.h"
+#include"..\DataStructers\LinkedListStack.h"
+#include"..\DataStructers\ListBag.h"
+#include"..\DataStructers\PriorityQueue.h"
+
+
 #include<fstream>
 
 
@@ -16,9 +21,20 @@ class Restaurant
 {	
 private:
 	GUI *pGUI;
+
 	Queue<Event*> EventsQueue;	//Queue of all events that will be loaded from file
-	//list<cooks*>Cooks;
+
+	ListBag<Cook*> Cooks;
+
+	Queue<Order*> normalOrders;
+	Queue<Order*> veganOrders;
+	PriorityQueue<Order*> vipOrders;
+
+	LinkedListStack<Order*> finishedOrders;
+
 	ifstream  loadFile;
+	ofstream saveFile;
+
 	int nCooks;
 	int currentTimeStep;
 	int promoteAfter;

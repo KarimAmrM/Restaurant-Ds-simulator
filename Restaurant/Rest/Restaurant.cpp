@@ -10,7 +10,7 @@ using namespace std;
 Restaurant::Restaurant() 
 {
 	pGUI = NULL;
-	currentTimeStep = 0;
+	currentTimeStep = 1;
 }
 
 void Restaurant::RunSimulation()
@@ -52,6 +52,7 @@ void Restaurant::LoadFromFile()
 	loadFile >> normalCooks >> veganCooks >> vipCooks;
 	loadFile >> normalSpeed >> veganSpeed >> vipSpeed;
 	loadFile >> breakPerCook >> normalBreaks >> veganBreaks >> vipBreaks;
+
 	nCooks = normalCooks + veganCooks + vipCooks;
 
 
@@ -73,15 +74,17 @@ void Restaurant::LoadFromFile()
 				//fill cook list 
 				//ids from veganCooks+1 to vipCooks, id=veganCooks+1+i
 			}
+
 			loadFile >> promoteAfter >> numEvents;
 			
 
-			for (int i = 0; i < numEvents; i++) {
+			for (int i = 0; i < numEvents; i++) { // loop responsible for reading events 
+				//and queuing them
 				loadFile >> eventType >> orderType;
 				
 				switch (eventType) {
 				
-				case('R'):
+				case('R'): // Change constructor of arrivalEvent to fill order's info
 					loadFile >> eventTimeStep >> eventId >> orderSize >> orderPrice;
 					if (orderType == 'N') {
 						
@@ -98,6 +101,8 @@ void Restaurant::LoadFromFile()
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VIP);
 						addEvent(nEvent);
 					}
+
+					
 					break;
 				case('X'):
 					loadFile >> eventTimeStep >> eventId;
