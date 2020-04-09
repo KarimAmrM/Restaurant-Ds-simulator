@@ -11,6 +11,8 @@ Restaurant::Restaurant()
 {
 	pGUI = NULL;
 	currentTimeStep = 1;
+	nOrders = 0;
+	nCooks = 0;
 }
 
 void Restaurant::RunSimulation()
@@ -105,16 +107,19 @@ void Restaurant::LoadFromFile()
 						
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_NRM);
 						addEvent(nEvent);
+						nOrders++;
 					}
 					else if (orderType == 'G') {
 							
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VGAN);
 						addEvent(nEvent);
+						nOrders++;
 					}
 					else if (orderType == 'V') {
 					
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VIP);
 						addEvent(nEvent);
+						nOrders++;
 					}
 
 					
@@ -124,17 +129,19 @@ void Restaurant::LoadFromFile()
 					if (orderType == 'N') {
 					
 						//Cancellation event
+						nOrders--;
 
 					}
 					else if (orderType == 'G') {
 					
 						//Cancellation event
+						nOrders--;
 					}
 
 					else if (orderType == 'V') {
 					
 					//cancellation event
-					
+						nOrders--;
 					}
 					break;
 
@@ -179,8 +186,18 @@ void Restaurant::assignToCook()
 	while (!vipOrders.isEmpty()) {
 		
 		Order* nOrder =vipOrders.peek();
-		if()
+		
 	
+	}
+
+
+}
+
+void Restaurant::addOrder(Order* nOrder)
+{
+	if (nOrder->GetType()==TYPE_NRM) {
+	
+		
 	}
 
 
@@ -222,6 +239,9 @@ void Restaurant::FillDrawingList()
 	//It should get orders from orders lists/queues/stacks/whatever (same for Cooks)
 	//To add orders it should call function  void GUI::AddToDrawingList(Order* pOrd);
 	//To add Cooks it should call function  void GUI::AddToDrawingList(Cook* pCc);
+	
+
+	
 
 }
 

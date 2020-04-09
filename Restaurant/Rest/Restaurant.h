@@ -39,6 +39,7 @@ private:
 	int currentTimeStep;
 	int promoteAfter;
 	int numEvents;
+	int nOrders;
 	
 	/// ==> 
 	//	DEMO-related members. Should be removed in phases 1&2
@@ -61,6 +62,7 @@ public:
 	void LoadFromFile();
 	void addEvent(Event* nEvent );
 	void assignToCook();
+	void addOrder(Order* nOrder);
 	
 	
 	
