@@ -1,0 +1,13 @@
+x=input();
+> y=input();
+for i=1:length(x)
+> > if rem(i,2)~=0
+> > z(i)=x(i);
+end
+> > else 
+> > z(i)=y(i);
+end
+end
+> > for i=1:length(z)
+> > disp(z(i))
+end
