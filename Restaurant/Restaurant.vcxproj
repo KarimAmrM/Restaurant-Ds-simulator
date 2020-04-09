@@ -78,6 +78,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\source\repos\BagADT\BagADT\Bag.h" />
     <ClInclude Include="..\..\..\..\source\repos\BagADT\BagADT\ListBag.h" />
+    <ClInclude Include="..\..\..\..\source\repos\Queue\Queue\PriorityQueue.h" />
+    <ClInclude Include="..\..\..\..\source\repos\Queue\Queue\PriorNode.h" />
     <ClInclude Include="..\..\..\..\source\repos\Stack\Stack\LinkedListStack.h" />
     <ClInclude Include="..\..\..\..\source\repos\Stack\Stack\StackADT.h" />
     <ClInclude Include="CMUgraphicsLib\CMUgraphics.h" />
@@ -112,6 +114,8 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\source\repos\BagADT\BagADT\Bag.cpp" />
     <ClCompile Include="..\..\..\..\source\repos\BagADT\BagADT\ListBag.cpp" />
+    <ClCompile Include="..\..\..\..\source\repos\Queue\Queue\PriorityQueue.cpp" />
+    <ClCompile Include="..\..\..\..\source\repos\Queue\Queue\PriorNode.cpp" />
     <ClCompile Include="..\..\..\..\source\repos\Stack\Stack\LinkedListStack.cpp" />
     <ClCompile Include="..\..\..\..\source\repos\Stack\Stack\StackADT.cpp" />
     <ClCompile Include="CMUgraphicsLib\CMUgraphics.cpp" />

@@ -123,6 +123,12 @@
     <ClInclude Include="..\..\..\..\source\repos\Stack\Stack\StackADT.h">
       <Filter>Data Structers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\source\repos\Queue\Queue\PriorityQueue.h">
+      <Filter>Data Structers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\source\repos\Queue\Queue\PriorNode.h">
+      <Filter>Data Structers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Demo_Main.cpp" />
@@ -259,6 +265,12 @@
       <Filter>Data Structers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\source\repos\Stack\Stack\StackADT.cpp">
+      <Filter>Data Structers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\repos\Queue\Queue\PriorNode.cpp">
+      <Filter>Data Structers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\source\repos\Queue\Queue\PriorityQueue.cpp">
       <Filter>Data Structers</Filter>
     </ClCompile>
   </ItemGroup>
