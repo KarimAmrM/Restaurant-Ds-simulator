@@ -16,6 +16,7 @@ public:
 	bool dequeue(T& item);
 	bool isEmpty();
 	bool peek(T& item);
+	T* toArray(int& count);
 	~PriorityQueue();            // clearing
 	
 };
@@ -105,4 +106,30 @@ inline PriorityQueue<T>::~PriorityQueue()
 		T x;
 		dequeue(x);
 	}
+}
+
+template <typename T>
+T* PriorityQueue<T>::toArray(int& count)
+{
+	count = 0;
+
+	if (!front)
+		return nullptr;
+	//counting the no. of items in the Queue
+	PriorNode<T>* p = front;
+	while (p)
+	{
+		count++;
+		p = p->getNext();
+	}
+
+
+	T* Arr = new T[count];
+	p = front;
+	for (int i = 0; i < count; i++)
+	{
+		Arr[i] = p->getItem();
+		p = p->getNext();
+	}
+	return Arr;
 }

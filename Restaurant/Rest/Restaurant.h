@@ -30,6 +30,7 @@ private:
 	Queue<Order*> veganOrders;
 	PriorityQueue<Order*> vipOrders;
 	Queue<Order*> servingOrders;
+	
 
 	LinkedListStack<Order*> finishedOrders;
 
