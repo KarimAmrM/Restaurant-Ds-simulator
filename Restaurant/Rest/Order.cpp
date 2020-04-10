@@ -1,19 +1,33 @@
 #include "Order.h"
 
-Order::Order(int id, ORD_TYPE r_Type)
+Order::Order(int id, ORD_TYPE r_Type, int s, int ar, int m)
 {
-	ID = (id>0&&id<1000)?id:0;	//1<ID<999
+	ID = (id > 0 && id < 1000) ? id : 0;	//1<ID<999
 	type = r_Type;
 	status = WAIT;
+	OrdSize = s;
+	ArrTime = ar;
+	totalMoney = m;
 }
 
 Order::~Order()
 {
 }
 
+void Order::SetID(int id)
+{
+	ID = (id > 0 && id < 1000) ? id : 0;	//1<ID<999
+}
+
 int Order::GetID()
 {
 	return ID;
+}
+
+void Order::SetType(ORD_TYPE r_Type)
+{
+	type = r_Type;
+
 }
 
 
@@ -25,7 +39,7 @@ ORD_TYPE Order::GetType() const
 
 void Order::SetDistance(int d)
 {
-	Distance = d>0?d:0;
+	Distance = d > 0 ? d : 0;
 }
 
 int Order::GetDistance() const
@@ -44,3 +58,48 @@ ORD_STATUS Order::getStatus() const
 	return status;
 }
 
+void Order::SetTotalMoney(double TM)
+{
+	totalMoney = TM > 0 ? TM : 0;
+}
+double Order::GetTotalMoney() const
+{
+	return totalMoney;
+}
+
+void Order::SetArrTime(int AT)
+{
+	ArrTime = AT;
+}
+int Order::GetArrTime() const
+{
+	return ArrTime;
+}
+
+void Order::SetServTime(int ST)
+{
+	ServTime = ST;
+}
+int Order::GetServTime() const
+{
+	return ServTime;
+}
+
+void Order::SetFinishTime(int FT)
+{
+	FinishTime = FT;
+}
+int Order::GetFinishTime() const
+{
+	return FinishTime;
+}
+
+
+void Order::SetOrdSize(int OS)
+{
+	OrdSize = OS;
+}
+int Order::GetOrdSize() const
+{
+	return OrdSize;
+}

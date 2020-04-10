@@ -28,8 +28,8 @@ void Restaurant::RunSimulation()
 		break;
 	case MODE_SLNT:
 		break;
-	case MODE_DEMO:
-		Just_A_Demo();
+	//case MODE_DEMO:
+	//	Just_A_Demo();
 
 	};
 
@@ -46,7 +46,7 @@ void Restaurant::LoadFromFile()
 	 
 		
 	int normalSpeed, veganSpeed, vipSpeed;// speed of each cook
-	int normalCooks, veganCooks, vipCooks;// number of each cook
+	
 	int breakPerCook, normalBreaks, veganBreaks, vipBreaks;// orders before break and number of breaks
 	char eventType, orderType;
 	int eventTimeStep, eventId, orderSize, orderPrice;
@@ -58,37 +58,33 @@ void Restaurant::LoadFromFile()
 	nCooks = normalCooks + veganCooks + vipCooks;
 
 
-			for (int i = 0; i < normalCooks; i++) {
+			for (int i = 0; i < normalCooks; i++) 
+			{
 				
 				//create cook 
 				//fill cook list 
 				//ids from 1 to normalCooks , id=i+1
-				Cook* nrmCook = new Cook;
-				nrmCook->setID(i + 1);
-				nrmCook->setType(TYPE_NRM);
-				//otherSeters
+				Cook* nrmCook = new Cook(i + 1, TYPE_NRM, normalSpeed, breakPerCook, normalBreaks);
 				cooks.insert(nrmCook,i);
 			}
 		
-			for (int i = 0; i < veganCooks; i++) {
+			for (int i = 0; i < veganCooks; i++)
+			{
 
 				//fill cook list 
 				//ids from normalCooks+1 to veganCooks, id=normalCooks+i+1
-				Cook* vgnCook = new Cook;
-				vgnCook->setID(normalCooks + i + 1);
-				vgnCook->setID(TYPE_VGAN);
-				//otherSetters
-				cooks.insert(vgnCook,i+normalCooks);
+				Cook* vgnCook = new Cook(normalCooks+i + 1, TYPE_VGAN, veganSpeed, breakPerCook, veganBreaks);
+				cooks.insert(vgnCook, i+normalCooks);
+				
+				
 
 			}
-			for (int i = 0; i < vipCooks; i++) {
+			for (int i = 0; i < vipCooks; i++) 
+			{
 
 				//fill cook list 
 				//ids from veganCooks+1 to vipCooks, id=veganCooks+1+i
-				Cook* vipCook = new Cook;
-				vipCook->setID(veganCooks + i + 1);
-				vipCook->setType(TYPE_VIP);
-				//others setters
+				Cook* vipCook = new Cook(i + 1+veganCooks, TYPE_VGAN, vipSpeed, breakPerCook, vipBreaks);
 				cooks.insert(vipCook,i+veganCooks);
 			}
 
@@ -103,19 +99,22 @@ void Restaurant::LoadFromFile()
 				
 				case('R'): // Change constructor of arrivalEvent to fill order's info
 					loadFile >> eventTimeStep >> eventId >> orderSize >> orderPrice;
-					if (orderType == 'N') {
+					if (orderType == 'N') 
+					{
 						
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_NRM);
 						addEvent(nEvent);
 						nOrders++;
 					}
-					else if (orderType == 'G') {
+					else if (orderType == 'G') 
+					{
 							
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VGAN);
 						addEvent(nEvent);
 						nOrders++;
 					}
-					else if (orderType == 'V') {
+					else if (orderType == 'V') 
+					{
 					
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VIP);
 						addEvent(nEvent);
@@ -126,42 +125,17 @@ void Restaurant::LoadFromFile()
 					break;
 				case('X'):
 					loadFile >> eventTimeStep >> eventId;
-					if (orderType == 'N') {
+					
 					
 						//Cancellation event
 						nOrders--;
-
-					}
-					else if (orderType == 'G') {
-					
-						//Cancellation event
-						nOrders--;
-					}
-
-					else if (orderType == 'V') {
-					
-					//cancellation event
-						nOrders--;
-					}
-					break;
-
+						break;
+		
 				case('P'):
 					loadFile >> eventTimeStep >> eventId >> orderPrice;
-					if (orderType == 'N') {
+					
 
 						//Promotion event
-
-					}
-					else if (orderType == 'G') {
-
-						//Promotion event
-					}
-
-					else if (orderType == 'V') {
-
-						//Promotion event
-
-					}
 					break;
 				default:
 					break;
@@ -184,102 +158,178 @@ void Restaurant::assignToCook()
 {
 	Order* orderToServe;
 	Cook* cookToPrepare;
+	
 	//We empty vip queue first
-	while (!vipOrders.isEmpty()) {
+	while (vipOrders.peek(orderToServe))
+	{
 
+		for (int i = nCooks - 1; i >= normalCooks + veganCooks; i--) 
+		{
+			
+			cookToPrepare = cooks.getEntry(i);
+			if (cookToPrepare->GetFlag()) {
+
+				//assign order to cook
+				cookToPrepare->AssignOrder(orderToServe, currentTimeStep);
+				vipOrders.dequeue(orderToServe);
+				servingOrders.enqueue(orderToServe);
+				break;
+
+			}
 		
+		
+		}
 
-		if (vipOrders.peek(orderToServe)) {
-
-			for (int i = nCooks-1; i >= 0; i--)
+		if (orderToServe->getStatus() == WAIT) 
+		{
+			
+			for (int i = 0; i < normalCooks; i++) 
 			{
 				cookToPrepare = cooks.getEntry(i);
 
-					if (cookToPrepare->GetType() == TYPE_VIP) //and this cook is free 
-					{
-						
-							//Assign order to found cook and dequeue order
+				if (cookToPrepare->GetFlag()) 
+				{
+				
+					cookToPrepare->AssignOrder(orderToServe, currentTimeStep);
+					vipOrders.dequeue(orderToServe);
+					servingOrders.enqueue(orderToServe);
+					break;
+				
+				}
+			
+			}
 
-						vipOrders.dequeue(orderToServe);
-						break;
-							
-					}
+		
+		}
+		if (orderToServe->getStatus() == WAIT) 
+		{
 
-					if (cookToPrepare->GetType() == TYPE_NRM) //and this cook is free
-					{
-					
-						//Assign order to found cook
-						vipOrders.dequeue(orderToServe);
-						break;
-					
-					}
+			for (int i = normalCooks; i < normalCooks + veganCooks; i++) 
+			{
+				cookToPrepare = cooks.getEntry(i);
+				if (cookToPrepare->GetFlag())
+				{
+				
+					cookToPrepare->AssignOrder(orderToServe, currentTimeStep);
+					vipOrders.dequeue(orderToServe);
+					servingOrders.enqueue(orderToServe);
+					break;
+				
+				}
 
-					if (cookToPrepare->GetType() == TYPE_VGAN)//and this cook is free
-					{
-					
-						//Assign order to found cook
-						vipOrders.dequeue(orderToServe);
-						break;
-						
-					
-					}
-					else {
-					
-					
-					
-					}
+
 
 			}
 
-			
-
 		}
 
+		if (orderToServe->getStatus() == WAIT) 
+		{
+		
+			return;
+        
+		}
 
 	}
-	while (!veganOrders.isEmpty()) {
+	
+	while (veganOrders.peekFront(orderToServe)) 
+	{
 	
 	
-		for (int i = 0; i < nCooks; i++)
+		for (int i = normalCooks; i < normalCooks + veganCooks; i++)
 		{
 		
 			cookToPrepare = cooks.getEntry(i);
 
-				if (cookToPrepare->GetType() == TYPE_VGAN)
-				{
+			if (cookToPrepare->GetFlag())
+			{
+				cookToPrepare->AssignOrder(orderToServe, currentTimeStep);
+				veganOrders.dequeue(orderToServe);
+				servingOrders.enqueue(orderToServe);
+				break;
+			}
+
+		}
+
+		if (orderToServe->getStatus() == WAIT) 
+		{
+		
+		//no vegan cooks free
+			break;
+		
+		}
+
+	}
+	while (normalOrders.peekFront(orderToServe)) 
+	{
+	
+		for (int i = 0; i < normalCooks; i++) 
+		{
+			cookToPrepare = cooks.getEntry(i);
 			
-					//Assign to vegan cook
-					veganOrders.dequeue(orderToServe);
-					break;
-				}
-		
-		
-		
-		
+			if (cookToPrepare->GetFlag()) 
+			{
+				cookToPrepare->AssignOrder(orderToServe, currentTimeStep);
+				normalOrders.dequeue(orderToServe);
+				servingOrders.enqueue(orderToServe);
+				break;
+
+			}
 		
 		}
 	
-	
-	
-	
+		if (orderToServe->getStatus() == WAIT) 
+		{
+		
+			for (int i = nCooks-1; i >= normalCooks + veganCooks;i--) 
+			{
+			
+				cookToPrepare = cooks.getEntry(i);
+			
+				if (cookToPrepare->GetFlag())
+				{
+				
+					cookToPrepare->AssignOrder(orderToServe, currentTimeStep);
+					normalOrders.dequeue(orderToServe);
+					servingOrders.enqueue(orderToServe);
+					break;
+				
+				}
+
+			}
+
+		}
+		if (orderToServe->getStatus() == WAIT) 
+		{
+		
+			return;
+		
+		}
+
 	}
+
 }
 
 void Restaurant::addOrder(Order* nOrder)
 {
-	if (nOrder->GetType()==TYPE_NRM) {
+	if (nOrder->GetType()==TYPE_NRM) 
+	{
 	
 		normalOrders.enqueue(nOrder);
+		
 	}
-	else if (nOrder->GetType() == TYPE_VGAN) {
+	else if (nOrder->GetType() == TYPE_VGAN)
+	{
 	
 		veganOrders.enqueue(nOrder);
-
+	
 
 	}
-	else if (nOrder->GetType() == TYPE_VIP) {
+	else if (nOrder->GetType() == TYPE_VIP) 
+	{
 	
 		vipOrders.enqueue(nOrder,2);
+		
 	}
 
 }
@@ -321,8 +371,52 @@ void Restaurant::FillDrawingList()
 	//To add orders it should call function  void GUI::AddToDrawingList(Order* pOrd);
 	//To add Cooks it should call function  void GUI::AddToDrawingList(Cook* pCc);
 	
+	for (int i = 0; i < nCooks; i++) 
+	{
+		
+		pGUI->AddToDrawingList(cooks.getEntry(i));
+		
+	}
+	//Create 3 arrs to merge into one array
+	// Sort array by arrival time
+	int nVipOrders = 0 ;
+	Order** vipOrdersArr = vipOrders.toArray(nVipOrders);
+	int nNormalOrders = 0;
+	Order** normalOrderArr = normalOrders.toArray(nNormalOrders);
+	int nVeganOrders = 0;
+	Order** veganOrderArr = veganOrders.toArray(nVeganOrders);
+	int sum = nVeganOrders + nVipOrders + nNormalOrders;
+	Order** orders = new Order * [sum];
 
-	
+	for (int i = 0; i < nVipOrders; i++)
+	{
+		orders[i] = vipOrdersArr[i];
+	}
+	for (int i = nVipOrders; i < nVipOrders + nNormalOrders; i++)
+	{
+		orders[i] = normalOrderArr[i];
+	}
+	for (int i = nVipOrders + nNormalOrders; i < sum; i++)
+	{
+		orders[i] = veganOrderArr[i];
+	}
+	int i, key, j;
+	for (i = 1; i < sum; i++)
+	{
+		key = orders[i]->GetID();
+		j = i - 1;
+
+		while (j >= 0 && orders[j]->GetID > key)
+		{
+			orders[j + 1] = orders[j];
+			j = j - 1;
+		}
+		orders[i]->SetID(key);
+	}
+	for (int i = 0; i < sum; i++) 
+	{
+		pGUI->AddToDrawingList(orders[i]);
+	}
 
 }
 
@@ -337,7 +431,7 @@ void Restaurant::FillDrawingList()
 
 //This is just a demo function for project introductory phase
 //It should be removed starting phase 1
-void Restaurant::Just_A_Demo()
+/*void Restaurant::Just_A_Demo()
 {
 	
 	//
@@ -359,14 +453,14 @@ void Restaurant::Just_A_Demo()
 	//Just for sake of demo, generate some cooks and add them to the drawing list
 	//In next phases, Cooks info should be loaded from input file
 	int C_count = 12;	
-	Cook *pC = new Cook[C_count];
+	//Cook *pC = new Cook[C_count];
 	int cID = 1;
 
 	for(int i=0; i<C_count; i++)
 	{
 		cID+= (rand()%15+1);	
-		pC[i].setID(cID);
-		pC[i].setType((ORD_TYPE)(rand()%TYPE_CNT));
+		//pC[i].setID(cID);
+		//pC[i].setType((ORD_TYPE)(rand()%TYPE_CNT));
 	}	
 
 		
@@ -453,4 +547,4 @@ void Restaurant::AddtoDemoQueue(Order *pOrd)
 /// ==> end of DEMO-related function
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-
+*/

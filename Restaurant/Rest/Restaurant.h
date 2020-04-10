@@ -23,17 +23,21 @@ private:
 	GUI *pGUI;
 
 	Queue<Event*> EventsQueue;	//Queue of all events that will be loaded from file
-
+	
 	LinkedList<Cook*> cooks;
 
 	Queue<Order*> normalOrders;
 	Queue<Order*> veganOrders;
 	PriorityQueue<Order*> vipOrders;
+	Queue<Order*> servingOrders;
+	
 
 	LinkedListStack<Order*> finishedOrders;
 
 	ifstream  loadFile;
 	ofstream saveFile;
+
+	int normalCooks, veganCooks, vipCooks;// number of each cook
 
 	int nCooks;
 	int currentTimeStep;
@@ -108,8 +112,8 @@ public:
 
 /// ===================    DEMO-related functions. Should be removed in phases 1&2   ================= 
 
-	void Just_A_Demo();	//just to show a demo and should be removed in phase1 1 & 2
-	void AddtoDemoQueue(Order* po);	//adds an order to the demo queue
+	//void Just_A_Demo();	//just to show a demo and should be removed in phase1 1 & 2
+	//void AddtoDemoQueue(Order* po);	//adds an order to the demo queue
 
 /// ================================================================================================== 
 
