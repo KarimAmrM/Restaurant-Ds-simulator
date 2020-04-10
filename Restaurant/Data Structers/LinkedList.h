@@ -43,7 +43,7 @@ inline Node<T>* LinkedList<T>::getNodeAt(int pos)
 		{
 			return ptr;
 		}
-		ptr = ptr->getnext();
+		ptr = ptr->getNext();
 	}
 }
 
@@ -99,7 +99,7 @@ inline bool LinkedList<T>::insert(T item, int pos)
 	Node<T>* nptr = new Node<T>;
 	nptr->setItem(item);
 	Node<T>* ptr = getNodeAt(pos - 1);
-	nptr->setNext(ptr->getnext());
+	nptr->setNext(ptr->getNext());
 	ptr->setNext(nptr);
 	count++;
 	return true;
@@ -111,7 +111,7 @@ inline bool LinkedList<T>::remove(int pos)
 	if (pos == 0)
 	{
 		Node<T>* temp = head;
-		head = head->getnext();
+		head = head->getNext();
 		delete temp;
 		count--;
 		return true;
@@ -128,7 +128,7 @@ inline bool LinkedList<T>::remove(int pos)
 	}
 	Node<T>* temp = getNodeAt(pos);
 	Node<T>* ptr = getNodeAt(pos - 1);
-	ptr->setNext(temp->getnext());
+	ptr->setNext(temp->getNext());
 	delete temp;
 	count--;
 	return true;
@@ -142,7 +142,7 @@ inline void LinkedList<T>::clear()
 	while (head)
 	{
 		Node<T>* ptr = head;
-		head = head->getnext();
+		head = head->getNext();
 		delete ptr;
 	}
 	count = 0;
@@ -172,7 +172,7 @@ inline void LinkedList<T>::print()
 	for (int i = 0; i < count; i++)
 	{
 		cout << ptr->getItem()<<" ";
-		ptr = ptr->getnext();
+		ptr = ptr->getNext();
 	}
 	cout << endl;
 }

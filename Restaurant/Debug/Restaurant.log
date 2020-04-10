@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿  Demo_Main.cpp
 C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\LinkedList.h(102,1): error C2039: 'getnext': is not a member of 'Node<T>'
           with
@@ -59,3 +60,14 @@ C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Resta
 C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(342,1): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdlib.h(1323): message : see declaration of 'itoa'
   Generating Code...
+=======
+﻿  ArrivalEvent.cpp
+  GUI.cpp
+  Restaurant.cpp
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(350,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(405,3): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
+  Generating Code...
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\LinkedList.h(156): warning C4715: 'LinkedList<Cook *>::getEntry': not all control paths return a value
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\LinkedList.h(48): warning C4715: 'LinkedList<Cook *>::getNodeAt': not all control paths return a value
+  Restaurant.vcxproj -> C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Debug\Restaurant.exe
+>>>>>>> 27fa2d4f18825380c04e3d19eba6ceb8d18cf68b
