@@ -1,45 +1,61 @@
 ﻿  Demo_Main.cpp
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\LinkedList.h(102,1): error C2039: 'getnext': is not a member of 'Node<T>'
+          with
+          [
+              T=Cook *
+          ]
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\LinkedList.h(9): message : see declaration of 'Node<T>'
+          with
+          [
+              T=Cook *
+          ]
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\LinkedList.h(71): message : while compiling class template member function 'bool LinkedList<Cook *>::insert(T,int)'
+          with
+          [
+              T=Cook *
+          ]
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.h(27): message : see reference to class template instantiation 'LinkedList<Cook *>' being compiled
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\LinkedList.h(114,1): error C2039: 'getnext': is not a member of 'Node<T>'
+          with
+          [
+              T=Cook *
+          ]
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\LinkedList.h(9): message : see declaration of 'Node<T>'
+          with
+          [
+              T=Cook *
+          ]
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\LinkedList.h(110): message : while compiling class template member function 'bool LinkedList<Cook *>::remove(int)'
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\LinkedList.h(131,1): error C2039: 'getnext': is not a member of 'Node<T>'
+          with
+          [
+              T=Cook *
+          ]
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\LinkedList.h(9): message : see declaration of 'Node<T>'
+          with
+          [
+              T=Cook *
+          ]
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\LinkedList.h(145,1): error C2039: 'getnext': is not a member of 'Node<T>'
+          with
+          [
+              T=Cook *
+          ]
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\LinkedList.h(9): message : see declaration of 'Node<T>'
+          with
+          [
+              T=Cook *
+          ]
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\LinkedList.h(140): message : while compiling class template member function 'void LinkedList<Cook *>::clear(void)'
   ArrivalEvent.cpp
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Events\ArrivalEvent.cpp(20,9): error C2374: 'pOrd': redefinition; multiple initialization
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Events\ArrivalEvent.cpp(15): message : see declaration of 'pOrd'
+  GUI.cpp
   Restaurant.cpp
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(219,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(274,3): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(192,12): error C2059: syntax error: ')'
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(219,27): error C2660: 'PriorityQueue<Order *>::enqueue': function does not take 1 arguments
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\PriorityQueue.h(15,7): message : see declaration of 'PriorityQueue<Order *>::enqueue'
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(287,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(342,1): warning C4996: 'itoa': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _itoa. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdlib.h(1323): message : see declaration of 'itoa'
   Generating Code...
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\ListBag.h(76): warning C4715: 'ListBag<Cook *>::remove': not all control paths return a value
-  jpegload.c
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\jpegload.c(23,12): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  jcomapi.c
-  jcparam.c
-  jdapimin.c
-  jdapistd.c
-  jdatasrc.c
-  jdcoefct.c
-  jdcolor.c
-  jddctmgr.c
-  jdhuff.c
-  jdinput.c
-  jdmainct.c
-  jdmarker.c
-  jdmaster.c
-  jdmerge.c
-  jdphuff.c
-  jdpostct.c
-  jdsample.c
-  jdtrans.c
-  jerror.c
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\jpeg\jerror.c(169,5): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\jpeg\jerror.c(171,5): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  Generating Code...
-  Compiling...
-  jidctflt.c
-  jidctfst.c
-  jidctint.c
-  jidctred.c
-  jmemmgr.c
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\jpeg\jmemmgr.c(1103,19): warning C4996: 'getenv': This function or variable may be unsafe. Consider using _dupenv_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\jpeg\jmemmgr.c(1106,11): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  jmemnobs.c
-  jquant1.c
-  jquant2.c
-  jutils.c
-  Generating Code...
-  Restaurant.vcxproj -> C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Debug\Restaurant.exe
