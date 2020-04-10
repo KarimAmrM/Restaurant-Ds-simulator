@@ -66,8 +66,8 @@ public:
 	void addEvent(Event* nEvent );
 	void assignToCook();
 	void addOrder(Order* nOrder);
-	
-	
+	void cancelEvent(int ID);
+	void Simulation();
 	
 	
 

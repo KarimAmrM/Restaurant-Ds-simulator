@@ -1,10 +1,10 @@
 #include <cstdlib>
 #include <time.h>
 #include <iostream>
-using namespace std;
-
 #include "Restaurant.h"
 #include "..\Events\ArrivalEvent.h"
+
+using namespace std;
 
 
 Restaurant::Restaurant() 
@@ -173,6 +173,7 @@ void Restaurant::LoadFromFile()
 	
 }
 
+
 void Restaurant::addEvent( Event* nEvent)
 {
 	EventsQueue.enqueue(nEvent);
@@ -335,6 +336,95 @@ void Restaurant::addOrder(Order* nOrder)
 
 }
 
+void Restaurant::cancelEvent(int ID)
+{
+	int count = 0;
+	Order** O = normalOrders.toArray(count); //converting the normal orders cook queue to an arry to find the element with the matched id
+	for (int i = 0; i < count; i++)
+	{
+		if (O[i]->GetID() == ID)
+		{
+			int pos = i;
+			for (int i = 0; i < count; i++) //removing the element 
+			{
+				if (i >= pos)
+				{
+					O[i] = O[i + 1];
+				}
+			}
+			count--;
+		}
+	}
+
+	while (!normalOrders.isEmpty()) //emptyting the queue to refill it again without the order with the canceled id 
+	{
+		Order* dummy;
+		normalOrders.dequeue(dummy);
+	}
+
+
+	for (int i = 0; i < count; i++)//refilling the queue again 
+	{
+		normalOrders.enqueue(O[i]);
+	}
+}
+
+void Restaurant::Simulation()
+{
+	LoadFromFile();
+	while (!EventsQueue.isEmpty()|| !vipOrders.isEmpty() || !veganOrders.isEmpty() || !normalOrders.isEmpty())
+	{
+		ExecuteEvents(currentTimeStep);
+
+		Order* O1, * O2, * O3;
+
+		if (vipOrders.peek(O1))
+		{
+			servingOrders.enqueue(O1);
+			vipOrders.dequeue(O1);
+		}
+		if (veganOrders.peekFront(O2))
+		{
+			servingOrders.enqueue(O2);
+			veganOrders.dequeue(O2);
+		}
+		if (normalOrders.peekFront(O3))
+		{
+			servingOrders.enqueue(O3);
+			normalOrders.dequeue(O3);
+		}
+		if (currentTimeStep % 5 == 0)
+		{
+			if (servingOrders.peekFront(O1))
+			{
+				finishedOrders.push(O1);
+				servingOrders.dequeue(O1);
+			}
+			if (servingOrders.peekFront(O2))
+			{
+				finishedOrders.push(O2);
+				servingOrders.dequeue(O2);
+			}
+			if (servingOrders.peekFront(O3))
+			{
+				finishedOrders.push(O3);
+				servingOrders.dequeue(O3);
+			}
+		}
+		FillDrawingList();
+		pGUI->UpdateInterface();
+		
+
+		pGUI->waitForClick();
+		pGUI->ResetDrawingList();
+		currentTimeStep++;
+
+
+	}
+
+
+}
+
 
 
 
@@ -345,7 +435,7 @@ void Restaurant::addOrder(Order* nOrder)
 void Restaurant::ExecuteEvents(int CurrentTimeStep)
 {
 	Event *pE;
-	while( EventsQueue.peekFront(pE) )	//as long as there are more events
+	while( EventsQueue.peekFront(pE) )	//as lg ason there are more events
 	{
 		if(pE->getEventTime() > CurrentTimeStep )	//no more events at current timestep
 			return;

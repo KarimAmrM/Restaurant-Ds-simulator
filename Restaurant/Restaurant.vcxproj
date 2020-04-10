@@ -104,6 +104,7 @@
     <ClInclude Include="Data Structers\StackADT.h" />
     <ClInclude Include="Defs.h" />
     <ClInclude Include="Events\ArrivalEvent.h" />
+    <ClInclude Include="Events\CancelationEvent.h" />
     <ClInclude Include="Events\Event.h" />
     <ClInclude Include="Generic_DS\Node.h" />
     <ClInclude Include="Generic_DS\Queue.h" />
@@ -156,6 +157,7 @@
     <ClCompile Include="Data Structers\PriorNode.cpp" />
     <ClCompile Include="Data Structers\StackADT.cpp" />
     <ClCompile Include="Demo_Main.cpp" />
+    <ClCompile Include="Events\CancelationEvent.cpp" />
     <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Events\ArrivalEvent.cpp" />
     <ClCompile Include="GUI\GUI.cpp" />
