@@ -23,17 +23,20 @@ private:
 	GUI *pGUI;
 
 	Queue<Event*> EventsQueue;	//Queue of all events that will be loaded from file
-
+	
 	LinkedList<Cook*> cooks;
 
 	Queue<Order*> normalOrders;
 	Queue<Order*> veganOrders;
 	PriorityQueue<Order*> vipOrders;
+	Queue<Order*> servingOrders;
 
 	LinkedListStack<Order*> finishedOrders;
 
 	ifstream  loadFile;
 	ofstream saveFile;
+
+	int normalCooks, veganCooks, vipCooks;// number of each cook
 
 	int nCooks;
 	int currentTimeStep;
@@ -63,6 +66,7 @@ public:
 	void addEvent(Event* nEvent );
 	void assignToCook();
 	void addOrder(Order* nOrder);
+	
 	
 	
 	
