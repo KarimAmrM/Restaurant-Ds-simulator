@@ -28,8 +28,8 @@ void Restaurant::RunSimulation()
 		break;
 	case MODE_SLNT:
 		break;
-	case MODE_DEMO:
-		Just_A_Demo();
+	//case MODE_DEMO:
+	//	Just_A_Demo();
 
 	};
 
@@ -63,33 +63,33 @@ void Restaurant::LoadFromFile()
 				//create cook 
 				//fill cook list 
 				//ids from 1 to normalCooks , id=i+1
-				Cook* nrmCook = new Cook;
-				nrmCook->setID(i + 1);
-				nrmCook->setType(TYPE_NRM);
+				//Cook* nrmCook = new Cook;
+				//nrmCook->setID(i + 1);
+			//	nrmCook->setType(TYPE_NRM);
 				//otherSeters
-				cooks.insert(nrmCook,i);
+				//cooks.insert(nrmCook,i);
 			}
 		
 			for (int i = 0; i < veganCooks; i++) {
 
 				//fill cook list 
 				//ids from normalCooks+1 to veganCooks, id=normalCooks+i+1
-				Cook* vgnCook = new Cook;
-				vgnCook->setID(normalCooks + i + 1);
-				vgnCook->setID(TYPE_VGAN);
+			//	Cook* vgnCook = new Cook;
+			//	vgnCook->setID(normalCooks + i + 1);
+			//	vgnCook->setID(TYPE_VGAN);
 				//otherSetters
-				cooks.insert(vgnCook,i+normalCooks);
+				//cooks.insert(vgnCook,i+normalCooks);
 
 			}
 			for (int i = 0; i < vipCooks; i++) {
 
 				//fill cook list 
 				//ids from veganCooks+1 to vipCooks, id=veganCooks+1+i
-				Cook* vipCook = new Cook;
-				vipCook->setID(veganCooks + i + 1);
-				vipCook->setType(TYPE_VIP);
+				//Cook* vipCook = new Cook;
+				//vipCook->setID(veganCooks + i + 1);
+				//vipCook->setType(TYPE_VIP);
 				//others setters
-				cooks.insert(vipCook,i+veganCooks);
+				//cooks.insert(vipCook,i+veganCooks);
 			}
 
 			loadFile >> promoteAfter >> numEvents;
@@ -388,7 +388,7 @@ void Restaurant::FillDrawingList()
 
 //This is just a demo function for project introductory phase
 //It should be removed starting phase 1
-void Restaurant::Just_A_Demo()
+/*void Restaurant::Just_A_Demo()
 {
 	
 	//
@@ -410,14 +410,14 @@ void Restaurant::Just_A_Demo()
 	//Just for sake of demo, generate some cooks and add them to the drawing list
 	//In next phases, Cooks info should be loaded from input file
 	int C_count = 12;	
-	Cook *pC = new Cook[C_count];
+	//Cook *pC = new Cook[C_count];
 	int cID = 1;
 
 	for(int i=0; i<C_count; i++)
 	{
 		cID+= (rand()%15+1);	
-		pC[i].setID(cID);
-		pC[i].setType((ORD_TYPE)(rand()%TYPE_CNT));
+		//pC[i].setID(cID);
+		//pC[i].setType((ORD_TYPE)(rand()%TYPE_CNT));
 	}	
 
 		
@@ -504,4 +504,4 @@ void Restaurant::AddtoDemoQueue(Order *pOrd)
 /// ==> end of DEMO-related function
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-
+*/
