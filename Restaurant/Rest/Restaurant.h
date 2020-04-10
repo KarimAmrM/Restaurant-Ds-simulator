@@ -65,7 +65,38 @@ public:
 	void addOrder(Order* nOrder);
 	
 	
-	
+	void cancelEvent(int ID)  
+	{
+		int count = 0;
+		Order** O= normalOrders.toArray(count); //converting the normal orders cook queue to an arry to find the element with the matched id
+		for (int i = 0; i < count; i++)
+		{
+			if (O[i]->GetID() == ID)
+			{
+				int pos = i;
+				for (int i = 0; i < count; i++) //removing the element 
+				{
+					if (i >= pos)
+					{
+						O[i] = O[i + 1];
+					}
+				}
+				count--;
+			}
+		}
+
+		while (!normalOrders.isEmpty()) //emptyting the queue to refill it again without the order with the canceled id 
+		{
+			Order* dummy;
+			normalOrders.dequeue(dummy);
+		}
+
+
+		for (int i = 0; i < count; i++)//refilling the queue again 
+		{
+			normalOrders.enqueue(O[i]);
+		}
+	}
 
 
 	void FillDrawingList();

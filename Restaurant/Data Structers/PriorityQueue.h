@@ -71,9 +71,9 @@ inline bool PriorityQueue<T>::dequeue(T& item)
 		return false;
 
 	PriorNode<T>* temp = front;
-	item = temp->getItem();
+	item = temp->getItem();    //returning the item of the top
 	front = front->getNext();
-	delete temp;
+	delete temp;               //freeing memory
 	count--;
 
 	return true;
