@@ -1,14 +1,14 @@
 #pragma once
 
 #include "..\Defs.h"
-#include"..\Data Structers\ListBag.h"
+
 #pragma once
 class Cook
 {
 	int ID;
 	ORD_TYPE type;	//for each order type there is a corresponding type (VIP, Normal, Vegan)
 	int speed;	//dishes it can prepare in one clock tick (in one timestep)
-	bool isAvailabe;
+	bool isFree;
 
 public:
 	Cook();

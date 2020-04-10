@@ -24,7 +24,7 @@ private:
 
 	Queue<Event*> EventsQueue;	//Queue of all events that will be loaded from file
 
-	LinkedList<Cook*> Cooks;
+	LinkedList<Cook*> cooks;
 
 	Queue<Order*> normalOrders;
 	Queue<Order*> veganOrders;

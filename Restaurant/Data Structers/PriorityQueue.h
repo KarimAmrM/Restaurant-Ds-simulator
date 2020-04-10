@@ -73,7 +73,7 @@ inline bool PriorityQueue<T>::dequeue(T& item)
 	PriorNode<T>* temp = front;
 	item = temp->getItem();
 	front = front->getNext();
- 	
+	delete temp;
 	count--;
 
 	return true;

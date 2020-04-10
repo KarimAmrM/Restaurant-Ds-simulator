@@ -67,7 +67,7 @@ void Restaurant::LoadFromFile()
 				nrmCook->setID(i + 1);
 				nrmCook->setType(TYPE_NRM);
 				//otherSeters
-				Cooks.insert(nrmCook,i);
+				cooks.insert(nrmCook,i);
 			}
 		
 			for (int i = 0; i < veganCooks; i++) {
@@ -78,7 +78,7 @@ void Restaurant::LoadFromFile()
 				vgnCook->setID(normalCooks + i + 1);
 				vgnCook->setID(TYPE_VGAN);
 				//otherSetters
-				Cooks.insert(vgnCook,i+normalCooks);
+				cooks.insert(vgnCook,i+normalCooks);
 
 			}
 			for (int i = 0; i < vipCooks; i++) {
@@ -89,7 +89,7 @@ void Restaurant::LoadFromFile()
 				vipCook->setID(veganCooks + i + 1);
 				vipCook->setType(TYPE_VIP);
 				//others setters
-				Cooks.insert(vipCook,i);
+				cooks.insert(vipCook,i+veganCooks);
 			}
 
 			loadFile >> promoteAfter >> numEvents;
@@ -182,23 +182,86 @@ void Restaurant::addEvent( Event* nEvent)
 
 void Restaurant::assignToCook()
 {
+	Order* orderToServe;
+	Cook* cookToPrepare;
+	//We empty vip queue first
 	while (!vipOrders.isEmpty()) {
 
-		Order* orderToServe;
+		
 
 		if (vipOrders.peek(orderToServe)) {
 
-			if (orderToServe->getStatus() == WAIT) {
-				for(int)
+			for (int i = nCooks-1; i >= 0; i--)
+			{
+				cookToPrepare = cooks.getEntry(i);
 
-				Cooks.getEntry()
+					if (cookToPrepare->GetType() == TYPE_VIP) //and this cook is free 
+					{
+						
+							//Assign order to found cook and dequeue order
 
+						vipOrders.dequeue(orderToServe);
+						break;
+							
+					}
+
+					if (cookToPrepare->GetType() == TYPE_NRM) //and this cook is free
+					{
+					
+						//Assign order to found cook
+						vipOrders.dequeue(orderToServe);
+						break;
+					
+					}
+
+					if (cookToPrepare->GetType() == TYPE_VGAN)//and this cook is free
+					{
+					
+						//Assign order to found cook
+						vipOrders.dequeue(orderToServe);
+						break;
+						
+					
+					}
+					else {
+					
+					
+					
+					}
 
 			}
+
+			
 
 		}
 
 
+	}
+	while (!veganOrders.isEmpty()) {
+	
+	
+		for (int i = 0; i < nCooks; i++)
+		{
+		
+			cookToPrepare = cooks.getEntry(i);
+
+				if (cookToPrepare->GetType() == TYPE_VGAN)
+				{
+			
+					//Assign to vegan cook
+					veganOrders.dequeue(orderToServe);
+					break;
+				}
+		
+		
+		
+		
+		
+		}
+	
+	
+	
+	
 	}
 }
 
@@ -216,7 +279,7 @@ void Restaurant::addOrder(Order* nOrder)
 	}
 	else if (nOrder->GetType() == TYPE_VIP) {
 	
-		vipOrders.enqueue(nOrder);
+		vipOrders.enqueue(nOrder,2);
 	}
 
 }
