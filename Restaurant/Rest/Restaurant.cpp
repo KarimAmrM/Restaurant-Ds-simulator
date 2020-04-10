@@ -58,38 +58,34 @@ void Restaurant::LoadFromFile()
 	nCooks = normalCooks + veganCooks + vipCooks;
 
 
-			for (int i = 0; i < normalCooks; i++) {
+			for (int i = 0; i < normalCooks; i++) 
+			{
 				
 				//create cook 
 				//fill cook list 
 				//ids from 1 to normalCooks , id=i+1
-				//Cook* nrmCook = new Cook;
-				//nrmCook->setID(i + 1);
-			//	nrmCook->setType(TYPE_NRM);
-				//otherSeters
-				//cooks.insert(nrmCook,i);
+				Cook* nrmCook = new Cook(i + 1, TYPE_NRM, normalSpeed, breakPerCook, normalBreaks);
+				cooks.insert(nrmCook,i);
 			}
 		
-			for (int i = 0; i < veganCooks; i++) {
+			for (int i = 0; i < veganCooks; i++)
+			{
 
 				//fill cook list 
 				//ids from normalCooks+1 to veganCooks, id=normalCooks+i+1
-			//	Cook* vgnCook = new Cook;
-			//	vgnCook->setID(normalCooks + i + 1);
-			//	vgnCook->setID(TYPE_VGAN);
-				//otherSetters
-				//cooks.insert(vgnCook,i+normalCooks);
+				Cook* vgnCook = new Cook(normalCooks+i + 1, TYPE_VGAN, veganSpeed, breakPerCook, veganBreaks);
+				cooks.insert(vgnCook, i+normalCooks);
+				
+				
 
 			}
-			for (int i = 0; i < vipCooks; i++) {
+			for (int i = 0; i < vipCooks; i++) 
+			{
 
 				//fill cook list 
 				//ids from veganCooks+1 to vipCooks, id=veganCooks+1+i
-				//Cook* vipCook = new Cook;
-				//vipCook->setID(veganCooks + i + 1);
-				//vipCook->setType(TYPE_VIP);
-				//others setters
-				//cooks.insert(vipCook,i+veganCooks);
+				Cook* vipCook = new Cook(i + 1+veganCooks, TYPE_VGAN, vipSpeed, breakPerCook, vipBreaks);
+				cooks.insert(vipCook,i+veganCooks);
 			}
 
 			loadFile >> promoteAfter >> numEvents;
@@ -103,19 +99,22 @@ void Restaurant::LoadFromFile()
 				
 				case('R'): // Change constructor of arrivalEvent to fill order's info
 					loadFile >> eventTimeStep >> eventId >> orderSize >> orderPrice;
-					if (orderType == 'N') {
+					if (orderType == 'N') 
+					{
 						
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_NRM);
 						addEvent(nEvent);
 						nOrders++;
 					}
-					else if (orderType == 'G') {
+					else if (orderType == 'G') 
+					{
 							
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VGAN);
 						addEvent(nEvent);
 						nOrders++;
 					}
-					else if (orderType == 'V') {
+					else if (orderType == 'V') 
+					{
 					
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VIP);
 						addEvent(nEvent);
@@ -126,42 +125,17 @@ void Restaurant::LoadFromFile()
 					break;
 				case('X'):
 					loadFile >> eventTimeStep >> eventId;
-					if (orderType == 'N') {
+					
 					
 						//Cancellation event
 						nOrders--;
-
-					}
-					else if (orderType == 'G') {
-					
-						//Cancellation event
-						nOrders--;
-					}
-
-					else if (orderType == 'V') {
-					
-					//cancellation event
-						nOrders--;
-					}
-					break;
-
+						break;
+		
 				case('P'):
 					loadFile >> eventTimeStep >> eventId >> orderPrice;
-					if (orderType == 'N') {
+					
 
 						//Promotion event
-
-					}
-					else if (orderType == 'G') {
-
-						//Promotion event
-					}
-
-					else if (orderType == 'V') {
-
-						//Promotion event
-
-					}
 					break;
 				default:
 					break;
@@ -193,14 +167,14 @@ void Restaurant::assignToCook()
 		{
 			
 			cookToPrepare = cooks.getEntry(i);
-			//if(cookToPrepare->isFree())
-		/*{
-			//assign order to cook
-			dequeue order 
-			flag cook as not free
-			break
-		}*/
-			
+			if (cookToPrepare->GetFlag()) {
+
+				//assign order to cook
+				cookToPrepare->AssignOrder(orderToServe, currentTimeStep);
+				vipOrders.dequeue(orderToServe);
+				break;
+
+			}
 		
 		
 		}
@@ -211,7 +185,15 @@ void Restaurant::assignToCook()
 			for (int i = 0; i < normalCooks; i++) 
 			{
 				cookToPrepare = cooks.getEntry(i);
-			
+
+				if (cookToPrepare->GetFlag()) 
+				{
+				
+					cookToPrepare->AssignOrder(orderToServe, currentTimeStep);
+					vipOrders.dequeue(orderToServe);
+					break;
+				
+				}
 			
 			}
 			
@@ -225,7 +207,14 @@ void Restaurant::assignToCook()
 			for (int i = normalCooks; i < normalCooks + veganCooks; i++) 
 			{
 				cookToPrepare = cooks.getEntry(i);
-
+				if (cookToPrepare->GetFlag())
+				{
+				
+					cookToPrepare->AssignOrder(orderToServe, currentTimeStep);
+					vipOrders.dequeue(orderToServe);
+					break;
+				
+				}
 
 
 
@@ -250,12 +239,17 @@ void Restaurant::assignToCook()
 	{
 	
 	
-		for (int i = 0; i < nCooks; i++)
+		for (int i = normalCooks; i < normalCooks + veganCooks; i++)
 		{
 		
 			cookToPrepare = cooks.getEntry(i);
 
-		
+			if (cookToPrepare->GetFlag())
+			{
+				cookToPrepare->AssignOrder(orderToServe, currentTimeStep);
+				veganOrders.dequeue(orderToServe);
+				break;
+			}
 		
 		
 		
@@ -279,7 +273,14 @@ void Restaurant::assignToCook()
 		for (int i = 0; i < normalCooks; i++) 
 		{
 			cookToPrepare = cooks.getEntry(i);
-		
+			
+			if (cookToPrepare->GetFlag()) 
+			{
+				cookToPrepare->AssignOrder(orderToServe, currentTimeStep);
+				normalOrders.dequeue(orderToServe);
+				break;
+
+			}
 		
 		
 		}
@@ -287,12 +288,19 @@ void Restaurant::assignToCook()
 		if (orderToServe->getStatus() == WAIT) 
 		{
 		
-			for (int i = normalCooks; i < normalCooks + veganCooks;i++) 
+			for (int i = nCooks-1; i >= normalCooks + veganCooks;i--) 
 			{
 			
 				cookToPrepare = cooks.getEntry(i);
 			
-			
+				if (cookToPrepare->GetFlag())
+				{
+				
+					cookToPrepare->AssignOrder(orderToServe, currentTimeStep);
+					normalOrders.dequeue(orderToServe);
+					break;
+				
+				}
 			
 			
 			}
