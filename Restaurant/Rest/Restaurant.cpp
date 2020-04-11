@@ -40,7 +40,7 @@ void Restaurant::RunSimulation()
 void Restaurant::LoadFromFile()
 {
 
-	loadFile.open("C:\\Users\\Fastoraaa\\Desktop\\y.txt");
+	loadFile.open("C:\\Users\\Gadollyo\\Desktop\\y.txt");
 	if (!loadFile.is_open()) {
 		pGUI->PrintMessage("Load file doesn't exist in default directory! ");
 		return;
@@ -87,7 +87,7 @@ void Restaurant::LoadFromFile()
 
 				//fill cook list 
 				//ids from veganCooks+1 to vipCooks, id=veganCooks+1+i
-				Cook* vipCook = new Cook(i + normalCooks +veganCooks+1, TYPE_VGAN, vipSpeed, breakPerCook, vipBreaks);
+				Cook* vipCook = new Cook(i + normalCooks +veganCooks+1, TYPE_VIP, vipSpeed, breakPerCook, vipBreaks);
 				cooks.insert(vipCook,i+veganCooks+normalCooks);
 			}
 
@@ -432,6 +432,7 @@ void Restaurant::Simulation()
 		pGUI->waitForClick();
 		pGUI->PrintMessage("");
 		pGUI->ResetDrawingList();
+	
 		
 		currentTimeStep++;
 
@@ -510,15 +511,15 @@ void Restaurant::FillDrawingList()
 	int i, key, j;
 	for (i = 1; i < sum; i++)
 	{
-		key = orders[i]->GetID();
+		key = orders[i]->GetArrTime();
 		j = i - 1;
 
-		while (j >= 0 && (orders[j]->GetID ()> key))
+		while (j >= 0 && (orders[j]->GetArrTime ()> key))
 		{
 			orders[j + 1] = orders[j];
 			j = j - 1;
 		}
-		orders[i]->SetID(key);
+		orders[i]->SetArrTime(key);
 	}
 	for (int i = 0; i < sum; i++) 
 	{

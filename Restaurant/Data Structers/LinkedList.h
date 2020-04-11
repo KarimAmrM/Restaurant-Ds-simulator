@@ -23,7 +23,7 @@ public:
 };
 
 template<class T>
-inline Node<T>* LinkedList<T>::getNodeAt(int pos)
+inline Node<T>* LinkedList<T>::getNodeAt(int pos)  //utulity function to get a node at a given position , complexity of O(n)
 {
 	if (pos >= count || pos<0)
 	{
@@ -67,7 +67,7 @@ inline int LinkedList<T>::getLength()
 }
 
 template<class T>
-inline bool LinkedList<T>::insert(T item, int pos)
+inline bool LinkedList<T>::insert(T item, int pos) //complexity of O(n)
 {
 	//special cases to be done 
 	if (count == 0)
@@ -106,7 +106,7 @@ inline bool LinkedList<T>::insert(T item, int pos)
 }
 
 template<class T>
-inline bool LinkedList<T>::remove(int pos)
+inline bool LinkedList<T>::remove(int pos) //O(n)
 {
 	if (pos == 0)
 	{

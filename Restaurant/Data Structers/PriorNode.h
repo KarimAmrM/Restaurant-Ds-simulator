@@ -2,7 +2,7 @@
 
 
 template<class T>
-class PriorNode
+class PriorNode  //This class is the same ass node but added a prioirty for the implemnetation of the priority queue
 {
 private:
 	T item;

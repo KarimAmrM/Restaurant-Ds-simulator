@@ -87,7 +87,7 @@ inline bool PriorityQueue<T>::isEmpty()
 }
 
 template<class T>
-inline bool PriorityQueue<T>::peek(T& item)
+inline bool PriorityQueue<T>::peek(T& item) //returning the item in the front node
 {
 	if (isEmpty()) {
 	
@@ -99,7 +99,7 @@ inline bool PriorityQueue<T>::peek(T& item)
 }
 
 template<class T>
-inline PriorityQueue<T>::~PriorityQueue()
+inline PriorityQueue<T>::~PriorityQueue() //freeying memory
 {
 	while (!isEmpty())
 	{
@@ -109,7 +109,7 @@ inline PriorityQueue<T>::~PriorityQueue()
 }
 
 template <typename T>
-T* PriorityQueue<T>::toArray(int& count)
+T* PriorityQueue<T>::toArray(int& count)  // copied the function of a queue to array to use it 
 {
 	count = 0;
 
