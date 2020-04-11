@@ -22,7 +22,7 @@ protected:
 	//
 
 public:
-	Order(int ID, ORD_TYPE r_Type, int s, int sr, int m);
+	Order(int ID, ORD_TYPE r_Type, int s, int sr, double m);
 	virtual ~Order();
 
 	void SetID(int id);

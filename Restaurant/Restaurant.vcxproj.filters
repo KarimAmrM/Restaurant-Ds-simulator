@@ -128,6 +128,9 @@
     <ClInclude Include="Data Structers\ListAdt.h">
       <Filter>Data Structers</Filter>
     </ClInclude>
+    <ClInclude Include="Events\CancelationEvent.h">
+      <Filter>Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Demo_Main.cpp" />
@@ -274,6 +277,9 @@
     </ClCompile>
     <ClCompile Include="Data Structers\ListAdt.cpp">
       <Filter>Data Structers</Filter>
+    </ClCompile>
+    <ClCompile Include="Events\CancelationEvent.cpp">
+      <Filter>Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
