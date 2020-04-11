@@ -40,7 +40,6 @@ void Restaurant::RunSimulation()
 void Restaurant::LoadFromFile()
 {
 
-	loadFile.open("C:\\Users\\Gadollyo\\Desktop\\y.txt");
 	if (!loadFile.is_open()) {
 		pGUI->PrintMessage("Load file doesn't exist in default directory! ");
 		return;
@@ -508,18 +507,19 @@ void Restaurant::FillDrawingList()
 	{
 		orders[i] = veganOrderArr[i];
 	}
-	int i, key, j;
+	int i,  j;
+	Order* key;
 	for (i = 1; i < sum; i++)
 	{
-		key = orders[i]->GetArrTime();
+		key = orders[i];
 		j = i - 1;
 
-		while (j >= 0 && (orders[j]->GetArrTime ()> key))
+		while (j >= 0 && (orders[j]->GetArrTime ()> key->GetArrTime()))
 		{
 			orders[j + 1] = orders[j];
 			j = j - 1;
 		}
-		orders[i]->SetArrTime(key);
+		orders[j + 1] = key;
 	}
 	for (int i = 0; i < sum; i++) 
 	{
