@@ -19,6 +19,7 @@ void Restaurant::RunSimulation()
 {
 	pGUI = new GUI;
 	PROG_MODE	mode = pGUI->getGUIMode();
+	
 		
 	switch (mode)	//Add a function for each mode in next phases
 	{
@@ -28,8 +29,9 @@ void Restaurant::RunSimulation()
 		break;
 	case MODE_SLNT:
 		break;
-	//case MODE_DEMO:
-	//	Just_A_Demo();
+	case MODE_DEMO:
+		Simulation();
+		break;
 
 	};
 
@@ -49,7 +51,8 @@ void Restaurant::LoadFromFile()
 	
 	int breakPerCook, normalBreaks, veganBreaks, vipBreaks;// orders before break and number of breaks
 	char eventType, orderType;
-	int eventTimeStep, eventId, orderSize, orderPrice;
+	int eventTimeStep, eventId, orderSize;
+	double orderPrice;
 
 	loadFile >> normalCooks >> veganCooks >> vipCooks;
 	loadFile >> normalSpeed >> veganSpeed >> vipSpeed;
@@ -84,8 +87,8 @@ void Restaurant::LoadFromFile()
 
 				//fill cook list 
 				//ids from veganCooks+1 to vipCooks, id=veganCooks+1+i
-				Cook* vipCook = new Cook(i + 1+veganCooks, TYPE_VGAN, vipSpeed, breakPerCook, vipBreaks);
-				cooks.insert(vipCook,i+veganCooks);
+				Cook* vipCook = new Cook(i + normalCooks +veganCooks+1, TYPE_VGAN, vipSpeed, breakPerCook, vipBreaks);
+				cooks.insert(vipCook,i+veganCooks+normalCooks);
 			}
 
 			loadFile >> promoteAfter >> numEvents;
@@ -93,42 +96,46 @@ void Restaurant::LoadFromFile()
 
 			for (int i = 0; i < numEvents; i++) { // loop responsible for reading events 
 				//and queuing them
-				loadFile >> eventType >> orderType;
+				loadFile >> eventType;
 				
 				switch (eventType) {
 				
 				case('R'): // Change constructor of arrivalEvent to fill order's info
-					loadFile >> eventTimeStep >> eventId >> orderSize >> orderPrice;
+					loadFile >>orderType>> eventTimeStep >> eventId >> orderSize >> orderPrice;
+					nOrders++;
 					if (orderType == 'N') 
 					{
 						
-						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_NRM);
+						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_NRM,orderSize,orderPrice);
 						addEvent(nEvent);
-						nOrders++;
+						
 					}
 					else if (orderType == 'G') 
 					{
 							
-						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VGAN);
+						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VGAN,orderSize,orderPrice);
 						addEvent(nEvent);
-						nOrders++;
+						
 					}
 					else if (orderType == 'V') 
 					{
 					
-						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VIP);
+						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VIP,orderSize,orderPrice);
 						addEvent(nEvent);
-						nOrders++;
+						
 					}
 
 					
 					break;
 				case('X'):
+					Event* nEvent;
 					loadFile >> eventTimeStep >> eventId;
 					
 					
 						//Cancellation event
-						nOrders--;
+						nEvent = new CancelationEvent(eventTimeStep, eventId);
+						addEvent(nEvent);
+						
 						break;
 		
 				case('P'):
@@ -352,8 +359,10 @@ void Restaurant::cancelEvent(int ID)
 				}
 			}
 			count--;
+
 		}
 	}
+	nOrders--;
 
 	while (!normalOrders.isEmpty()) //emptyting the queue to refill it again without the order with the canceled id 
 	{
@@ -371,7 +380,7 @@ void Restaurant::cancelEvent(int ID)
 void Restaurant::Simulation()
 {
 	LoadFromFile();
-	while (!EventsQueue.isEmpty()|| !vipOrders.isEmpty() || !veganOrders.isEmpty() || !normalOrders.isEmpty())
+	while (!EventsQueue.isEmpty()|| !vipOrders.isEmpty() || !veganOrders.isEmpty() || !normalOrders.isEmpty()||!servingOrders.isEmpty())
 	{
 		ExecuteEvents(currentTimeStep);
 
@@ -380,42 +389,50 @@ void Restaurant::Simulation()
 		if (vipOrders.peek(O1))
 		{
 			servingOrders.enqueue(O1);
+			O1->setStatus(SRV);
 			vipOrders.dequeue(O1);
 		}
 		if (veganOrders.peekFront(O2))
 		{
 			servingOrders.enqueue(O2);
+			O2->setStatus(SRV);
 			veganOrders.dequeue(O2);
 		}
 		if (normalOrders.peekFront(O3))
 		{
 			servingOrders.enqueue(O3);
+			O3->setStatus(SRV);
 			normalOrders.dequeue(O3);
 		}
 		if (currentTimeStep % 5 == 0)
 		{
 			if (servingOrders.peekFront(O1))
 			{
-				finishedOrders.push(O1);
+				finishedOrders.enqueue(O1);
+				O1->setStatus(DONE);
 				servingOrders.dequeue(O1);
 			}
 			if (servingOrders.peekFront(O2))
 			{
-				finishedOrders.push(O2);
+				finishedOrders.enqueue(O2);
+				O2->setStatus(DONE);
 				servingOrders.dequeue(O2);
 			}
 			if (servingOrders.peekFront(O3))
 			{
-				finishedOrders.push(O3);
+				finishedOrders.enqueue(O3);
+				O3->setStatus(DONE);
 				servingOrders.dequeue(O3);
 			}
 		}
 		FillDrawingList();
 		pGUI->UpdateInterface();
 		
-
+		pGUI->PrintMessage("Press to continue");
 		pGUI->waitForClick();
+		pGUI->PrintMessage("");
 		pGUI->ResetDrawingList();
+		
 		currentTimeStep++;
 
 
@@ -496,7 +513,7 @@ void Restaurant::FillDrawingList()
 		key = orders[i]->GetID();
 		j = i - 1;
 
-		while (j >= 0 && orders[j]->GetID > key)
+		while (j >= 0 && (orders[j]->GetID ()> key))
 		{
 			orders[j + 1] = orders[j];
 			j = j - 1;
@@ -507,7 +524,25 @@ void Restaurant::FillDrawingList()
 	{
 		pGUI->AddToDrawingList(orders[i]);
 	}
+	
+	int servedOrd=0;
+	Order** served = servingOrders.toArray(servedOrd);
 
+	for (int i = 0; i < servedOrd; i++)
+	{
+		
+		pGUI->AddToDrawingList(served[i]);
+			
+	}
+	int finished=0;
+	Order** finsihedArr = finishedOrders.toArray(finished);
+
+	for (int i = 0; i < finished; i++) {
+	
+	
+		pGUI->AddToDrawingList(finsihedArr[i]);
+	
+	}
 }
 
 

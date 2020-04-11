@@ -6,6 +6,7 @@
 #include "..\GUI\GUI.h"
 #include "..\Generic_DS\Queue.h"
 #include "..\Events\Event.h"
+#include"..\Events\CancelationEvent.h"
 #include"../Data Structers/LinkedListStack.h"
 #include"../Data Structers/LinkedList.h"
 #include"../Data Structers\PriorityQueue.h"
@@ -32,7 +33,7 @@ private:
 	Queue<Order*> servingOrders;
 	
 
-	LinkedListStack<Order*> finishedOrders;
+	Queue<Order*> finishedOrders;
 
 	ifstream  loadFile;
 	ofstream saveFile;

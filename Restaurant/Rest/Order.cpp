@@ -1,6 +1,6 @@
 #include "Order.h"
 
-Order::Order(int id, ORD_TYPE r_Type, int s, int ar, int m)
+Order::Order(int id, ORD_TYPE r_Type, int s, int ar, double m)
 {
 	ID = (id > 0 && id < 1000) ? id : 0;	//1<ID<999
 	type = r_Type;

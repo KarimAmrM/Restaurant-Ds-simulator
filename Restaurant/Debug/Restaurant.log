@@ -1,4 +1,2 @@
-﻿  Restaurant.cpp
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\LinkedList.h(156): warning C4715: 'LinkedList<Cook *>::getEntry': not all control paths return a value
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Data Structers\LinkedList.h(48): warning C4715: 'LinkedList<Cook *>::getNodeAt': not all control paths return a value
+﻿  CancelationEvent.cpp
   Restaurant.vcxproj -> C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Debug\Restaurant.exe
