@@ -87,7 +87,7 @@ void Restaurant::LoadFromFile()
 
 				//fill cook list 
 				//ids from veganCooks+1 to vipCooks, id=veganCooks+1+i
-				Cook* vipCook = new Cook(i + normalCooks +veganCooks+1, TYPE_VGAN, vipSpeed, breakPerCook, vipBreaks);
+				Cook* vipCook = new Cook(i + normalCooks +veganCooks+1, TYPE_VIP, vipSpeed, breakPerCook, vipBreaks);
 				cooks.insert(vipCook,i+veganCooks+normalCooks);
 			}
 
