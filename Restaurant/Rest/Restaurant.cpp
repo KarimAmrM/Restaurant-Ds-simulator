@@ -427,12 +427,28 @@ void Restaurant::Simulation()
 		}
 		FillDrawingList();
 		pGUI->UpdateInterface();
-		
-		pGUI->PrintMessage("Press to continue");
+
+		//printing data info
+
+		string currentTimePrinted = to_string(currentTimeStep);
+		string vipWaitingOrdersPrinted = to_string( waitVipNumber());
+		string normalWaitingOrdersPrinted = to_string(waitNormalNumber());
+		string veganWaitingOrdersPrinted = to_string(waitVeganNumber());
+
+
+		pGUI->PrintMessage(" Current time step : "+ currentTimePrinted );
+		pGUI->waitForClick();
+		pGUI->PrintMessage("Current waiting VIP orders : " + vipWaitingOrdersPrinted );
+		pGUI->waitForClick();
+		pGUI->PrintMessage("Current waiting normal orders : " +normalWaitingOrdersPrinted);
+		pGUI->waitForClick();
+		pGUI->PrintMessage("Current waiting vegan orders : " + veganWaitingOrdersPrinted);
+		pGUI->waitForClick();
+		pGUI->PrintMessage("Click to continue.");
 		pGUI->waitForClick();
 		pGUI->PrintMessage("");
 		pGUI->ResetDrawingList();
-	
+		
 		
 		currentTimeStep++;
 
@@ -440,6 +456,29 @@ void Restaurant::Simulation()
 	}
 
 
+}
+  
+//calling these functions when printing the info of the number of waiting orders . 
+
+int Restaurant::waitVipNumber()
+{
+	int count=0;
+	Order** waitVip = vipOrders.toArray(count);
+	return count;
+}
+
+int Restaurant::waitNormalNumber()
+{
+	int count = 0;
+	Order** waitNormal = normalOrders.toArray(count);
+	return count;
+}
+
+int Restaurant::waitVeganNumber()
+{
+	int count=0;
+	Order** waitVegan = veganOrders.toArray(count);
+	return count;
 }
 
 

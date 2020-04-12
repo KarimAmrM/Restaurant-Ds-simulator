@@ -51,6 +51,7 @@ private:
 	Queue<Order*> DEMO_Queue;	//Important: This is just for demo
 	/// ==>
 	
+
 	
 	
 	//
@@ -70,9 +71,11 @@ public:
 	void addOrder(Order* nOrder);
 	void cancelEvent(int ID);
 	void Simulation();
-	
-	
 
+	//functions for printing info on the status bar 
+	int waitVipNumber();
+	int waitNormalNumber();
+	int waitVeganNumber();
 
 	void FillDrawingList();
 

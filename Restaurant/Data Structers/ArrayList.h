@@ -7,7 +7,7 @@ class ArrayList:public ListAdt<T>
 {
 private :
 	int max;
-	T*arr
+	T* arr;
 	int count;
 public:
 	ArrayList(int size);

@@ -69,8 +69,8 @@ inline int LinkedList<T>::getLength()
 template<class T>
 inline bool LinkedList<T>::insert(T item, int pos) //complexity of O(n)
 {
-	//special cases to be done 
-	if (count == 0)
+	
+	if (count == 0)  //empty special case 
 	{
 		Node<T>* ptr = new Node<T>;
 		ptr->setItem(item);
@@ -85,7 +85,7 @@ inline bool LinkedList<T>::insert(T item, int pos) //complexity of O(n)
 		return false;
 	}
 
-	if (pos == 0)
+	if (pos == 0) //trying to insert an element at the start of the list
 	{
 		Node<T>* ptr = new Node<T>;
 		ptr->setItem(item);
@@ -95,7 +95,7 @@ inline bool LinkedList<T>::insert(T item, int pos) //complexity of O(n)
 		return true;
 
 	}
-
+	//Normal insertion
 	Node<T>* nptr = new Node<T>;
 	nptr->setItem(item);
 	Node<T>* ptr = getNodeAt(pos - 1);
@@ -126,10 +126,10 @@ inline bool LinkedList<T>::remove(int pos) //O(n)
 		cout << "List is empty" << endl;
 		return false;
 	}
-	Node<T>* temp = getNodeAt(pos);
+	Node<T>* temp = getNodeAt(pos); //getting the pointer to the node with the passed position
 	Node<T>* ptr = getNodeAt(pos - 1);
-	ptr->setNext(temp->getNext());
-	delete temp;
+	ptr->setNext(temp->getNext());  //interchanging links 
+	delete temp; //freeying up memory
 	count--;
 	return true;
 
