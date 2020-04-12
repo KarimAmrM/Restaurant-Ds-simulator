@@ -40,6 +40,7 @@ void Restaurant::RunSimulation()
 void Restaurant::LoadFromFile()
 {
 
+	loadFile.open("C:\\Users\\Gadollyo\\Desktop\\y.txt");
 	if (!loadFile.is_open()) {
 		pGUI->PrintMessage("Load file doesn't exist in default directory! ");
 		return;
