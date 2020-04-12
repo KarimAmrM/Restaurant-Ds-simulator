@@ -49,8 +49,8 @@ string GUI::GetString() const
 			Label.resize(Label.size() -1 );			
 		else
 			Label += Key;
-		
-		PrintMessage(Label);
+		ClearStatusBar();
+		PrintMessage(Label,0);
 	}
 }
 
@@ -58,14 +58,16 @@ string GUI::GetString() const
 // ================================== OUTPUT FUNCTIONS ===================================
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void GUI::PrintMessage(string msg) const	//Prints a message on status bar
+void GUI::PrintMessage(string msg,int num) const	//Prints a message on status bar
 {
-	ClearStatusBar();	//First clear the status bar
+		//First clear the status bar
 	
+
 	pWind->SetPen(DARKRED);
-	pWind->SetFont(18, BOLD , BY_NAME, "Arial");   
-	pWind->DrawString(10, WindHeight - (int) (StatusBarHeight/1.5), msg); // You may need to change these coordinates later 
-	                                                                      // to be able to write multi-line
+	pWind->SetFont(18, BOLD , BY_NAME, "Arial");  
+	int y_coor[7] = { 50,35,20,5,-10,-25,-40 };
+	pWind->DrawString(10, WindHeight - (int) (StatusBarHeight/1.5)-y_coor[num], msg); // You may need to change these coordinates later 
+                                                                             // to be able to write multi-line
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 void GUI::DrawString(const int iX, const int iY, const string Text)
@@ -277,7 +279,8 @@ PROG_MODE	GUI::getGUIMode() const
 	PROG_MODE Mode;
 	do
 	{
-		PrintMessage("Please select GUI mode: (1)Interactive, (2)StepByStep, (3)Silent, (4)DEMO... ");
+		PrintMessage("Please select GUI mode: (1)Interactive, (2)StepByStep, (3)Silent, (4)DEMO... ",0);
+
 		string S = GetString();
 		Mode = (PROG_MODE) (atoi(S.c_str())-1);
 	}

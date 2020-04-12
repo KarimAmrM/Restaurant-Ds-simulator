@@ -42,7 +42,7 @@ void Restaurant::LoadFromFile()
 
 	loadFile.open("C:\\Users\\Gadollyo\\Desktop\\y.txt");
 	if (!loadFile.is_open()) {
-		pGUI->PrintMessage("Load file doesn't exist in default directory! ");
+		pGUI->PrintMessage("Load file doesn't exist in default directory! ",0);
 		return;
 	}
 	 
@@ -404,6 +404,7 @@ void Restaurant::Simulation()
 			O3->setStatus(SRV);
 			normalOrders.dequeue(O3);
 		}
+
 		if (currentTimeStep % 5 == 0)
 		{
 			if (servingOrders.peekFront(O1))
@@ -425,6 +426,7 @@ void Restaurant::Simulation()
 				servingOrders.dequeue(O3);
 			}
 		}
+
 		FillDrawingList();
 		pGUI->UpdateInterface();
 
@@ -434,19 +436,31 @@ void Restaurant::Simulation()
 		string vipWaitingOrdersPrinted = to_string( waitVipNumber());
 		string normalWaitingOrdersPrinted = to_string(waitNormalNumber());
 		string veganWaitingOrdersPrinted = to_string(waitVeganNumber());
+		string vipCooksNumberPrinted = to_string(vipCooks);
+		string normalCooksNumberPrinted = to_string(normalCooks);
+		string veganCooksNumberPrinted = to_string(veganCooks);
 
 
-		pGUI->PrintMessage(" Current time step : "+ currentTimePrinted );
+		pGUI->ClearStatusBar();
+		int x = 0;
+		pGUI->PrintMessage("Current time step : "+ currentTimePrinted,x);
+		x++;
+		pGUI->PrintMessage("Current waiting VIP orders : " + vipWaitingOrdersPrinted,x );
+		x++;
+		pGUI->PrintMessage("Current waiting normal orders : " +normalWaitingOrdersPrinted,x);
+		x++;
+		pGUI->PrintMessage("Current waiting vegan orders : " + veganWaitingOrdersPrinted,x);
+		x++;
+		pGUI->PrintMessage("Current available VIP cooks : " + vipCooksNumberPrinted,x);
+		x++;
+		pGUI->PrintMessage("Current available normal cooks : " + normalCooksNumberPrinted,x);
+		x++;
+		pGUI->PrintMessage("Current available vegan cooks : " + veganCooksNumberPrinted, x);
+		x++;
+		pGUI->PrintMessage("Click to continue.",x);
 		pGUI->waitForClick();
-		pGUI->PrintMessage("Current waiting VIP orders : " + vipWaitingOrdersPrinted );
-		pGUI->waitForClick();
-		pGUI->PrintMessage("Current waiting normal orders : " +normalWaitingOrdersPrinted);
-		pGUI->waitForClick();
-		pGUI->PrintMessage("Current waiting vegan orders : " + veganWaitingOrdersPrinted);
-		pGUI->waitForClick();
-		pGUI->PrintMessage("Click to continue.");
-		pGUI->waitForClick();
-		pGUI->PrintMessage("");
+		x = 0;
+		pGUI->PrintMessage("",x);
 		pGUI->ResetDrawingList();
 		
 		
@@ -539,16 +553,20 @@ void Restaurant::FillDrawingList()
 	{
 		orders[i] = vipOrdersArr[i];
 	}
+
 	for (int i = nVipOrders; i < nVipOrders + nNormalOrders; i++)
 	{
-		orders[i] = normalOrderArr[i];
+		orders[i] = normalOrderArr[i-nVipOrders];
 	}
+
 	for (int i = nVipOrders + nNormalOrders; i < sum; i++)
 	{
-		orders[i] = veganOrderArr[i];
+		orders[i] = veganOrderArr[i-nVipOrders-nNormalOrders];
 	}
+
 	int i,  j;
 	Order* key;
+
 	for (i = 1; i < sum; i++)
 	{
 		key = orders[i];
@@ -561,6 +579,7 @@ void Restaurant::FillDrawingList()
 		}
 		orders[j + 1] = key;
 	}
+
 	for (int i = 0; i < sum; i++) 
 	{
 		pGUI->AddToDrawingList(orders[i]);

@@ -101,19 +101,19 @@ private:
 	void DrawString(const int iX, const int iY, const string Text); // prints a message in the passed coordinates
 	void DrawRestArea() const;	    // draws the restaurant area
 
-	void ClearStatusBar() const;    // clears the status bar
+	  // clears the status bar
 	void ClearDrawingArea() const;	// clears the Drawing area from all drawings
 
 public:
 	GUI();
 	~GUI();
-
+	void ClearStatusBar() const;
 	// Input Functions  ---------------------------
 	void waitForClick() const;	// waits a user click from the user
 	string GetString() const ; // reads a string (keyboard input) from the user
 
 	// Output Functions  ---------------------------
-	void PrintMessage(string msg) const; // prints a message in the status bar
+	void PrintMessage(string msg,int num) const; // prints a message in the status bar
 
 
 	void UpdateInterface();
