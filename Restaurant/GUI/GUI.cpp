@@ -60,14 +60,12 @@ string GUI::GetString() const
 
 void GUI::PrintMessage(string msg,int num) const	//Prints a message on status bar
 {
-		//First clear the status bar
-	
+
 
 	pWind->SetPen(DARKRED);
-	pWind->SetFont(18, BOLD , BY_NAME, "Arial");  
+	pWind->SetFont(18, BOLD, BY_NAME, "Arial");
 	int y_coor[7] = { 50,35,20,5,-10,-25,-40 };
-	pWind->DrawString(10, WindHeight - (int) (StatusBarHeight/1.5)-y_coor[num], msg); // You may need to change these coordinates later 
-                                                                             // to be able to write multi-line
+	pWind->DrawString(10, WindHeight - (int)(StatusBarHeight / 1.5) - y_coor[num], msg);
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 void GUI::DrawString(const int iX, const int iY, const string Text)

@@ -68,7 +68,7 @@ void Restaurant::LoadFromFile()
 				//fill cook list 
 				//ids from 1 to normalCooks , id=i+1
 				Cook* nrmCook = new Cook(i + 1, TYPE_NRM, normalSpeed, breakPerCook, normalBreaks);
-				cooks.insert(nrmCook,i);
+				availableCooks.enqueue(nrmCook);
 			}
 		
 			for (int i = 0; i < veganCooks; i++)
@@ -77,7 +77,7 @@ void Restaurant::LoadFromFile()
 				//fill cook list 
 				//ids from normalCooks+1 to veganCooks, id=normalCooks+i+1
 				Cook* vgnCook = new Cook(normalCooks+i + 1, TYPE_VGAN, veganSpeed, breakPerCook, veganBreaks);
-				cooks.insert(vgnCook, i+normalCooks);
+				availableCooks.enqueue(vgnCook);
 				
 				
 
@@ -88,7 +88,7 @@ void Restaurant::LoadFromFile()
 				//fill cook list 
 				//ids from veganCooks+1 to vipCooks, id=veganCooks+1+i
 				Cook* vipCook = new Cook(i + normalCooks +veganCooks+1, TYPE_VIP, vipSpeed, breakPerCook, vipBreaks);
-				cooks.insert(vipCook,i+veganCooks+normalCooks);
+				availableCooks.enqueue(vipCook);
 			}
 
 			loadFile >> promoteAfter >> numEvents;
@@ -162,6 +162,7 @@ void Restaurant::addEvent( Event* nEvent)
 
 }
 
+/*
 void Restaurant::assignToCook()
 {
 	Order* orderToServe;
@@ -317,6 +318,7 @@ void Restaurant::assignToCook()
 	}
 
 }
+*/
 
 void Restaurant::addOrder(Order* nOrder)
 {
@@ -380,7 +382,7 @@ void Restaurant::cancelEvent(int ID)
 void Restaurant::Simulation()
 {
 	LoadFromFile();
-	while (!EventsQueue.isEmpty()|| !vipOrders.isEmpty() || !veganOrders.isEmpty() || !normalOrders.isEmpty()||!servingOrders.isEmpty())
+	while (!EventsQueue.isEmpty() || !vipOrders.isEmpty() || !veganOrders.isEmpty() || !normalOrders.isEmpty() || !servingOrders.isEmpty())
 	{
 		ExecuteEvents(currentTimeStep);
 
@@ -433,7 +435,7 @@ void Restaurant::Simulation()
 		//printing data info
 
 		string currentTimePrinted = to_string(currentTimeStep);
-		string vipWaitingOrdersPrinted = to_string( waitVipNumber());
+		string vipWaitingOrdersPrinted = to_string(waitVipNumber());
 		string normalWaitingOrdersPrinted = to_string(waitNormalNumber());
 		string veganWaitingOrdersPrinted = to_string(waitVeganNumber());
 		string vipCooksNumberPrinted = to_string(vipCooks);
@@ -443,27 +445,27 @@ void Restaurant::Simulation()
 
 		pGUI->ClearStatusBar();
 		int x = 0;
-		pGUI->PrintMessage("Current time step : "+ currentTimePrinted,x);
+		pGUI->PrintMessage("Current time step : " + currentTimePrinted, x);
 		x++;
-		pGUI->PrintMessage("Current waiting VIP orders : " + vipWaitingOrdersPrinted,x );
+		pGUI->PrintMessage("Current waiting VIP orders : " + vipWaitingOrdersPrinted, x);
 		x++;
-		pGUI->PrintMessage("Current waiting normal orders : " +normalWaitingOrdersPrinted,x);
+		pGUI->PrintMessage("Current waiting normal orders : " + normalWaitingOrdersPrinted, x);
 		x++;
-		pGUI->PrintMessage("Current waiting vegan orders : " + veganWaitingOrdersPrinted,x);
+		pGUI->PrintMessage("Current waiting vegan orders : " + veganWaitingOrdersPrinted, x);
 		x++;
-		pGUI->PrintMessage("Current available VIP cooks : " + vipCooksNumberPrinted,x);
+		pGUI->PrintMessage("Current available VIP cooks : " + vipCooksNumberPrinted, x);
 		x++;
-		pGUI->PrintMessage("Current available normal cooks : " + normalCooksNumberPrinted,x);
+		pGUI->PrintMessage("Current available normal cooks : " + normalCooksNumberPrinted, x);
 		x++;
 		pGUI->PrintMessage("Current available vegan cooks : " + veganCooksNumberPrinted, x);
 		x++;
-		pGUI->PrintMessage("Click to continue.",x);
+		pGUI->PrintMessage("Click to continue.", x);
 		pGUI->waitForClick();
 		x = 0;
-		pGUI->PrintMessage("",x);
+		pGUI->PrintMessage("", x);
 		pGUI->ResetDrawingList();
-		
-		
+
+
 		currentTimeStep++;
 
 
@@ -531,13 +533,25 @@ void Restaurant::FillDrawingList()
 	//It should get orders from orders lists/queues/stacks/whatever (same for Cooks)
 	//To add orders it should call function  void GUI::AddToDrawingList(Order* pOrd);
 	//To add Cooks it should call function  void GUI::AddToDrawingList(Cook* pCc);
-	
-	for (int i = 0; i < nCooks; i++) 
+
+	int avaialbeCooksCount = 0;
+	Cook** availCooks = availableCooks.toArray(avaialbeCooksCount);
+	for (int i = 0; i < avaialbeCooksCount; i++) 
 	{
 		
-		pGUI->AddToDrawingList(cooks.getEntry(i));
+		pGUI->AddToDrawingList(availCooks[i]);
 		
 	}
+
+	int busyCooksCount = 0;
+	Cook** busyCooksarr = busyCooks.toArray(busyCooksCount);
+	for (int i = 0; i < busyCooksCount; i++)
+	{
+
+		pGUI->AddToDrawingList(busyCooksarr[i]);
+
+	}
+
 	//Create 3 arrs to merge into one array
 	// Sort array by arrival time
 	int nVipOrders = 0 ;
