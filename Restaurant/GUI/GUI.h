@@ -103,17 +103,18 @@ private:
 
 	  // clears the status bar
 	void ClearDrawingArea() const;	// clears the Drawing area from all drawings
+	void ClearStatusBar() const;
 
 public:
 	GUI();
 	~GUI();
-	void ClearStatusBar() const;
+	
 	// Input Functions  ---------------------------
 	void waitForClick() const;	// waits a user click from the user
 	string GetString() const ; // reads a string (keyboard input) from the user
 
 	// Output Functions  ---------------------------
-	void PrintMessage(string msg,int num) const; // prints a message in the status bar
+	void PrintMessage(string msg) const; // prints a message in the status bar
 
 
 	void UpdateInterface();

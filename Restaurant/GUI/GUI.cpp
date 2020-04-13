@@ -50,7 +50,7 @@ string GUI::GetString() const
 		else
 			Label += Key;
 		ClearStatusBar();
-		PrintMessage(Label,0);
+		PrintMessage(Label+'\n');
 	}
 }
 
@@ -58,14 +58,42 @@ string GUI::GetString() const
 // ================================== OUTPUT FUNCTIONS ===================================
 //////////////////////////////////////////////////////////////////////////////////////////
 
-void GUI::PrintMessage(string msg,int num) const	//Prints a message on status bar
+void GUI::PrintMessage(string msg) const	//Prints a message on status bar
 {
 
+	ClearStatusBar();
 
 	pWind->SetPen(DARKRED);
 	pWind->SetFont(18, BOLD, BY_NAME, "Arial");
-	int y_coor[7] = { 50,35,20,5,-10,-25,-40 };
-	pWind->DrawString(10, WindHeight - (int)(StatusBarHeight / 1.5) - y_coor[num], msg);
+
+	string subString;
+
+	int found = 0;
+	int num = 0;
+	int size = msg.length();
+	int y_coor[8] = { 50,35,20,5,-10,-25,-40,-55 };
+
+	bool flag = false;
+
+
+	for (int i = 0; i < size; i++) {
+
+		if (msg[i] == '\n' || i == size - 1)
+		{
+			flag = true;
+			subString = msg.substr(found, i - found);
+			pWind->DrawString(10, WindHeight - (int)(StatusBarHeight / 1.5) - y_coor[num], subString);// You may need to change these coordinates later
+			num++;
+			found = i + 1;
+		}
+
+	}
+	
+	if (!flag)//Message is single lined
+	{
+		pWind->DrawString(10, WindHeight - (int)(StatusBarHeight / 1.5), msg);
+
+	}// to be able to write multi-line
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 void GUI::DrawString(const int iX, const int iY, const string Text)
@@ -277,7 +305,7 @@ PROG_MODE	GUI::getGUIMode() const
 	PROG_MODE Mode;
 	do
 	{
-		PrintMessage("Please select GUI mode: (1)Interactive, (2)StepByStep, (3)Silent, (4)DEMO... ",0);
+		PrintMessage("Please select GUI mode: (1)Interactive, (2)StepByStep, (3)Silent, (4)DEMO... ");
 
 		string S = GetString();
 		Mode = (PROG_MODE) (atoi(S.c_str())-1);

@@ -40,9 +40,8 @@ void Restaurant::RunSimulation()
 void Restaurant::LoadFromFile()
 {
 
-	loadFile.open("C:\\Users\\Gadollyo\\Desktop\\y.txt");
 	if (!loadFile.is_open()) {
-		pGUI->PrintMessage("Load file doesn't exist in default directory! ",0);
+		pGUI->PrintMessage("Load file doesn't exist in default directory! ");
 		return;
 	}
 	 
@@ -443,26 +442,14 @@ void Restaurant::Simulation()
 		string veganCooksNumberPrinted = to_string(veganCooks);
 
 
-		pGUI->ClearStatusBar();
-		int x = 0;
-		pGUI->PrintMessage("Current time step : " + currentTimePrinted, x);
-		x++;
-		pGUI->PrintMessage("Current waiting VIP orders : " + vipWaitingOrdersPrinted, x);
-		x++;
-		pGUI->PrintMessage("Current waiting normal orders : " + normalWaitingOrdersPrinted, x);
-		x++;
-		pGUI->PrintMessage("Current waiting vegan orders : " + veganWaitingOrdersPrinted, x);
-		x++;
-		pGUI->PrintMessage("Current available VIP cooks : " + vipCooksNumberPrinted, x);
-		x++;
-		pGUI->PrintMessage("Current available normal cooks : " + normalCooksNumberPrinted, x);
-		x++;
-		pGUI->PrintMessage("Current available vegan cooks : " + veganCooksNumberPrinted, x);
-		x++;
-		pGUI->PrintMessage("Click to continue.", x);
+		pGUI->PrintMessage("Current time step : " + currentTimePrinted + '\n' + "Current waiting VIP orders : " + vipWaitingOrdersPrinted + '\n' + "Current waiting vegan orders : " + veganWaitingOrdersPrinted + '\n'
+			+ "Current waiting vegan orders : " + veganWaitingOrdersPrinted + '\n' + "Current available VIP cooks : " + vipCooksNumberPrinted + '\n'
+			+ "Current available normal cooks : " + normalCooksNumberPrinted + '\n' + "Current available vegan cooks : " + veganCooksNumberPrinted + '\n' + "Click to continue.");
+
+
 		pGUI->waitForClick();
-		x = 0;
-		pGUI->PrintMessage("", x);
+
+
 		pGUI->ResetDrawingList();
 
 
