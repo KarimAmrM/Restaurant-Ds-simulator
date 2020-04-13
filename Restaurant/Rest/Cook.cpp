@@ -42,7 +42,7 @@ int Cook::GetBreakDuration() const
 	return BreakDuration;
 }
 
-bool Cook::GetFlag() const
+bool Cook::isFree() const
 {
 	return Free;
 }

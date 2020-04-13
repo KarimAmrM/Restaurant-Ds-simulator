@@ -20,7 +20,7 @@ public:
 	int GetSpeed() const;
 	int GetNumberOfDishes() const;
 	int GetBreakDuration() const;
-	bool GetFlag() const; //a getter for bool free
+	bool isFree() const; //a getter for bool free
 	Order* GetCurrentOrder();
 	void setID(int);
 	void setType(ORD_TYPE);

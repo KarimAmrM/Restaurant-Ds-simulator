@@ -83,7 +83,7 @@ void GUI::PrintMessage(string msg) const	//Prints a message on status bar
 			flag = true;
 			subString = msg.substr(found, i - found);
 			pWind->DrawString(10, WindHeight - (int)(StatusBarHeight / 1.5) - y_coor[num], subString);// You may need to change these coordinates later
-			num++;
+			num++; 
 			found = i + 1;
 		}
 
