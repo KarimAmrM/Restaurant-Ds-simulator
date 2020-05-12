@@ -50,7 +50,7 @@ string GUI::GetString() const
 		else
 			Label += Key;
 		ClearStatusBar();
-		PrintMessage(Label+'\n');
+		PrintMessage(Label);
 	}
 }
 
@@ -78,7 +78,7 @@ void GUI::PrintMessage(string msg) const	//Prints a message on status bar
 
 	for (int i = 0; i < size; i++) {
 
-		if (msg[i] == '\n' || i == size - 1)
+		if (msg[i] == '\n' || i == size)
 		{
 			flag = true;
 			subString = msg.substr(found, i - found);

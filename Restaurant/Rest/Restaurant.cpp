@@ -41,19 +41,30 @@ void Restaurant::LoadFromFile()
 	loadFile.open("2.txt");
 	if (!loadFile.is_open()) {
 		pGUI->PrintMessage("Load file doesn't exist in default directory! ");
+		pGUI->waitForClick();
 		return;
 	}
 
-	int normalSpeed, veganSpeed, vipSpeed;// speed of each cook
+	int normalSpeedMin,nomralSpeedMax, veganSpeedMax,veganSpeedMin ,vipSpeedMin,vipSpeedMax;// speed of each cook
 	
-	int breakPerCook, normalBreaks, veganBreaks, vipBreaks;// orders before break and number of breaks
+	int orderBeforeBreak, normalBreaksMin,normalBreaksMax, veganBreaksMin,veganBreaksMax, vipBreaksMin,vipBreaksMax;// orders before break and number of breaks
+
+	int injProb, restPeriod;
+
 	char eventType, orderType;
+
+	
+
 	int eventTimeStep, eventId, orderSize;
+
 	double orderPrice;
 
 	loadFile >> normalCooks >> veganCooks >> vipCooks;
-	loadFile >> normalSpeed >> veganSpeed >> vipSpeed;
-	loadFile >> breakPerCook >> normalBreaks >> veganBreaks >> vipBreaks;
+	loadFile >> normalSpeedMin>>nomralSpeedMax >> veganSpeedMin>>veganSpeedMax >> vipSpeedMin>>vipSpeedMax;
+	loadFile >> orderBeforeBreak >> normalBreaksMin>>normalBreaksMax >> veganBreaksMin >>veganBreaksMax>> vipBreaksMin>>vipBreaksMax;
+	loadFile >> injProb >> restPeriod;
+	loadFile >> promoteLimit >> urgentLimit >> numEvents;
+
 
 	nCooks = normalCooks + veganCooks + vipCooks;
 
@@ -83,12 +94,14 @@ void Restaurant::LoadFromFile()
 				availableCooks.enqueue(vipCook);
 			}
 
-			loadFile >> promoteAfter >> numEvents;
-			for (int i = 0; i < numEvents; i++) { // loop responsible for reading events 
+			
+			for (int i = 0; i < numEvents; i++) // loop responsible for reading events 
 				//and queuing them
+			{	
 				loadFile >> eventType;
 				
-				switch (eventType) {
+				switch (eventType) 
+				{
 				
 				case('R'): // Change constructor of arrivalEvent to fill order's info
 					loadFile >>orderType>> eventTimeStep >> eventId >> orderSize >> orderPrice;
@@ -126,7 +139,8 @@ void Restaurant::LoadFromFile()
 						break;
 		
 				case('P'): // to be completed in phase 2
-					loadFile >> eventTimeStep >> eventId >> orderPrice;
+					int extraMoney;
+					loadFile >> eventTimeStep >> eventId >> extraMoney;
 						//Promotion event
 					break;
 				default:

@@ -44,7 +44,8 @@ private:
 
 	int nCooks;
 	int currentTimeStep;
-	int promoteAfter;
+	int promoteLimit;
+	int urgentLimit;
 	int numEvents;
 	int nOrders;
 	
