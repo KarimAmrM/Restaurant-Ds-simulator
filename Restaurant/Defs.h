@@ -36,5 +36,12 @@ enum PROG_MODE	//mode of the program interface
 #define MaxPossibleOrdCnt 999	//max possible order count (arbitrary value)
 #define MaxPossibleMcCnt  100	//max possible cook count (arbitrary value)
 
+int randomize(int max, int min) // generates random number between range{min to max}
+{
+
+	srand(time(NULL));
+	return  (rand() % (max - min + 1)) + min;
+	
+}
 
 #endif

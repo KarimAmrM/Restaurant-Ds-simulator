@@ -12,6 +12,7 @@
 #include"../Data Structers\PriorityQueue.h"
 
 
+
 #include<fstream>
 
 
@@ -25,6 +26,7 @@ private:
 
 	Queue<Event*> EventsQueue;	//Queue of all events that will be loaded from file
 	
+	Queue<Cook*>availableCooks;
 
 
 	Queue<Order*> normalOrders;
@@ -32,7 +34,6 @@ private:
 	PriorityQueue<Order*> vipOrders;
 	Queue<Order*> servingOrders;
 
-	Queue<Cook*>availableCooks;
 	Queue <Cook*>busyCooks;
 
 	Queue<Order*> finishedOrders;

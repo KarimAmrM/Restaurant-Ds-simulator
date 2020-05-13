@@ -4,7 +4,7 @@
 #include "Restaurant.h"
 #include "..\Events\ArrivalEvent.h"
 
-using namespace std;
+
 
 
 Restaurant::Restaurant() 
@@ -53,8 +53,6 @@ void Restaurant::LoadFromFile()
 
 	char eventType, orderType;
 
-	
-
 	int eventTimeStep, eventId, orderSize;
 
 	double orderPrice;
@@ -67,13 +65,20 @@ void Restaurant::LoadFromFile()
 
 
 	nCooks = normalCooks + veganCooks + vipCooks;
+	int cookBreak, cookSpeed;//to be generated randomly 
+	cookBreak = 0;
+	cookSpeed = 0;
 
 			for (int i = 0; i < normalCooks; i++) 
 			{
 				//create cook 
 				//fill cook list 
 				//ids from 1 to normalCooks , id=i+1
-				Cook* nrmCook = new Cook(i + 1, TYPE_NRM, normalSpeed, breakPerCook, normalBreaks);
+				
+				cookBreak = randomize(normalBreaksMax, normalBreaksMin);
+				cookSpeed = randomize(normalBreaksMax, normalSpeedMin);
+
+				Cook* nrmCook = new Cook(i + 1, TYPE_NRM, cookSpeed, orderBeforeBreak, cookBreak);
 				availableCooks.enqueue(nrmCook);
 			}
 		
@@ -81,7 +86,11 @@ void Restaurant::LoadFromFile()
 			{
 				//fill cook list 
 				//ids from normalCooks+1 to veganCooks, id=normalCooks+i+1
-				Cook* vgnCook = new Cook(normalCooks+i + 1, TYPE_VGAN, veganSpeed, breakPerCook, veganBreaks);
+				
+				cookBreak = randomize(veganBreaksMax, veganBreaksMin);
+				cookSpeed = randomize(veganSpeedMax, veganSpeedMin);
+
+				Cook* vgnCook = new Cook(normalCooks + i + 1, TYPE_VGAN, cookSpeed, orderBeforeBreak, cookBreak);
 				availableCooks.enqueue(vgnCook);
 
 			}
@@ -89,8 +98,13 @@ void Restaurant::LoadFromFile()
 			{
 
 				//fill cook list 
+
 				//ids from veganCooks+1 to vipCooks, id=veganCooks+1+i
-				Cook* vipCook = new Cook(i + normalCooks +veganCooks+1, TYPE_VIP, vipSpeed, breakPerCook, vipBreaks);
+
+				cookBreak = randomize(vipBreaksMax, vipBreaksMin);
+				cookSpeed = randomize(vipSpeedMax, vipSpeedMin);
+
+				Cook* vipCook = new Cook(i + normalCooks + veganCooks +1, TYPE_VIP, cookSpeed, orderBeforeBreak, cookBreak);
 				availableCooks.enqueue(vipCook);
 			}
 
@@ -160,22 +174,16 @@ void Restaurant::addOrder(Order* nOrder)
 {
 	if (nOrder->GetType()==TYPE_NRM) 
 	{
-	
 		normalOrders.enqueue(nOrder);
-		
 	}
 	else if (nOrder->GetType() == TYPE_VGAN)
 	{
-	
 		veganOrders.enqueue(nOrder);
-	
 
 	}
 	else if (nOrder->GetType() == TYPE_VIP) 
 	{
-	
 		vipOrders.enqueue(nOrder,2);
-		
 	}
 
 }
@@ -298,7 +306,8 @@ void Restaurant::Simulation()
 
 
 }
-  
+
+
 //calling these functions when printing the info of the number of waiting orders . 
 
 int Restaurant::waitVipNumber()
