@@ -47,9 +47,10 @@ void Restaurant::LoadFromFile()
 
 	int normalSpeedMin,nomralSpeedMax, veganSpeedMax,veganSpeedMin ,vipSpeedMin,vipSpeedMax;// speed of each cook
 	
-	int orderBeforeBreak, normalBreaksMin,normalBreaksMax, veganBreaksMin,veganBreaksMax, vipBreaksMin,vipBreaksMax;// orders before break and number of breaks
+	int orderBeforeBreak, normalBreaksMin,normalBreaksMax, veganBreaksMin,veganBreaksMax, vipBreaksMin,vipBreaksMax, restPeriod;// orders before break and number of breaks
 
-	int injProb, restPeriod;
+	float injProb;
+		
 
 	char eventType, orderType;
 
