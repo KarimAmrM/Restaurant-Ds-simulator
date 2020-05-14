@@ -1,68 +1,43 @@
-﻿  Demo_Main.cpp
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Defs.h(42,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+﻿  CMUgraphics.cpp
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(751,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1164,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1171,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1202,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1210,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1357,23): warning C4018: '>': signed/unsigned mismatch
+  colors.cpp
+  image.cpp
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\image.cpp(115,29): warning C4018: '<': signed/unsigned mismatch
+  keyqueue.cpp
+  mousequeue.cpp
+  windowinput.cpp
+  ArrayList.cpp
+  LinkedList.cpp
+  LinkedListStack.cpp
+  ListAdt.cpp
+  PriorityQueue.cpp
+  PriorNode.cpp
+  StackADT.cpp
+  Demo_Main.cpp
   CancelationEvent.cpp
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Defs.h(42,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Event.cpp
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Defs.h(42,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   ArrivalEvent.cpp
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Defs.h(42,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   GUI.cpp
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Defs.h(42,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Cook.cpp
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Defs.h(42,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Cook.cpp(85,17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
   Order.cpp
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Defs.h(42,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Restaurant.cpp
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Defs.h(42,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  Generating Code...
-  jpegload.c
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\jpegload.c(23,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
-  jcomapi.c
-  jcparam.c
-  jdapimin.c
-  jdapistd.c
-  jdatasrc.c
-  jdcoefct.c
-  jdcolor.c
-  jddctmgr.c
-  jdhuff.c
-  jdinput.c
-  jdmainct.c
-  jdmarker.c
-  jdmaster.c
-  jdmerge.c
-  jdphuff.c
-  jdpostct.c
-  jdsample.c
-  jdtrans.c
-  jerror.c
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\jpeg\jerror.c(169,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\jpeg\jerror.c(171,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
   Generating Code...
   Compiling...
-  jidctflt.c
-  jidctfst.c
-  jidctint.c
-  jidctred.c
-  jmemmgr.c
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\jpeg\jmemmgr.c(1103,1): warning C4996: 'getenv': This function or variable may be unsafe. Consider using _dupenv_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdlib.h(1191): message : see declaration of 'getenv'
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\jpeg\jmemmgr.c(1106,1): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(2263): message : see declaration of 'sscanf'
-  jmemnobs.c
-  jquant1.c
-  jquant2.c
-  jutils.c
+  Restaurant.cpp
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(78,17): error C3861: 'randomize': identifier not found
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(79,17): error C3861: 'randomize': identifier not found
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(90,17): error C3861: 'randomize': identifier not found
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(91,17): error C3861: 'randomize': identifier not found
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(104,17): error C3861: 'randomize': identifier not found
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(105,17): error C3861: 'randomize': identifier not found
   Generating Code...
-CancelationEvent.obj : error LNK2005: "int __cdecl randomize(int,int)" (?randomize@@YAHHH@Z) already defined in Demo_Main.obj
-Event.obj : error LNK2005: "int __cdecl randomize(int,int)" (?randomize@@YAHHH@Z) already defined in Demo_Main.obj
-ArrivalEvent.obj : error LNK2005: "int __cdecl randomize(int,int)" (?randomize@@YAHHH@Z) already defined in Demo_Main.obj
-GUI.obj : error LNK2005: "int __cdecl randomize(int,int)" (?randomize@@YAHHH@Z) already defined in Demo_Main.obj
-Cook.obj : error LNK2005: "int __cdecl randomize(int,int)" (?randomize@@YAHHH@Z) already defined in Demo_Main.obj
-Order.obj : error LNK2005: "int __cdecl randomize(int,int)" (?randomize@@YAHHH@Z) already defined in Demo_Main.obj
-Restaurant.obj : error LNK2005: "int __cdecl randomize(int,int)" (?randomize@@YAHHH@Z) already defined in Demo_Main.obj
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Debug\Restaurant.exe : fatal error LNK1169: one or more multiply defined symbols found
