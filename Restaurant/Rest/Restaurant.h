@@ -77,8 +77,9 @@ public:
 	int waitVeganNumber();
 
 	void FillDrawingList();
+	void assignToCook(); //this function is called each timestep to assign orders to cook
+	
 
-	//
 	// TODO: Add More Member Functions As Needed
 	//
 

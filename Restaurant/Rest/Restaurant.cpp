@@ -38,7 +38,7 @@ void Restaurant::RunSimulation()
 
 void Restaurant::LoadFromFile()
 {
-	loadFile.open("2.txt");
+	loadFile.open("1.txt");
 	if (!loadFile.is_open()) {
 		pGUI->PrintMessage("Load file doesn't exist in default directory! ");
 		pGUI->waitForClick();
@@ -205,7 +205,6 @@ void Restaurant::cancelEvent(int ID)
 				}
 			}
 			count--;
-
 		}
 	}
 	nOrders--;
@@ -448,7 +447,3 @@ void Restaurant::FillDrawingList()
 	
 	}
 }
-
-
-
-
