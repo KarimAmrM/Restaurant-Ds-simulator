@@ -23,21 +23,26 @@
 class Restaurant  
 {	
 private:
-	GUI *pGUI;
-
+	GUI *pGUI;  
 	Queue<Event*> EventsQueue;	//Queue of all events that will be loaded from file
-	
-	Queue<Cook*>availableCooks;
-
+	//orders Queues
 
 	Queue<Order*> normalOrders;
 	Queue<Order*> veganOrders;
 	PriorityQueue<Order*> vipOrders;
 	Queue<Order*> servingOrders;
+	Queue<Order*> finishedOrders;
 
+	//cooksQueues
+
+	PriorityQueue<Cook*>onBreakCooks;
+	Queue<Cook*>availableVipCooks;
+	Queue<Cook*>availableVeganCooks;
+	Queue<Cook*>availableNormalCooks;
+	Queue<Cook*>availableCooks; //to be removed 
 	Queue <Cook*>busyCooks;
 
-	Queue<Order*> finishedOrders;
+
 
 	ifstream  loadFile;
 	ofstream saveFile;
@@ -78,8 +83,9 @@ public:
 	int waitVeganNumber();
 
 	void FillDrawingList();
+	bool assignToCook(Order*); //this function is called each timestep to assign orders to cook
+	
 
-	//
 	// TODO: Add More Member Functions As Needed
 	//
 
