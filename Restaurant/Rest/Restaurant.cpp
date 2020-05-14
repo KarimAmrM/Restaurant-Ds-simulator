@@ -5,6 +5,13 @@
 #include "..\Events\ArrivalEvent.h"
 
 
+int randomize(int max, int min) // generates random number between range{min to max}
+{
+
+	srand(time(NULL));
+	return  (rand() % (max - min + 1)) + min;
+
+}
 
 
 Restaurant::Restaurant() 
@@ -190,12 +197,14 @@ void Restaurant::addOrder(Order* nOrder)
 
 void Restaurant::cancelEvent(int ID)
 {
+	
 	int count = 0;
 	Order** O = normalOrders.toArray(count); //converting the normal orders cook queue to an arry to find the element with the matched id
 	for (int i = 0; i < count; i++)
 	{
 		if (O[i]->GetID() == ID)
 		{
+		
 			int pos = i;
 			for (int i = 0; i < count; i++) //removing the element 
 			{
@@ -448,7 +457,6 @@ void Restaurant::FillDrawingList()
 	
 	}
 }
-
 
 
 

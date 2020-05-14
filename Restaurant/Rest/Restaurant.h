@@ -11,7 +11,8 @@
 #include"../Data Structers/LinkedList.h"
 #include"../Data Structers\PriorityQueue.h"
 
-
+#include<stdlib.h>
+#include<time.h>
 
 #include<fstream>
 
