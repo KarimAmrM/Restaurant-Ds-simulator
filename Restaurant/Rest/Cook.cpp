@@ -47,6 +47,11 @@ bool Cook::isFree() const
 	return Free;
 }
 
+bool Cook::isInjured() const
+{
+	return Injured;
+}
+
 Order* Cook::GetCurrentOrder()
 {
 	return CurrentOrder;
@@ -85,3 +90,5 @@ void Cook::AssignOrder(Order* o, int Stime)
 	int finishTime = CookingTime + Stime;                               //calculating the finish time
 	CurrentOrder->SetFinishTime(finishTime);
 }
+
+
