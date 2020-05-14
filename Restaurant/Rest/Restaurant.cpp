@@ -5,7 +5,13 @@
 #include "..\Events\ArrivalEvent.h"
 
 
+int randomize(int max, int min) // generates random number between range{min to max}
+{
 
+	srand(time(NULL));
+	return  (rand() % (max - min + 1)) + min;
+
+}
 
 Restaurant::Restaurant() 
 {
@@ -38,7 +44,7 @@ void Restaurant::RunSimulation()
 
 void Restaurant::LoadFromFile()
 {
-	loadFile.open("1.txt");
+	loadFile.open("2.txt");
 	if (!loadFile.is_open()) {
 		pGUI->PrintMessage("Load file doesn't exist in default directory! ");
 		pGUI->waitForClick();
@@ -446,5 +452,71 @@ void Restaurant::FillDrawingList()
 	
 		pGUI->AddToDrawingList(finsihedArr[i]);
 	
+	}
+}
+
+bool Restaurant::assignToCook(Order*orderToAssigned)
+{
+	Cook* cookToAssign;		//A cook ptr to hold the cook dequed from whatever queue. 
+	
+	if (orderToAssigned->GetType() == TYPE_VIP) //checking if the order is vip
+	{
+		if (!availableVipCooks.isEmpty())								//checking the vip cooks quque first
+		{
+			  availableVipCooks.dequeue(cookToAssign);                     //remove this cook from the queue of available cooks
+			  cookToAssign->AssignOrder(orderToAssigned, currentTimeStep); //assigns the order to the cook
+			  busyCooks.enqueue(cookToAssign);								//enqueueing the cook to the busy cooks queue
+			  servingOrders.enqueue(orderToAssigned);						//adding the order to the inservice queue of cooks
+			  return true;
+		}
+		else if (!availableNormalCooks.isEmpty())   //if there are no available vip then check for normal cooks
+		{
+			availableNormalCooks.dequeue(cookToAssign);
+			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
+			busyCooks.enqueue(cookToAssign);
+			servingOrders.enqueue(orderToAssigned);
+			return true;
+		}
+		else if (!availableVeganCooks.isEmpty())  //if both vip queues and normal queues are empty then check for vegan cooks
+		{
+			availableVeganCooks.dequeue(cookToAssign);
+			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
+			busyCooks.enqueue(cookToAssign);
+			servingOrders.enqueue(orderToAssigned);
+			return true;
+		}
+		return false;
+	}
+	else if (orderToAssigned->GetType() == TYPE_NRM) //if the order is normal 
+	{
+		if (!availableNormalCooks.isEmpty())   //checking for normal available cooks first
+		{
+			availableNormalCooks.dequeue(cookToAssign);
+			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
+			busyCooks.enqueue(cookToAssign);
+			servingOrders.enqueue(orderToAssigned);
+			return true;
+		}
+		else if (!availableVipCooks.isEmpty()) //checking for vip available cooks first
+		{
+			availableVipCooks.dequeue(cookToAssign);
+			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
+			busyCooks.enqueue(cookToAssign);
+			servingOrders.enqueue(orderToAssigned);
+			return true;
+		}
+		return false;
+	}
+	else if (orderToAssigned->GetType() == TYPE_VGAN) 
+	{
+		if (!availableVeganCooks.isEmpty())  //one if condition only because vegan orders can only be perfomed by vegan cooks.
+		{
+			availableVeganCooks.dequeue(cookToAssign);
+			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
+			busyCooks.enqueue(cookToAssign);
+			servingOrders.enqueue(orderToAssigned);
+			return true;
+		}
+		return false;
 	}
 }
