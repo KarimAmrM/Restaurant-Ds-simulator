@@ -41,7 +41,7 @@ private:
 	Queue<Cook*>availableNormalCooks;
 	Queue<Cook*>availableCooks; //to be removed 
 	Queue <Cook*>busyCooks;
-
+	Queue<Cook*>injuredCooks;
 
 
 	ifstream  loadFile;
@@ -56,8 +56,8 @@ private:
 	int numEvents;
 	int nOrders;
 	
-	
-	
+	int numberAvailNormalCooks, numberAvailVipCooks, numberAvailVeganCooks;
+	int numberBusyVipCooks, numberBusyVeganCooks, numberBusyNormalCooks;
 	
 	//
 	// TODO: Add More Data Members As Needed
