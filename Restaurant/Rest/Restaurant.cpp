@@ -544,7 +544,8 @@ void Restaurant::Injury()
 	}
 	else
 	{
-		float p = rand() % injProb;   //generating a random number
+		
+		float p = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);   //generating a random number
 		if (p <= injProb)
 		{
 			Cook* InjCook; //a pointer to hold the injured cook

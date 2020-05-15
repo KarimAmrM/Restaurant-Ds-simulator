@@ -80,6 +80,16 @@ void Cook::setBreakDuration(int bd)
 	BreakDuration = bd;
 }
 
+void Cook::setisfree(bool isFree)
+{
+	Free = isFree;
+}
+
+void Cook::setisinjured(bool isInjured)
+{
+	Injured = isInjured;
+}
+
 void Cook::AssignOrder(Order* o, int Stime)
 {
 	CurrentOrder = o;

@@ -29,6 +29,8 @@ public:
 	void setSpeed(int s);
 	void setNumberOfDishes(int n);
 	void setBreakDuration(int bd);
+	void setisfree(bool isFree);
+	void setisinjured(bool isInjured);
 	void AssignOrder(Order* o, int Stime);//a function to assign an order to the cook
 	
 
