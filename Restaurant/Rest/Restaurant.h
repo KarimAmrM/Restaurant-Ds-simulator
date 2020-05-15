@@ -58,7 +58,7 @@ private:
 	float injProb;
 	int numberAvailNormalCooks, numberAvailVipCooks, numberAvailVeganCooks;
 	int numberBusyVipCooks, numberBusyVeganCooks, numberBusyNormalCooks;
-	
+	int numberInjured;
 	//
 	// TODO: Add More Data Members As Needed
 	//
@@ -85,7 +85,7 @@ public:
 	void FillDrawingList();
 	bool assignToCook(Order*); //this function is called each timestep to assign orders to cook
 	void Injury();
-
+	void moveFromInservToFinished();
 	// TODO: Add More Member Functions As Needed
 	//
 

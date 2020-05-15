@@ -19,6 +19,7 @@ Restaurant::Restaurant()
 	currentTimeStep = 1;
 	nOrders = 0;
 	nCooks = 0;
+	numberInjured = 0;
 }
 
 void Restaurant::RunSimulation()
@@ -560,8 +561,97 @@ void Restaurant::Injury()
 			int newCokkingTime = ceil(remainingDishes / newSpeed); //calculating the new cooking time of the cook's order
 			int newFinishTime = currentTimeStep +newCokkingTime; //calculating the new finish time of the cook's order
 			InjCook->GetCurrentOrder()->SetFinishTime(newFinishTime); // setting the new finish time of the cook's order
+			numberInjured++;
 		}
 
 	}
 
+}
+
+
+void Restaurant::moveFromInservToFinished()  //some modifications to be added for break and rest 
+{
+	if (busyCooks.isEmpty() && injuredCooks.isEmpty())  //if there are no cooks serving any orders return
+		return;
+
+	Cook* c;  //a place holder to hold the dequeued cooks from either queues
+	Order* finishedOrder; //to move the orders between the queues
+
+	if (!busyCooks.isEmpty())    //first we check the queue of the busy cooks that are serving orders without being injured
+	{
+		for (int i = 0; i < numberBusyNormalCooks + numberBusyVeganCooks + numberBusyVipCooks; i++)
+		{
+			busyCooks.peekFront(c);
+			if (c->GetCurrentOrder()->GetFinishTime() == currentTimeStep) //checking if the top cook has an order to be finished at this current time step
+			{
+				busyCooks.dequeue(c);					//if the cook is serving an order that has the same time as the current timestep then remove it from the queue of busy cooks
+				finishedOrder = c->GetCurrentOrder();
+				servingOrders.dequeue(finishedOrder);			//move the order from inservice list to the finished orders list
+				finishedOrders.enqueue(finishedOrder);   
+				if (c->GetType() == TYPE_NRM)
+				{
+					availableNormalCooks.enqueue(c);  //if the order is of type normal then move the cook assigned to it to the available queue of its type and then incremting and decremting the counters for each type
+					numberAvailNormalCooks++;
+					numberBusyNormalCooks--;
+				}
+				else if (c->GetType() == TYPE_VIP)  //same procedure but for VIP
+				{
+					availableVipCooks.enqueue(c);
+					numberAvailVipCooks++;
+					numberBusyVipCooks--;
+				}
+				else
+				{
+					availableVeganCooks.enqueue(c);		//same procedure but for VEGAN
+					numberAvailVeganCooks++;
+					numberBusyVeganCooks--;
+				}
+			}
+			else
+			{
+				Cook* temp;				//here if the order finish time is not the same as the current time step then remove it from the start of the queue to its end
+				busyCooks.dequeue(temp);
+				busyCooks.enqueue(temp);
+			}
+			
+		}
+	}
+	if (!injuredCooks.isEmpty())
+	{
+		for (int i = 0; i < numberInjured; i++)
+		{
+			busyCooks.peekFront(c);
+			if (c->GetCurrentOrder()->GetFinishTime() == currentTimeStep)
+			{
+				injuredCooks.dequeue(c);
+				finishedOrder = c->GetCurrentOrder();
+				servingOrders.dequeue(finishedOrder);			
+				finishedOrders.enqueue(finishedOrder);
+				if (c->GetType() == TYPE_NRM)
+				{
+					availableNormalCooks.enqueue(c);  //if the order is of type normal then move the cook assigned to it to the available queue of its type and then incremting and decremting the counters for each type
+					numberAvailNormalCooks++;
+					numberBusyNormalCooks--;
+				}
+				else if (c->GetType() == TYPE_VIP)  //same procedure but for VIP
+				{
+					availableVipCooks.enqueue(c);
+					numberAvailVipCooks++;
+					numberBusyVipCooks--;
+				}
+				else
+				{
+					availableVeganCooks.enqueue(c);		//same procedure but for VEGAN
+					numberAvailVeganCooks++;
+					numberBusyVeganCooks--;
+				}
+			}
+			else
+			{
+				Cook* temp;				//here if the order finish time is not the same as the current time step then remove it from the start of the queue to its end
+				busyCooks.dequeue(temp);
+				busyCooks.enqueue(temp);
+			}
+		}
+	}
 }
