@@ -41,7 +41,7 @@ private:
 	Queue<Cook*>availableNormalCooks;
 	Queue<Cook*>availableCooks; //to be removed 
 	Queue <Cook*>busyCooks;
-	Queue<Cook*>injuredCooks;
+	
 
 
 	ifstream  loadFile;

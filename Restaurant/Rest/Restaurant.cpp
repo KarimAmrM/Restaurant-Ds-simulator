@@ -550,9 +550,7 @@ void Restaurant::Injury()
 		if (p <= injProb)
 		{
 			Cook* InjCook; //a pointer to hold the injured cook
-			busyCooks.dequeue(InjCook);  //dequeuing the first cook in busy queue
 			InjCook->setisinjured(true); //changing the cook's status to injured
-			injuredCooks.enqueue(InjCook); //enqueuing the injured cook in injured queue
 			int passedTime = currentTimeStep - InjCook->GetCurrentOrder()->GetServTime();//calculating the time passed from the serving time to the current time step
 			int doneDishes = passedTime*InjCook->GetSpeed(); //calculating the number of done dishes until the current time step
 			int newSpeed = InjCook->GetSpeed() / 2; //decrement the cook's speed to half its value
@@ -571,7 +569,7 @@ void Restaurant::Injury()
 
 void Restaurant::moveFromInservToFinished()  //some modifications to be added for break and rest 
 {
-	if (busyCooks.isEmpty() && injuredCooks.isEmpty())  //if there are no cooks serving any orders return
+	if (busyCooks.isEmpty() )  //if there are no cooks serving any orders return
 		return;
 
 	Cook* c;  //a place holder to hold the dequeued cooks from either queues
@@ -609,50 +607,12 @@ void Restaurant::moveFromInservToFinished()  //some modifications to be added fo
 			}
 			else
 			{
-				Cook* temp;				//here if the order finish time is not the same as the current time step then remove it from the start of the queue to its end
-				busyCooks.dequeue(temp);
-				busyCooks.enqueue(temp);
-			}
-			
-		}
-	}
-	if (!injuredCooks.isEmpty())
-	{
-		for (int i = 0; i < numberInjured; i++)
-		{
-			busyCooks.peekFront(c);
-			if (c->GetCurrentOrder()->GetFinishTime() == currentTimeStep)
-			{
-				injuredCooks.dequeue(c);
-				finishedOrder = c->GetCurrentOrder();
-				servingOrders.dequeue(finishedOrder);			
-				finishedOrders.enqueue(finishedOrder);
-				if (c->GetType() == TYPE_NRM)
-				{
-					availableNormalCooks.enqueue(c);  //to be added to the rest queue
-					numberAvailNormalCooks++;
-					numberBusyNormalCooks--;
-				}
-				else if (c->GetType() == TYPE_VIP)  //same procedure but for VIP
-				{
-					availableVipCooks.enqueue(c);//to be added to the rest queue
-					numberAvailNormalCooks++;
-					numberAvailVipCooks++;
-					numberBusyVipCooks--;
-				}
-				else
-				{
-					availableVeganCooks.enqueue(c);		//to be added to the rest queue
-					numberAvailNormalCooks++;
-					numberAvailVeganCooks++;
-					numberBusyVeganCooks--;
-				}
-			}
-			else
-			{
-				Cook* temp;				//here if the order finish time is not the same as the current time step then remove it from the start of the queue to its end
-				busyCooks.dequeue(temp);
-				busyCooks.enqueue(temp);
+				Cook* tempCook;				//here if the order finish time is not the same as the current time step then remove it from the start of the queue to its end
+				Order* tempOrder;
+				busyCooks.dequeue(tempCook);
+				busyCooks.enqueue(tempCook);
+				servingOrders.dequeue(tempOrder);
+				servingOrders.enqueue(tempOrder);
 			}
 		}
 	}
