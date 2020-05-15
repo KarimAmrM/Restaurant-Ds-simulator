@@ -41,6 +41,8 @@ private:
 	Queue<Cook*>availableNormalCooks;
 	Queue<Cook*>availableCooks; //to be removed 
 	Queue <Cook*>busyCooks;
+	Queue<Cook*> onBreakCooks;
+	Queue < Cook*> onRestCooks;
 	
 
 
@@ -87,6 +89,13 @@ public:
 	bool assignToCook(Order*); //this function is called each timestep to assign orders to cook
 	void Injury();
 	void moveFromInservToFinished();
+
+	void toRest(Cook* cookToMove); //moves selected cook to rest after finishing his order
+
+	void toBreak(Cook* cookToMove); // moves selected cook to break after reaching his limit
+
+	void endBreak();
+	void endRest();
 	// TODO: Add More Member Functions As Needed
 	//
 
