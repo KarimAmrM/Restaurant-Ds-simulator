@@ -55,7 +55,7 @@ void Restaurant::LoadFromFile()
 	
 	int orderBeforeBreak, normalBreaksMin,normalBreaksMax, veganBreaksMin,veganBreaksMax, vipBreaksMin,vipBreaksMax, restPeriod;// orders before break and number of breaks
 
-	float injProb;
+	//float injProb;
 		
 
 	char eventType, orderType;
@@ -534,4 +534,32 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 		}
 		return false;
 	}
+}
+
+void Restaurant::Injury()
+{
+	if (busyCooks.isEmpty())
+	{
+		return;        //the function if for busy cooks only
+	}
+	else
+	{
+		float p = rand() % injProb;   //generating a random number
+		if (p <= injProb)
+		{
+			Cook* InjCook; //a pointer to hold the injured cook
+			busyCooks.dequeue(InjCook);  //dequeuing the first cook in busy queue
+			InjCook->setisinjured(true); //changing the cook's status to injured
+			injuredCooks.enqueue(InjCook); //enqueuing the injured cook in injured queue
+			int passedTime = currentTimeStep - InjCook->GetCurrentOrder()->GetServTime();//calculating the time passed from the serving time to the current time step
+			int doneDishes = passedTime / InjCook->GetSpeed(); //calculating the number of done dishes until the current time step
+			int newSpeed = InjCook->GetSpeed() / 2; //decrement the cook's speed to half its value
+			InjCook->setSpeed(newSpeed); // setting the new speed
+			int remainingDishes = InjCook->GetCurrentOrder()->GetOrdSize() - doneDishes; //calculating the number of the remaining dishes
+			int newFinishTime = currentTimeStep + remainingDishes / newSpeed; //calculating the new finish time of the cook's order
+			InjCook->GetCurrentOrder()->SetFinishTime(newFinishTime); // setting the new finish time of the cook's order
+		}
+
+	}
+
 }
