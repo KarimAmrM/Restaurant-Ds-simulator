@@ -553,11 +553,12 @@ void Restaurant::Injury()
 			InjCook->setisinjured(true); //changing the cook's status to injured
 			injuredCooks.enqueue(InjCook); //enqueuing the injured cook in injured queue
 			int passedTime = currentTimeStep - InjCook->GetCurrentOrder()->GetServTime();//calculating the time passed from the serving time to the current time step
-			int doneDishes = passedTime / InjCook->GetSpeed(); //calculating the number of done dishes until the current time step
+			int doneDishes = passedTime*InjCook->GetSpeed(); //calculating the number of done dishes until the current time step
 			int newSpeed = InjCook->GetSpeed() / 2; //decrement the cook's speed to half its value
 			InjCook->setSpeed(newSpeed); // setting the new speed
 			int remainingDishes = InjCook->GetCurrentOrder()->GetOrdSize() - doneDishes; //calculating the number of the remaining dishes
-			int newFinishTime = currentTimeStep + remainingDishes / newSpeed; //calculating the new finish time of the cook's order
+			int newCokkingTime = ceil(remainingDishes / newSpeed); //calculating the new cooking time of the cook's order
+			int newFinishTime = currentTimeStep +newCokkingTime; //calculating the new finish time of the cook's order
 			InjCook->GetCurrentOrder()->SetFinishTime(newFinishTime); // setting the new finish time of the cook's order
 		}
 

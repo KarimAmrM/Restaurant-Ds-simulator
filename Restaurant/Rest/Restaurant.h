@@ -55,7 +55,7 @@ private:
 	int urgentLimit;
 	int numEvents;
 	int nOrders;
-	int injProb;
+	float injProb;
 	int numberAvailNormalCooks, numberAvailVipCooks, numberAvailVeganCooks;
 	int numberBusyVipCooks, numberBusyVeganCooks, numberBusyNormalCooks;
 	
