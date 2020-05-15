@@ -549,7 +549,8 @@ void Restaurant::Injury()
 		float p = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);   //generating a random number
 		if (p <= injProb)
 		{
-			Cook* InjCook; //a pointer to hold the injured cook
+			Cook* InjCook=nullptr; //a pointer to hold the injured cook
+			busyCooks.dequeue(InjCook);
 			InjCook->setisinjured(true); //changing the cook's status to injured
 			int passedTime = currentTimeStep - InjCook->GetCurrentOrder()->GetServTime();//calculating the time passed from the serving time to the current time step
 			int doneDishes = passedTime*InjCook->GetSpeed(); //calculating the number of done dishes until the current time step
