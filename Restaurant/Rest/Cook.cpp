@@ -8,6 +8,7 @@ Cook::Cook(int id, ORD_TYPE r_Type, int s, int n, int bd)
 	speed = s;
 	NumberOfDishes = n;
 	BreakDuration = bd;
+	ordersCompleted = 0;
 }
 
 
@@ -92,6 +93,7 @@ void Cook::setisinjured(bool isInjured)
 
 void Cook::AssignOrder(Order* o, int Stime)
 {
+	if (CurrentOrder) return;
 	CurrentOrder = o;
 	CurrentOrder->setStatus(SRV);
 	Free = false;
@@ -99,6 +101,39 @@ void Cook::AssignOrder(Order* o, int Stime)
 	double CookingTime = ceil(CurrentOrder->GetOrdSize() / double(speed));//calculating the time taken by the order to be finished
 	int finishTime = CookingTime + Stime;                               //calculating the finish time
 	CurrentOrder->SetFinishTime(finishTime);
+	
+}
+
+bool Cook::toBreak()
+{
+	if (ordersCompleted % NumberOfDishes == 0) 
+	{
+		return true;
+	
+	}
+	return false;
+
+
+}
+
+void Cook::removeOrder()
+{
+	if (!CurrentOrder) return;
+
+	CurrentOrder = NULL;
+	ordersCompleted++;
+	setisfree(true);
+
+
+}
+
+bool Cook::toRest()
+{
+	if (isInjured)
+	{
+		return true;
+	}
+	else return false;
 }
 
 

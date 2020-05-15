@@ -13,6 +13,7 @@ class Cook
 	bool Free = true; //flag to check either the cook is free or not
 	Order* CurrentOrder = nullptr; //the assigned order to the cook
 	bool Injured = false;  //flag to check either the cook is injured or not
+	int ordersCompleted;
 public:
 	Cook(int id, ORD_TYPE r_Type, int s, int n, int bd);
 	virtual ~Cook();
@@ -32,6 +33,8 @@ public:
 	void setisfree(bool isFree);
 	void setisinjured(bool isInjured);
 	void AssignOrder(Order* o, int Stime);//a function to assign an order to the cook
-	
+	bool toBreak();
+	void removeOrder();
+	bool toRest();
 
 };
