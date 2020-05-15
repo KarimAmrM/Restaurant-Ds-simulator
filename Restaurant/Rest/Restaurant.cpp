@@ -20,6 +20,7 @@ Restaurant::Restaurant()
 	nOrders = 0;
 	nCooks = 0;
 	numberInjured = 0;
+	totalMoney = 0;
 }
 
 void Restaurant::RunSimulation()
@@ -471,6 +472,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			  cookToAssign->AssignOrder(orderToAssigned, currentTimeStep); //assigns the order to the cook
 			  busyCooks.enqueue(cookToAssign);								//enqueueing the cook to the busy cooks queue
 			  servingOrders.enqueue(orderToAssigned);						//adding the order to the inservice queue of cooks
+			  totalMoney = totalMoney + orderToAssigned->GetTotalMoney();
 			  numberAvailVipCooks--;
 			  numberBusyVipCooks++;
 			  return true;
@@ -481,6 +483,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
 			busyCooks.enqueue(cookToAssign);
 			servingOrders.enqueue(orderToAssigned);
+			totalMoney = totalMoney + orderToAssigned->GetTotalMoney();
 			numberAvailNormalCooks--;
 			numberBusyNormalCooks++;
 			return true;
@@ -491,6 +494,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
 			busyCooks.enqueue(cookToAssign);
 			servingOrders.enqueue(orderToAssigned);
+			totalMoney = totalMoney + orderToAssigned->GetTotalMoney();
 			numberAvailVeganCooks--;
 			numberBusyVeganCooks++;
 			return true;
@@ -505,6 +509,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
 			busyCooks.enqueue(cookToAssign);
 			servingOrders.enqueue(orderToAssigned);
+			totalMoney = totalMoney + orderToAssigned->GetTotalMoney();
 			numberAvailNormalCooks--;
 			numberBusyNormalCooks++;
 			return true;
@@ -515,6 +520,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
 			busyCooks.enqueue(cookToAssign);
 			servingOrders.enqueue(orderToAssigned);
+			totalMoney = totalMoney + orderToAssigned->GetTotalMoney();
 			numberAvailVipCooks--;
 			numberBusyVipCooks++;
 			return true;
@@ -529,6 +535,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
 			busyCooks.enqueue(cookToAssign);
 			servingOrders.enqueue(orderToAssigned);
+			totalMoney = totalMoney + orderToAssigned->GetTotalMoney();
 			numberAvailVeganCooks--;
 			numberBusyVeganCooks++;
 			return true;
