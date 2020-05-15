@@ -548,7 +548,7 @@ void Restaurant::Injury()
 {
 	if (busyCooks.isEmpty())
 	{
-		return;        //the function if for busy cooks only
+		return;        //the function is for busy cooks only
 	}
 	else
 	{
@@ -557,7 +557,7 @@ void Restaurant::Injury()
 		if (p <= injProb)
 		{
 			Cook* InjCook=nullptr; //a pointer to hold the injured cook
-			busyCooks.dequeue(InjCook);
+			busyCooks.dequeue(InjCook); //dequeuing the first busy cook
 			InjCook->setisinjured(true); //changing the cook's status to injured
 			int passedTime = currentTimeStep - InjCook->GetCurrentOrder()->GetServTime();//calculating the time passed from the serving time to the current time step
 			int doneDishes = passedTime*InjCook->GetSpeed(); //calculating the number of done dishes until the current time step
@@ -571,6 +571,29 @@ void Restaurant::Injury()
 		}
 
 	}
+
+}
+
+void Restaurant::AssignUrgentOrder()
+{
+	Order* UrgentOrder = nullptr;
+	vipOrders.peek(UrgentOrder);
+	if (UrgentOrder == nullptr)
+	{
+		return;
+	}
+	int WaitingTime = currentTimeStep - UrgentOrder->GetArrTime();
+	while (WaitingTime >= VIP_WT)
+	{
+		bool assigned=assignToCook(UrgentOrder);
+		if (!assigned)
+		{
+			switch()
+
+		}
+
+	}
+
 
 }
 
