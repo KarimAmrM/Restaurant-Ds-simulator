@@ -648,3 +648,38 @@ void Restaurant::moveFromInservToFinished()  //some modifications to be added fo
 		}
 	}
 }
+
+void Restaurant::toRest(Cook* cookToMove)
+{
+	if(cookToMove->toRest())
+	{
+		onRestCooks.enqueue(cookToMove);
+
+	}
+
+}
+
+void Restaurant::toBreak(Cook* cookToMove)
+{
+
+	if (cookToMove->toBreak())
+	{
+		onBreakCooks.enqueue(cookToMove);
+
+	}
+}
+
+void Restaurant::endBreak()
+{
+
+
+
+
+}
+
+void Restaurant::endRest()
+{
+
+
+
+}
