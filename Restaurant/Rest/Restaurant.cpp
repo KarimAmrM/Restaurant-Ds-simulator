@@ -65,6 +65,9 @@ void Restaurant::LoadFromFile()
 	double orderPrice;
 
 	loadFile >> normalCooks >> veganCooks >> vipCooks;
+	numberAvailNormalCooks = normalCooks;
+	numberAvailVipCooks = vipCooks;
+	numberAvailVeganCooks = veganCooks;
 	loadFile >> normalSpeedMin>>nomralSpeedMax >> veganSpeedMin>>veganSpeedMax >> vipSpeedMin>>vipSpeedMax;
 	loadFile >> orderBeforeBreak >> normalBreaksMin>>normalBreaksMax >> veganBreaksMin >>veganBreaksMax>> vipBreaksMin>>vipBreaksMax;
 	loadFile >> injProb >> restPeriod;
@@ -467,6 +470,8 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			  cookToAssign->AssignOrder(orderToAssigned, currentTimeStep); //assigns the order to the cook
 			  busyCooks.enqueue(cookToAssign);								//enqueueing the cook to the busy cooks queue
 			  servingOrders.enqueue(orderToAssigned);						//adding the order to the inservice queue of cooks
+			  numberAvailVipCooks--;
+			  numberBusyVipCooks++;
 			  return true;
 		}
 		else if (!availableNormalCooks.isEmpty())   //if there are no available vip then check for normal cooks
@@ -475,6 +480,8 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
 			busyCooks.enqueue(cookToAssign);
 			servingOrders.enqueue(orderToAssigned);
+			numberAvailNormalCooks--;
+			numberBusyNormalCooks++;
 			return true;
 		}
 		else if (!availableVeganCooks.isEmpty())  //if both vip queues and normal queues are empty then check for vegan cooks
@@ -483,6 +490,8 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
 			busyCooks.enqueue(cookToAssign);
 			servingOrders.enqueue(orderToAssigned);
+			numberAvailVeganCooks--;
+			numberBusyVeganCooks++;
 			return true;
 		}
 		return false;
@@ -495,6 +504,8 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
 			busyCooks.enqueue(cookToAssign);
 			servingOrders.enqueue(orderToAssigned);
+			numberAvailNormalCooks--;
+			numberBusyNormalCooks++;
 			return true;
 		}
 		else if (!availableVipCooks.isEmpty()) //checking for vip available cooks first
@@ -503,6 +514,8 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
 			busyCooks.enqueue(cookToAssign);
 			servingOrders.enqueue(orderToAssigned);
+			numberAvailVipCooks--;
+			numberBusyVipCooks++;
 			return true;
 		}
 		return false;
@@ -515,6 +528,8 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
 			busyCooks.enqueue(cookToAssign);
 			servingOrders.enqueue(orderToAssigned);
+			numberAvailVeganCooks--;
+			numberBusyVeganCooks++;
 			return true;
 		}
 		return false;
