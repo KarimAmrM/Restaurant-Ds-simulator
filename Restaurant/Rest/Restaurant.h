@@ -59,6 +59,7 @@ private:
 	int numberAvailNormalCooks, numberAvailVipCooks, numberAvailVeganCooks;
 	int numberBusyVipCooks, numberBusyVeganCooks, numberBusyNormalCooks;
 	int numberInjured;
+	int totalMoney;
 	//
 	// TODO: Add More Data Members As Needed
 	//
