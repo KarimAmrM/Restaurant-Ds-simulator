@@ -629,19 +629,21 @@ void Restaurant::moveFromInservToFinished()  //some modifications to be added fo
 				finishedOrders.enqueue(finishedOrder);
 				if (c->GetType() == TYPE_NRM)
 				{
-					availableNormalCooks.enqueue(c);  //if the order is of type normal then move the cook assigned to it to the available queue of its type and then incremting and decremting the counters for each type
+					availableNormalCooks.enqueue(c);  //to be added to the rest queue
 					numberAvailNormalCooks++;
 					numberBusyNormalCooks--;
 				}
 				else if (c->GetType() == TYPE_VIP)  //same procedure but for VIP
 				{
-					availableVipCooks.enqueue(c);
+					availableVipCooks.enqueue(c);//to be added to the rest queue
+					numberAvailNormalCooks++;
 					numberAvailVipCooks++;
 					numberBusyVipCooks--;
 				}
 				else
 				{
-					availableVeganCooks.enqueue(c);		//same procedure but for VEGAN
+					availableVeganCooks.enqueue(c);		//to be added to the rest queue
+					numberAvailNormalCooks++;
 					numberAvailVeganCooks++;
 					numberBusyVeganCooks--;
 				}
