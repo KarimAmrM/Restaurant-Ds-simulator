@@ -557,8 +557,8 @@ void Restaurant::Injury()
 			int newSpeed = InjCook->GetSpeed() / 2; //decrement the cook's speed to half its value
 			InjCook->setSpeed(newSpeed); // setting the new speed
 			int remainingDishes = InjCook->GetCurrentOrder()->GetOrdSize() - doneDishes; //calculating the number of the remaining dishes
-			int newCokkingTime = ceil(remainingDishes / newSpeed); //calculating the new cooking time of the cook's order
-			int newFinishTime = currentTimeStep +newCokkingTime; //calculating the new finish time of the cook's order
+			int newCookingTime = ceil(remainingDishes / float(newSpeed)); //calculating the new cooking time of the cook's order
+			int newFinishTime = currentTimeStep +newCookingTime; //calculating the new finish time of the cook's order
 			InjCook->GetCurrentOrder()->SetFinishTime(newFinishTime); // setting the new finish time of the cook's order
 		}
 
