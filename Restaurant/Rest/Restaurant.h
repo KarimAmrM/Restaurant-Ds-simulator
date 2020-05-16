@@ -53,10 +53,10 @@ private:
 
 	int nCooks;
 	int currentTimeStep;
-	int promoteLimit;
-	int VIP_WT;
+	int promoteLimit, numAutoPromoted;
+	int VIP_WT, numUrgentOrders;
 	int numEvents;
-	int nOrders;
+	int nOrders,numNormOrders,numVganOrders,numVipOreders;
 	float injProb;
 	int numberAvailNormalCooks, numberAvailVipCooks, numberAvailVeganCooks;
 	int numberBusyVipCooks, numberBusyVeganCooks, numberBusyNormalCooks;

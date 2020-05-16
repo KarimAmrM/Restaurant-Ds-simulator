@@ -21,6 +21,10 @@ Restaurant::Restaurant()
 	nCooks = 0;
 	numberInjured = 0;
 	totalMoney = 0;
+	numNormOrders = 0;
+	numVganOrders = 0;
+	numVipOreders = 0;
+	numUrgentOrders = 0;
 }
 
 void Restaurant::RunSimulation()
@@ -588,6 +592,7 @@ void Restaurant::AssignUrgentOrder()
 	int WaitingTime = currentTimeStep - UrgentOrder->GetArrTime();//calculating the waiting time of the order
 	while (WaitingTime >= VIP_WT) //to handle the case of many orders at the same time step
 	{
+		numUrgentOrders++;
 		bool assigned=assignToCook(UrgentOrder); //a boolean to check either the order is assigned to a cook or not 
 		if (!assigned) //in case there is no free cook
 		{
@@ -649,7 +654,19 @@ void Restaurant::moveFromInservToFinished()
 				finishedOrder = c->GetCurrentOrder();
 				c->removeOrder();
 				servingOrders.dequeue(finishedOrder);			//move the order from inservice list to the finished orders list
-				finishedOrders.enqueue(finishedOrder);   
+				finishedOrders.enqueue(finishedOrder); 
+				switch (finishedOrder->GetType) 
+				{
+				case(TYPE_NRM):
+					numNormOrders++;
+					break;
+				case(TYPE_VIP):
+					numVipOreders++;
+					break;
+				case(TYPE_VGAN):
+					numVganOrders++;
+					break;
+				}
 				switch (c->GetType())
 				{
 				case TYPE_NRM:
