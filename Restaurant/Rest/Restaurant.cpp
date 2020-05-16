@@ -90,8 +90,8 @@ void Restaurant::LoadFromFile()
 				cookBreak = randomize(normalBreaksMax, normalBreaksMin);
 				cookSpeed = randomize(normalBreaksMax, normalSpeedMin);
 
-				Cook* nrmCook = new Cook(i + 1, TYPE_NRM, cookSpeed, orderBeforeBreak, cookBreak);
-				availableCooks.enqueue(nrmCook);
+				Cook* nrmCook = new Cook(i + 1, TYPE_NRM, cookSpeed, orderBeforeBreak, cookBreak,restPeriod);
+				availableNormalCooks.enqueue(nrmCook);
 			}
 		
 			for (int i = 0; i < veganCooks; i++)
@@ -102,8 +102,8 @@ void Restaurant::LoadFromFile()
 				cookBreak = randomize(veganBreaksMax, veganBreaksMin);
 				cookSpeed = randomize(veganSpeedMax, veganSpeedMin);
 
-				Cook* vgnCook = new Cook(normalCooks + i + 1, TYPE_VGAN, cookSpeed, orderBeforeBreak, cookBreak);
-				availableCooks.enqueue(vgnCook);
+				Cook* vgnCook = new Cook(normalCooks + i + 1, TYPE_VGAN, cookSpeed, orderBeforeBreak, cookBreak,restPeriod);
+				availableVeganCooks.enqueue(vgnCook);
 
 			}
 			for (int i = 0; i < vipCooks; i++) 
@@ -116,8 +116,8 @@ void Restaurant::LoadFromFile()
 				cookBreak = randomize(vipBreaksMax, vipBreaksMin);
 				cookSpeed = randomize(vipSpeedMax, vipSpeedMin);
 
-				Cook* vipCook = new Cook(i + normalCooks + veganCooks +1, TYPE_VIP, cookSpeed, orderBeforeBreak, cookBreak);
-				availableCooks.enqueue(vipCook);
+				Cook* vipCook = new Cook(i + normalCooks + veganCooks +1, TYPE_VIP, cookSpeed, orderBeforeBreak, cookBreak,restPeriod);
+				availableVipCooks.enqueue(vipCook);
 			}
 
 			
@@ -646,6 +646,7 @@ void Restaurant::moveFromInservToFinished()  //some modifications to be added fo
 			if (c->GetCurrentOrder()->GetFinishTime() == currentTimeStep) //checking if the top cook has an order to be finished at this current time step
 			{
 				busyCooks.dequeue(c);					//if the cook is serving an order that has the same time as the current timestep then remove it from the queue of busy cooks
+				c->removeOrder();
 				finishedOrder = c->GetCurrentOrder();
 				servingOrders.dequeue(finishedOrder);			//move the order from inservice list to the finished orders list
 				finishedOrders.enqueue(finishedOrder);   
@@ -681,37 +682,91 @@ void Restaurant::moveFromInservToFinished()  //some modifications to be added fo
 	}
 }
 
-void Restaurant::toRest(Cook* cookToMove)
+bool Restaurant::toRest(Cook* cookToMove)
 {
-	if(cookToMove->toRest())
+	if(cookToMove->toRest(currentTimeStep))
 	{
-		onRestCooks.enqueue(cookToMove,1);
+		onRestCooks.enqueue(cookToMove,-cookToMove->getExcpetedReturn());// puts the cook in a priorty queue, cooks are sorted in an ascending order in regard to their return time
+		return true;
+	}
+	return false;
+}
+
+bool Restaurant::toBreak(Cook* cookToMove)
+{
+
+	if (cookToMove->toBreak(currentTimeStep))
+	{
+		onBreakCooks.enqueue(cookToMove,-cookToMove->getExcpetedReturn());// puts the cook in a priorty queue, cooks are sorted in an ascending order in regard to their return time
+		return true;
+	}
+	return false;
+}
+
+void Restaurant::checkEndBreakOrRest()
+{
+	Cook* restingCook;
+	if (!onBreakCooks.isEmpty())
+	{
+		onBreakCooks.peek(restingCook);
+
+		while (restingCook->returnToAction(currentTimeStep))// keeps checking the first entry if cook is ready to return to his available queue
+		{
+			onBreakCooks.dequeue(restingCook); // meaning cook ended his break and needs to be returned to the appropriate queue
+
+			switch (restingCook->GetType()) 
+			{
+
+			case TYPE_NRM:
+				numberAvailNormalCooks++;
+				availableNormalCooks.enqueue(restingCook);
+				break;
+			case TYPE_VIP:
+				numberAvailVipCooks++;
+				availableVipCooks.enqueue(restingCook);
+				break;
+			case TYPE_VGAN:
+				numberAvailVeganCooks++;
+				availableVeganCooks.enqueue(restingCook);
+				break;
+
+			}
+			onBreakCooks.peek(restingCook);
+			if (!restingCook) break;// to avoid accessing null pointer
+
+		}
+	}
+	if (!onRestCooks.isEmpty())
+	{
+		onRestCooks.peek(restingCook);
+
+		while (restingCook->returnToAction(currentTimeStep))// keeps checking the first entry if cook is ready to return to his available queue
+		{
+			onRestCooks.dequeue(restingCook);// meaning cook ended his rest and needs to be returned to the appropriate queue
+
+			switch (restingCook->GetType()) 
+			{
+
+			case TYPE_NRM:
+				numberAvailNormalCooks++;
+				availableNormalCooks.enqueue(restingCook);
+				break;
+			case TYPE_VIP:
+				numberAvailVipCooks++;
+				availableVipCooks.enqueue(restingCook);
+				break;
+			case TYPE_VGAN:
+				numberAvailVeganCooks++;
+				availableVeganCooks.enqueue(restingCook);
+				break;
+
+			}
+			onRestCooks.peek(restingCook);
+			if (!restingCook) break;// to avoid accessing null pointer
+
+		}
+
 
 	}
-
 }
 
-void Restaurant::toBreak(Cook* cookToMove)
-{
-
-	if (cookToMove->toBreak())
-	{
-		onBreakCooks.enqueue(cookToMove,1);
-
-	}
-}
-
-void Restaurant::endBreak()
-{
-
-
-
-
-}
-
-void Restaurant::endRest()
-{
-
-
-
-}

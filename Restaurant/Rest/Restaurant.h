@@ -91,12 +91,12 @@ public:
 	void AssignUrgentOrder();
 	void moveFromInservToFinished();
 
-	void toRest(Cook* cookToMove); //moves selected cook to rest after finishing his order
+	bool toRest(Cook* cookToMove); // checks selected cook  to be sent to rest after finishing his order
 
-	void toBreak(Cook* cookToMove); // moves selected cook to break after reaching his limit
+	bool toBreak(Cook* cookToMove); // checks selected cook to be sent to break after reaching his limit
 
-	void endBreak();
-	void endRest();
+	void checkEndBreakOrRest();//checks on-break and in rest cooks if they finished their break/rest
+	
 	// TODO: Add More Member Functions As Needed
 	//
 

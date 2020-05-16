@@ -1,7 +1,7 @@
 #include "Cook.h"
 #include <math.h>
 
-Cook::Cook(int id, ORD_TYPE r_Type, int s, int n, int bd)
+Cook::Cook(int id, ORD_TYPE r_Type, int s, int n, int bd,int rest)
 {
 	ID = id;
 	type = r_Type;
@@ -9,6 +9,11 @@ Cook::Cook(int id, ORD_TYPE r_Type, int s, int n, int bd)
 	NumberOfDishes = n;
 	BreakDuration = bd;
 	ordersCompleted = 0;
+	Free = true;
+	CurrentOrder = NULL;
+	Injured = false;
+	excpectedReturn = 0;
+	restPeriod = rest;
 }
 
 
@@ -41,6 +46,11 @@ int Cook::GetNumberOfDishes() const
 int Cook::GetBreakDuration() const
 {
 	return BreakDuration;
+}
+
+int Cook::getExcpetedReturn() const
+{
+	return excpectedReturn;
 }
 
 bool Cook::isFree() const
@@ -104,10 +114,11 @@ void Cook::AssignOrder(Order* o, int Stime)
 	
 }
 
-bool Cook::toBreak()
+bool Cook::toBreak(int timeStep)
 {
 	if (ordersCompleted % NumberOfDishes == 0) 
 	{
+		excpectedReturn = timeStep + BreakDuration;
 		return true;
 	
 	}
@@ -127,13 +138,20 @@ void Cook::removeOrder()
 
 }
 
-bool Cook::toRest()
+bool Cook::toRest(int timeStep)
 {
 	if (isInjured())
 	{
+		excpectedReturn = timeStep+restPeriod;
 		return true;
 	}
 	else return false;
+}
+
+bool Cook::returnToAction(int timeStep)
+{
+	if (timeStep == excpectedReturn) { return true; }
+	return false;
 }
 
 
