@@ -73,7 +73,7 @@ void Restaurant::LoadFromFile()
 	loadFile >> normalSpeedMin>>nomralSpeedMax >> veganSpeedMin>>veganSpeedMax >> vipSpeedMin>>vipSpeedMax;
 	loadFile >> orderBeforeBreak >> normalBreaksMin>>normalBreaksMax >> veganBreaksMin >>veganBreaksMax>> vipBreaksMin>>vipBreaksMax;
 	loadFile >> injProb >> restPeriod;
-	loadFile >> promoteLimit >> urgentLimit >> numEvents;
+	loadFile >> promoteLimit >> VIP_WT >> numEvents;
 
 
 	nCooks = normalCooks + veganCooks + vipCooks;
@@ -576,22 +576,51 @@ void Restaurant::Injury()
 
 void Restaurant::AssignUrgentOrder()
 {
-	Order* UrgentOrder = nullptr;
-	vipOrders.peek(UrgentOrder);
+	Order* UrgentOrder = nullptr; //a pointer to hold the urgent order
+	vipOrders.peek(UrgentOrder); 
 	if (UrgentOrder == nullptr)
 	{
-		return;
+		return; //if there is no vip order
 	}
-	int WaitingTime = currentTimeStep - UrgentOrder->GetArrTime();
-	while (WaitingTime >= VIP_WT)
+	int WaitingTime = currentTimeStep - UrgentOrder->GetArrTime();//calculating the waiting time of the order
+	while (WaitingTime >= VIP_WT) //to handle the case of many orders at the same time step
 	{
-		bool assigned=assignToCook(UrgentOrder);
-		if (!assigned)
+		bool assigned=assignToCook(UrgentOrder); //a boolean to check either the order is assigned to a cook or not 
+		if (!assigned) //in case there is no free cook
 		{
-			switch()
+			if (!onBreakCooks.isEmpty()) //searching for on break cook to assign the order to
+			{
+				Cook* UrgentCook = nullptr; //a pointer to hold the cook
+				onBreakCooks.dequeue(UrgentCook); //dequeuing the cook from the on break cooks queue
+				busyCooks.enqueue(UrgentCook); //enqueuing the cook in the busy cooks queue
+				servingOrders.enqueue(UrgentOrder); //enqueuing the order in the serving orders queue
+				UrgentCook->AssignOrder(UrgentOrder,currentTimeStep); //assigning the order to the cook
+				assigned = true; //setting the order to assigned
+			}
+			else if (!onRestCooks.isEmpty()) //if there is no on break cook, we start to search for on rest cook
+			{
+				Cook* UrgentCook = nullptr; //a pointer to hold the cook
+				onRestCooks.dequeue(UrgentCook); //dequeuing the cook from the on rest cooks queue
+				busyCooks.enqueue(UrgentCook); //enqueuing the cook in the busy cooks queue
+				servingOrders.enqueue(UrgentOrder); //enqueuing the order in the serving orders queue
+				UrgentCook->AssignOrder(UrgentOrder, currentTimeStep); //assigning the order to the cook
+				assigned = true;  //setting the order to assigned
+			}
 
 		}
-
+		if (!assigned)
+		{
+			return; //in case the order isn't assigned, there is no need to check the next order
+		}
+		vipOrders.peek(UrgentOrder);
+		if (!UrgentOrder)
+		{
+			return; //if there is no next order
+		}
+		else
+		{
+			WaitingTime = currentTimeStep - UrgentOrder->GetArrTime(); //if there is next order, calculate the waiting time of this order
+		}
 	}
 
 
