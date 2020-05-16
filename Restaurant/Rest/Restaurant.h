@@ -54,7 +54,7 @@ private:
 	int nCooks;
 	int currentTimeStep;
 	int promoteLimit;
-	int urgentLimit;
+	int VIP_WT;
 	int numEvents;
 	int nOrders;
 	float injProb;
@@ -88,6 +88,7 @@ public:
 	void FillDrawingList();
 	bool assignToCook(Order*); //this function is called each timestep to assign orders to cook
 	void Injury();
+	void AssignUrgentOrder();
 	void moveFromInservToFinished();
 
 	
