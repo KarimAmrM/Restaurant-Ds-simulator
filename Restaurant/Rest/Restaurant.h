@@ -41,8 +41,8 @@ private:
 	Queue<Cook*>availableNormalCooks;
 	Queue<Cook*>availableCooks; //to be removed 
 	Queue <Cook*>busyCooks;
-	Queue<Cook*> onBreakCooks;
-	Queue < Cook*> onRestCooks;
+	
+	PriorityQueue < Cook*> onRestCooks;
 	
 
 

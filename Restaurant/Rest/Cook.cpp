@@ -129,7 +129,7 @@ void Cook::removeOrder()
 
 bool Cook::toRest()
 {
-	if (isInjured)
+	if (isInjured())
 	{
 		return true;
 	}

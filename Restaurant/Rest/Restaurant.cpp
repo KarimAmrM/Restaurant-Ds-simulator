@@ -682,7 +682,7 @@ void Restaurant::toRest(Cook* cookToMove)
 {
 	if(cookToMove->toRest())
 	{
-		onRestCooks.enqueue(cookToMove);
+		onRestCooks.enqueue(cookToMove,1);
 
 	}
 
@@ -693,7 +693,7 @@ void Restaurant::toBreak(Cook* cookToMove)
 
 	if (cookToMove->toBreak())
 	{
-		onBreakCooks.enqueue(cookToMove);
+		onBreakCooks.enqueue(cookToMove,1);
 
 	}
 }
