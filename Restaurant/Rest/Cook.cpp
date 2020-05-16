@@ -1,7 +1,7 @@
 #include "Cook.h"
 #include <math.h>
 
-Cook::Cook(int id, ORD_TYPE r_Type, int s, int n, int bd)
+Cook::Cook(int id, ORD_TYPE r_Type, int s, int n, int bd,int rest)
 {
 	ID = id;
 	type = r_Type;
@@ -9,6 +9,11 @@ Cook::Cook(int id, ORD_TYPE r_Type, int s, int n, int bd)
 	NumberOfDishes = n;
 	BreakDuration = bd;
 	ordersCompleted = 0;
+	Free = true;
+	CurrentOrder = NULL;
+	Injured = false;
+	excpetedReturn = 0;
+	restPeriod = rest;
 }
 
 
@@ -104,17 +109,43 @@ void Cook::AssignOrder(Order* o, int Stime)
 	
 }
 
-bool Cook::toBreak()
+bool Cook::toBreak(int timeStep)
 {
+	/*if (ordersCompleted % NumberOfDishes == 0 && isInjured() && isFree()) // this cook got injured in the last order before taking his break
+	{
+		if (BreakDuration >= restPeriod)
+		{
+			excpetedReturn = BreakDuration;
+		}
+		else
+			excpetedReturn = restPeriod;
+					
+	}*/
 	if (ordersCompleted % NumberOfDishes == 0) 
 	{
+		excpetedReturn = timeStep + BreakDuration;
 		return true;
-	
+
 	}
 	return false;
 
+	
+
+
 
 }
+
+bool Cook::toRest(int timestep)
+{
+	if (isInjured() && isFree()) 
+	{
+		excpetedReturn = timestep + restPeriod;
+		return true;
+	}
+	return false;
+}
+
+
 
 void Cook::removeOrder()
 {
@@ -127,13 +158,14 @@ void Cook::removeOrder()
 
 }
 
-bool Cook::toRest()
+bool Cook::returnToAvail(int timeStep)
 {
-	if (isInjured)
-	{
-		return true;
-	}
-	else return false;
+	if (timeStep == excpetedReturn) return true;
+	return false;
+	
 }
+
+
+
 
 

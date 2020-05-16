@@ -90,12 +90,11 @@ public:
 	void Injury();
 	void moveFromInservToFinished();
 
-	void toRest(Cook* cookToMove); //moves selected cook to rest after finishing his order
-
-	void toBreak(Cook* cookToMove); // moves selected cook to break after reaching his limit
+	
 
 	void endBreak();
 	void endRest();
+	void relocateCook(Cook* cook);
 	// TODO: Add More Member Functions As Needed
 	//
 
