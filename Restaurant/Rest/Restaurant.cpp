@@ -475,12 +475,12 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			  cookToAssign->AssignOrder(orderToAssigned, currentTimeStep); //assigns the order to the cook
 			  busyCooks.enqueue(cookToAssign);								//enqueueing the cook to the busy cooks queue
 			  servingOrders.enqueue(orderToAssigned);						//adding the order to the inservice queue of cooks
-			  totalMoney = totalMoney + orderToAssigned->GetTotalMoney();
-			  numberAvailVipCooks--;
-			  numberBusyVipCooks++;
+			  totalMoney = totalMoney + orderToAssigned->GetTotalMoney();	//adding the money of the order to the total money 
+			  numberAvailVipCooks--;										//decrementing the available number of vip cooks
+			  numberBusyVipCooks++;											//incremting the Number of busy cooks
 			  return true;
 		}
-		else if (!availableNormalCooks.isEmpty())   //if there are no available vip then check for normal cooks
+		else if (!availableNormalCooks.isEmpty())   //if there are no available vip then check for normal cooks then repating the same procedures 
 		{
 			availableNormalCooks.dequeue(cookToAssign);
 			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
@@ -491,7 +491,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			numberBusyNormalCooks++;
 			return true;
 		}
-		else if (!availableVeganCooks.isEmpty())  //if both vip queues and normal queues are empty then check for vegan cooks
+		else if (!availableVeganCooks.isEmpty())  //if both vip queues and normal queues are empty then check for vegan cooks then repateing the same procedures 
 		{
 			availableVeganCooks.dequeue(cookToAssign);
 			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
@@ -630,7 +630,7 @@ void Restaurant::AssignUrgentOrder()
 }
 
 
-void Restaurant::moveFromInservToFinished()  //some modifications to be added for break and rest 
+void Restaurant::moveFromInservToFinished()  
 {
 	if (busyCooks.isEmpty() )  //if there are no cooks serving any orders return
 		return;
@@ -646,34 +646,43 @@ void Restaurant::moveFromInservToFinished()  //some modifications to be added fo
 			if (c->GetCurrentOrder()->GetFinishTime() == currentTimeStep) //checking if the top cook has an order to be finished at this current time step
 			{
 				busyCooks.dequeue(c);					//if the cook is serving an order that has the same time as the current timestep then remove it from the queue of busy cooks
-				c->removeOrder();
 				finishedOrder = c->GetCurrentOrder();
+				c->removeOrder();
 				servingOrders.dequeue(finishedOrder);			//move the order from inservice list to the finished orders list
 				finishedOrders.enqueue(finishedOrder);   
-				if (c->GetType() == TYPE_NRM)
+				switch (c->GetType())
 				{
-					availableNormalCooks.enqueue(c);  //if the order is of type normal then move the cook assigned to it to the available queue of its type and then incremting and decremting the counters for each type
-					numberAvailNormalCooks++;
-					numberBusyNormalCooks--;
-				}
-				else if (c->GetType() == TYPE_VIP)  //same procedure but for VIP
-				{
-					availableVipCooks.enqueue(c);
-					numberAvailVipCooks++;
-					numberBusyVipCooks--;
-				}
-				else
-				{
-					availableVeganCooks.enqueue(c);		//same procedure but for VEGAN
-					numberAvailVeganCooks++;
-					numberBusyVeganCooks--;
+				case TYPE_NRM:
+					if (!toRest(c)&&!toBreak(c))	//if the cook doesnt go to rest	or to break		
+					{
+						availableNormalCooks.enqueue(c);  //then we enqueue him in the queue of available cooks according to his spechilaty in this case normal cooks
+						numberAvailNormalCooks++;			//incremintg the number of available cooks type normal
+						numberBusyNormalCooks--;			//decremting the number of busy cooks
+					}
+					break;
+				case TYPE_VIP:								//same procedure but for VIP
+					if (!toRest(c) && !toBreak(c))
+					{
+						availableVipCooks.enqueue(c);		////then we enqueue him in the queue of available cooks according to his spechilaty in this case VIP cooks
+						numberAvailVipCooks++;				//incremintg the number of available cooks type VIP
+						numberBusyVipCooks--;				//decremting the number of busy cooks
+					}
+					break;
+				case TYPE_VGAN:							//same procedure but for VEGAN
+					if (!toRest(c) && !toBreak(c))
+					{
+						availableVeganCooks.enqueue(c);			//then we enqueue him in the queue of available cooks according to his spechilaty in this case VEGAN cooks
+						numberAvailVeganCooks++;				//incremintg the number of available cooks type vegan
+						numberBusyVeganCooks--;					//decremting the number of busy cooks
+					}
+					break;
 				}
 			}
 			else
 			{
 				Cook* tempCook;				//here if the order finish time is not the same as the current time step then remove it from the start of the queue to its end
 				Order* tempOrder;
-				busyCooks.dequeue(tempCook);
+				busyCooks.dequeue(tempCook);			//deqeuing and enqueing in both queues to keep the alignment of cooks assigned to orders
 				busyCooks.enqueue(tempCook);
 				servingOrders.dequeue(tempOrder);
 				servingOrders.enqueue(tempOrder);
