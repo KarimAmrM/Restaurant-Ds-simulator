@@ -195,7 +195,10 @@ void Restaurant::addOrder(Order* nOrder)
 	}
 	else if (nOrder->GetType() == TYPE_VIP) 
 	{
-		vipOrders.enqueue(nOrder,2);
+		double money = nOrder->GetTotalMoney();
+		int arrivalTime = nOrder->GetArrTime();
+		int size = nOrder->GetOrdSize();
+		vipOrders.enqueue(nOrder,exp((money/size*arrivalTime))/arrivalTime);
 	}
 
 }
