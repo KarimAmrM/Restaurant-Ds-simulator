@@ -769,7 +769,8 @@ void Restaurant::checkEndBreakOrRest()
 		while (restingCook->returnToAction(currentTimeStep))// keeps checking the first entry if cook is ready to return to his available queue
 		{
 			onRestCooks.dequeue(restingCook);// meaning cook ended his rest and needs to be returned to the appropriate queue
-
+			restingCook->setSpeed(restingCook->GetSpeed() * 2);
+			restingCook->setisinjured(false);
 			switch (restingCook->GetType()) 
 			{
 
