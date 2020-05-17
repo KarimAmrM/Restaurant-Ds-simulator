@@ -95,7 +95,10 @@ public:
 	bool toBreak(Cook* cookToMove); // checks selected cook to be sent to break after reaching his limit
 
 	void checkEndBreakOrRest();//checks on-break and in rest cooks if they finished their break/rest
-	//void promote(int, int);
+
+	void Promote(int ID, double incMoney);
+	void autoPromote();
+	
 	// TODO: Add More Member Functions As Needed
 	//
 
@@ -104,5 +107,4 @@ public:
 };
 
 #endif
-	
 
