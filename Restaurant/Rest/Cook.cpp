@@ -119,6 +119,10 @@ bool Cook::toBreak(int timeStep)
 	if (ordersCompleted % NumberOfDishes == 0) 
 	{
 		excpectedReturn = timeStep + BreakDuration;
+		if (isInjured()) 
+		{
+			speed *= 2;
+		}
 		return true;
 	
 	}
