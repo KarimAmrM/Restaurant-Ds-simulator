@@ -473,7 +473,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 	
 	if (orderToAssigned->GetType() == TYPE_VIP) //checking if the order is vip
 	{
-		if (!availableVipCooks.isEmpty())								//checking the vip cooks quque first
+		if (!availableVipCooks.isEmpty())								//checking the vip cooks queue first
 		{
 			  availableVipCooks.dequeue(cookToAssign);                     //remove this cook from the queue of available cooks
 			  cookToAssign->AssignOrder(orderToAssigned, currentTimeStep); //assigns the order to the cook
@@ -486,10 +486,10 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 		}
 		else if (!availableNormalCooks.isEmpty())   //if there are no available vip then check for normal cooks then repating the same procedures 
 		{
-			availableNormalCooks.dequeue(cookToAssign);
+			availableNormalCooks.dequeue(cookToAssign);					
 			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
-			busyCooks.enqueue(cookToAssign);
-			servingOrders.enqueue(orderToAssigned);
+			busyCooks.enqueue(cookToAssign);							
+			servingOrders.enqueue(orderToAssigned);					
 			totalMoney = totalMoney + orderToAssigned->GetTotalMoney();
 			numberAvailNormalCooks--;
 			numberBusyNormalCooks++;
@@ -510,7 +510,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 	}
 	else if (orderToAssigned->GetType() == TYPE_NRM) //if the order is normal 
 	{
-		if (!availableNormalCooks.isEmpty())   //checking for normal available cooks first
+		if (!availableNormalCooks.isEmpty())   //checking for normal available cooks first then repating the same procudeures
 		{
 			availableNormalCooks.dequeue(cookToAssign);
 			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
@@ -521,7 +521,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			numberBusyNormalCooks++;
 			return true;
 		}
-		else if (!availableVipCooks.isEmpty()) //checking for vip available cooks first
+		else if (!availableVipCooks.isEmpty()) //checking for vip available cooks first then repeating the same steps
 		{
 			availableVipCooks.dequeue(cookToAssign);
 			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
@@ -536,7 +536,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 	}
 	else if (orderToAssigned->GetType() == TYPE_VGAN) 
 	{
-		if (!availableVeganCooks.isEmpty())  //one if condition only because vegan orders can only be perfomed by vegan cooks.
+		if (!availableVeganCooks.isEmpty())  //one if condition only because vegan orders can only be perfomed by vegan cooks then repating the same procedures
 		{
 			availableVeganCooks.dequeue(cookToAssign);
 			cookToAssign->AssignOrder(orderToAssigned, currentTimeStep);
@@ -565,6 +565,8 @@ void Restaurant::Injury()
 		{
 			Cook* InjCook=nullptr; //a pointer to hold the injured cook
 			busyCooks.dequeue(InjCook); //dequeuing the first busy cook
+			if (InjCook->isInjured())	//if this cook is already injured
+				return;
 			InjCook->setisinjured(true); //changing the cook's status to injured
 			int passedTime = currentTimeStep - InjCook->GetCurrentOrder()->GetServTime();//calculating the time passed from the serving time to the current time step
 			int doneDishes = passedTime*InjCook->GetSpeed(); //calculating the number of done dishes until the current time step
@@ -651,26 +653,30 @@ void Restaurant::moveFromInservToFinished()
 			if (c->GetCurrentOrder()->GetFinishTime() == currentTimeStep) //checking if the top cook has an order to be finished at this current time step
 			{
 				busyCooks.dequeue(c);					//if the cook is serving an order that has the same time as the current timestep then remove it from the queue of busy cooks
-				finishedOrder = c->GetCurrentOrder();
-				c->removeOrder();
-				servingOrders.dequeue(finishedOrder);			//move the order from inservice list to the finished orders list
-				finishedOrders.enqueue(finishedOrder); 
-				switch (finishedOrder->GetType) 
+				finishedOrder = c->GetCurrentOrder();	//setting the order of the cook to the finsihed order
+				c->removeOrder();						//removing the order from the cook
+				servingOrders.dequeue(finishedOrder);	//move the order from inservice list to the finished orders list
+				finishedOrders.enqueue(finishedOrder);	//we add the order to the finished orders queue
+
+				//this switch case is to check on the type of the order alone as in some cases orders can be assigned to differnet cooks types
+				switch (finishedOrder->GetType())		
 				{
 				case(TYPE_NRM):
-					numNormOrders++;
+					numNormOrders++;					//incrementing the number of finished normal orders
 					break;
 				case(TYPE_VIP):
-					numVipOreders++;
+					numVipOreders++;					//incrementing the number of finished vip orders
 					break;
 				case(TYPE_VGAN):
-					numVganOrders++;
+					numVganOrders++;					//incrementing the number of finished vegan orders
 					break;
 				}
-				switch (c->GetType())
+
+				//while this switch case is for cooks
+				switch (c->GetType())			
 				{
 				case TYPE_NRM:
-					if (!toRest(c)&&!toBreak(c))	//if the cook doesnt go to rest	or to break		
+					if (!toRest(c)&&!toBreak(c))	//if the cook doesnt go to rest	or to break	
 					{
 						availableNormalCooks.enqueue(c);  //then we enqueue him in the queue of available cooks according to his spechilaty in this case normal cooks
 						numberAvailNormalCooks++;			//incremintg the number of available cooks type normal
@@ -695,7 +701,8 @@ void Restaurant::moveFromInservToFinished()
 					break;
 				}
 			}
-			else
+
+			else	//if this order is not set to be finished on this timestep we move the order and the cooks assigned to it to the end of their respective queues
 			{
 				Cook* tempCook;				//here if the order finish time is not the same as the current time step then remove it from the start of the queue to its end
 				Order* tempOrder;
