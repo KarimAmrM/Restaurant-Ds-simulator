@@ -106,6 +106,7 @@
     <ClInclude Include="Events\ArrivalEvent.h" />
     <ClInclude Include="Events\CancelationEvent.h" />
     <ClInclude Include="Events\Event.h" />
+    <ClInclude Include="Events\promoteEvent.h" />
     <ClInclude Include="Generic_DS\Node.h" />
     <ClInclude Include="Generic_DS\Queue.h" />
     <ClInclude Include="GUI\GUI.h" />
@@ -160,6 +161,7 @@
     <ClCompile Include="Events\CancelationEvent.cpp" />
     <ClCompile Include="Events\Event.cpp" />
     <ClCompile Include="Events\ArrivalEvent.cpp" />
+    <ClCompile Include="Events\promoteEvent.cpp" />
     <ClCompile Include="GUI\GUI.cpp" />
     <ClCompile Include="Rest\Cook.cpp" />
     <ClCompile Include="Rest\Order.cpp" />
