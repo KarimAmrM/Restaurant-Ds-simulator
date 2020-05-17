@@ -466,33 +466,6 @@ void Restaurant::FillDrawingList()
 	
 	}
 }
-void Restaurant::promote(int ID,int incMoney)
-{
-	int count = 0;
-	Order** O = normalOrders.toArray(count); //converting the normal orders cook queue to an arry to find the element with the matched id
-	for (int i = 0; i < count; i++)
-	{
-		if (O[i]->GetID() == ID)
-		{
-			
-			O[i]->SetType(TYPE_VIP);
-			O[i]->SetTotalMoney(O[i]->GetTotalMoney() + incMoney);
-		}
-	}
-
-	while (!normalOrders.isEmpty()) //emptyting the queue to refill it again after changing the type
-	{
-		Order* dummy;
-		normalOrders.dequeue(dummy);
-	}
-
-
-	for (int i = 0; i < count; i++)//refilling the queue again 
-	{
-		normalOrders.enqueue(O[i]);
-	}
-}
-
 
 bool Restaurant::assignToCook(Order*orderToAssigned)
 {
