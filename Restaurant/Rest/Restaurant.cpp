@@ -804,3 +804,56 @@ void Restaurant::checkEndBreakOrRest()
 	}
 }
 
+void Restaurant::Promote(int ID, double incMoney)
+{
+	int count = 0;
+	Order** O = normalOrders.toArray(count); //converting the normal orders cook queue to an arry to find the element with the matched id
+	for (int i = 0; i < count; i++)
+	{
+		if (O[i]->GetID() == ID)
+		{
+			O[i]->SetType(TYPE_VIP);
+			O[i]->SetTotalMoney(O[i]->GetTotalMoney() + incMoney);
+		}
+	}
+	
+	while (!normalOrders.isEmpty()) //emptyting the queue to refill it again with changed type and money
+	{
+		Order* dummy;
+		normalOrders.dequeue(dummy);
+	}
+
+
+	for (int i = 0; i < count; i++)//refilling the queue again 
+	{
+		normalOrders.enqueue(O[i]);
+	}
+}
+
+
+
+void Restaurant::autoPromote()
+{
+	
+	while (!normalOrders.isEmpty())
+	{
+		Order* O1;
+		normalOrders.peekFront(O1);
+		int c = currentTimeStep - O1->GetArrTime();
+
+		if (c >= promoteLimit)
+		{
+			normalOrders.dequeue(O1);
+			vipOrders.enqueue(O1, exp((O1->GetTotalMoney() / O1->GetOrdSize() * O1->GetArrTime())) / O1->GetArrTime());
+
+
+		}
+		else
+			break;
+	}
+		
+	
+
+
+
+}
