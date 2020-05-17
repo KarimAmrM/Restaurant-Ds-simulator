@@ -6,10 +6,13 @@
 #include "..\GUI\GUI.h"
 #include "..\Generic_DS\Queue.h"
 #include "..\Events\Event.h"
+#include"..\Events\CancelationEvent.h"
 #include"../Data Structers/LinkedListStack.h"
 #include"../Data Structers/LinkedList.h"
 #include"../Data Structers\PriorityQueue.h"
 
+#include<stdlib.h>
+#include<time.h>
 
 #include<fstream>
 
@@ -20,19 +23,28 @@
 class Restaurant  
 {	
 private:
-	GUI *pGUI;
-
+	GUI *pGUI;  
 	Queue<Event*> EventsQueue;	//Queue of all events that will be loaded from file
-	
-	LinkedList<Cook*> cooks;
+	//orders Queues
 
 	Queue<Order*> normalOrders;
 	Queue<Order*> veganOrders;
 	PriorityQueue<Order*> vipOrders;
 	Queue<Order*> servingOrders;
+	Queue<Order*> finishedOrders;
+
+	//cooksQueues
+
+	PriorityQueue<Cook*>onBreakCooks;
+	Queue<Cook*>availableVipCooks;
+	Queue<Cook*>availableVeganCooks;
+	Queue<Cook*>availableNormalCooks;
+	Queue<Cook*>availableCooks; //to be removed 
+	Queue <Cook*>busyCooks;
+	
+	PriorityQueue < Cook*> onRestCooks;
 	
 
-	LinkedListStack<Order*> finishedOrders;
 
 	ifstream  loadFile;
 	ofstream saveFile;
@@ -41,17 +53,15 @@ private:
 
 	int nCooks;
 	int currentTimeStep;
-	int promoteAfter;
+	int promoteLimit, numAutoPromoted;
+	int VIP_WT, numUrgentOrders;
 	int numEvents;
-	int nOrders;
-	
-	/// ==> 
-	//	DEMO-related members. Should be removed in phases 1&2
-	Queue<Order*> DEMO_Queue;	//Important: This is just for demo
-	/// ==>
-	
-	
-	
+	int nOrders,numNormOrders,numVganOrders,numVipOreders;
+	float injProb;
+	int numberAvailNormalCooks, numberAvailVipCooks, numberAvailVeganCooks;
+	int numberBusyVipCooks, numberBusyVeganCooks, numberBusyNormalCooks;
+	int numberInjured;
+	int totalMoney;
 	//
 	// TODO: Add More Data Members As Needed
 	//
@@ -65,11 +75,36 @@ public:
 	void RunSimulation();
 	void LoadFromFile();
 	void addEvent(Event* nEvent );
-	void assignToCook();
+	
 	void addOrder(Order* nOrder);
 	void cancelEvent(int ID);
 	void Simulation();
-	
+
+	//functions for printing info on the status bar 
+	int waitVipNumber();
+	int waitNormalNumber();
+	int waitVeganNumber();
+
+	void FillDrawingList();
+	bool assignToCook(Order*); //this function is called each timestep to assign orders to cook
+	void Injury();
+	void AssignUrgentOrder();
+	void moveFromInservToFinished();
+
+	bool toRest(Cook* cookToMove); // checks selected cook  to be sent to rest after finishing his order
+
+	bool toBreak(Cook* cookToMove); // checks selected cook to be sent to break after reaching his limit
+
+	void checkEndBreakOrRest();//checks on-break and in rest cooks if they finished their break/rest
+	void promote(int, int);
+	// TODO: Add More Member Functions As Needed
+	//
+
+
+
+};
+
+#endif
 	
 
 
