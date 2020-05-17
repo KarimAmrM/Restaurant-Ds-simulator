@@ -1,13 +1,19 @@
 #include "Cook.h"
 #include <math.h>
 
-Cook::Cook(int id, ORD_TYPE r_Type, int s, int n, int bd)
+Cook::Cook(int id, ORD_TYPE r_Type, int s, int n, int bd,int rest)
 {
 	ID = id;
 	type = r_Type;
 	speed = s;
 	NumberOfDishes = n;
 	BreakDuration = bd;
+	ordersCompleted = 0;
+	Free = true;
+	CurrentOrder = NULL;
+	Injured = false;
+	excpectedReturn = 0;
+	restPeriod = rest;
 }
 
 
@@ -42,9 +48,19 @@ int Cook::GetBreakDuration() const
 	return BreakDuration;
 }
 
-bool Cook::GetFlag() const
+int Cook::getExcpetedReturn() const
+{
+	return excpectedReturn;
+}
+
+bool Cook::isFree() const
 {
 	return Free;
+}
+
+bool Cook::isInjured() const
+{
+	return Injured;
 }
 
 Order* Cook::GetCurrentOrder()
@@ -75,8 +91,19 @@ void Cook::setBreakDuration(int bd)
 	BreakDuration = bd;
 }
 
+void Cook::setisfree(bool isFree)
+{
+	Free = isFree;
+}
+
+void Cook::setisinjured(bool isInjured)
+{
+	Injured = isInjured;
+}
+
 void Cook::AssignOrder(Order* o, int Stime)
 {
+	if (CurrentOrder) return;
 	CurrentOrder = o;
 	CurrentOrder->setStatus(SRV);
 	Free = false;
@@ -84,4 +111,47 @@ void Cook::AssignOrder(Order* o, int Stime)
 	double CookingTime = ceil(CurrentOrder->GetOrdSize() / double(speed));//calculating the time taken by the order to be finished
 	int finishTime = CookingTime + Stime;                               //calculating the finish time
 	CurrentOrder->SetFinishTime(finishTime);
+	
 }
+
+bool Cook::toBreak(int timeStep)
+{
+	if (ordersCompleted % NumberOfDishes == 0) 
+	{
+		excpectedReturn = timeStep + BreakDuration;
+		return true;
+	
+	}
+	return false;
+
+
+}
+
+void Cook::removeOrder()
+{
+	if (!CurrentOrder) return;
+
+	CurrentOrder = NULL;
+	ordersCompleted++;
+	setisfree(true);
+
+
+}
+
+bool Cook::toRest(int timeStep)
+{
+	if (isInjured())
+	{
+		excpectedReturn = timeStep+restPeriod;
+		return true;
+	}
+	else return false;
+}
+
+bool Cook::returnToAction(int timeStep)
+{
+	if (timeStep == excpectedReturn) { return true; }
+	return false;
+}
+
+

@@ -19,11 +19,11 @@ public:
 	T getEntry(int pos);
 	T replace(int pos, T item);
 	void print();
-
+	virtual ~LinkedList();
 };
 
 template<class T>
-inline Node<T>* LinkedList<T>::getNodeAt(int pos)
+inline Node<T>* LinkedList<T>::getNodeAt(int pos)  //utulity function to get a node at a given position , complexity of O(n)
 {
 	if (pos >= count || pos<0)
 	{
@@ -48,14 +48,14 @@ inline Node<T>* LinkedList<T>::getNodeAt(int pos)
 }
 
 template<class T>
-inline LinkedList<T>::LinkedList()
+inline LinkedList<T>::LinkedList() //normal intialziation in the constructor
 {
 	count = 0;
 	head = nullptr;
 }
 
 template<class T>
-inline bool LinkedList<T>::isEmpty()
+inline bool LinkedList<T>::isEmpty() 
 {
 	return (count == 0);
 }
@@ -67,10 +67,10 @@ inline int LinkedList<T>::getLength()
 }
 
 template<class T>
-inline bool LinkedList<T>::insert(T item, int pos)
+inline bool LinkedList<T>::insert(T item, int pos) //complexity of O(n)
 {
-	//special cases to be done 
-	if (count == 0)
+	
+	if (count == 0)  //empty special case 
 	{
 		Node<T>* ptr = new Node<T>;
 		ptr->setItem(item);
@@ -85,7 +85,7 @@ inline bool LinkedList<T>::insert(T item, int pos)
 		return false;
 	}
 
-	if (pos == 0)
+	if (pos == 0) //trying to insert an element at the start of the list
 	{
 		Node<T>* ptr = new Node<T>;
 		ptr->setItem(item);
@@ -95,7 +95,7 @@ inline bool LinkedList<T>::insert(T item, int pos)
 		return true;
 
 	}
-
+	//Normal insertion
 	Node<T>* nptr = new Node<T>;
 	nptr->setItem(item);
 	Node<T>* ptr = getNodeAt(pos - 1);
@@ -106,9 +106,9 @@ inline bool LinkedList<T>::insert(T item, int pos)
 }
 
 template<class T>
-inline bool LinkedList<T>::remove(int pos)
+inline bool LinkedList<T>::remove(int pos) //O(n)
 {
-	if (pos == 0)
+	if (pos == 0) //deleteing the first node
 	{
 		Node<T>* temp = head;
 		head = head->getNext();
@@ -116,6 +116,7 @@ inline bool LinkedList<T>::remove(int pos)
 		count--;
 		return true;
 	}
+	//invalid positions
 	if (pos >= count && count != 0)
 	{
 		cout << "invalid position" << endl;
@@ -126,10 +127,10 @@ inline bool LinkedList<T>::remove(int pos)
 		cout << "List is empty" << endl;
 		return false;
 	}
-	Node<T>* temp = getNodeAt(pos);
+	Node<T>* temp = getNodeAt(pos); //getting the pointer to the node with the passed position
 	Node<T>* ptr = getNodeAt(pos - 1);
-	ptr->setNext(temp->getNext());
-	delete temp;
+	ptr->setNext(temp->getNext());  //interchanging links 
+	delete temp; //freeying up memory
 	count--;
 	return true;
 
@@ -138,7 +139,7 @@ inline bool LinkedList<T>::remove(int pos)
 template<class T>
 inline void LinkedList<T>::clear()
 {
-	
+	//emptying the list and clearing memory
 	while (head)
 	{
 		Node<T>* ptr = head;
@@ -149,16 +150,17 @@ inline void LinkedList<T>::clear()
 }
 
 template<class T>
-inline T LinkedList<T>::getEntry(int pos)
+inline T LinkedList<T>::getEntry(int pos) //function that return item at a given position
 {
 	if(getNodeAt(pos)!=nullptr)
 	return getNodeAt(pos)->getItem();
 }
 
 template<class T>
-inline T LinkedList<T>::replace(int pos, T item)
+inline T LinkedList<T>::replace(int pos, T item) //just replacing the contetnts of the node at a given position with the enterd data .
 {
-	return T();
+	Node<T>* ptr = getNodeAt(pos);
+	ptr->setItem(item);
 }
 
 template<class T>
@@ -175,4 +177,10 @@ inline void LinkedList<T>::print()
 		ptr = ptr->getNext();
 	}
 	cout << endl;
+}
+
+template<class T>
+inline LinkedList<T>::~LinkedList()
+{
+	clear();
 }

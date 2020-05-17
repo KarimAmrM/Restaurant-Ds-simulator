@@ -2,28 +2,30 @@
 #include<iostream>
 using namespace std;
 #include"ListAdt.h"
-#define max 100
 template <class T>
 class ArrayList:public ListAdt<T>
 {
 private :
-	T arr[max];
+	int max;
+	T* arr;
 	int count;
 public:
-	ArrayList();
+	ArrayList(int size);
 	bool isEmpty();
 	int getLength();
 	bool insert( T item ,int pos );
 	 bool remove(int pos) ;
-	 void clear() ;
+	 void clear();
 	 T getEntry(int pos) ;
 	 T replace(int pos, T item) ;
 	 void print();
 };
 
 template<class T>
-inline ArrayList<T>::ArrayList()
+inline ArrayList<T>::ArrayList(int size)
 {
+	max = size;
+	arr = new T[max];
 	count = 0;
 }
 
