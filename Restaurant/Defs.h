@@ -1,6 +1,7 @@
 #ifndef __DEFS_H_
 #define __DEFS_H_
-
+#include<time.h>
+#include<stdlib.h>
 
 
 enum ORD_TYPE	//types of orders

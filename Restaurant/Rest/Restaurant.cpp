@@ -199,7 +199,10 @@ void Restaurant::addOrder(Order* nOrder)
 	}
 	else if (nOrder->GetType() == TYPE_VIP) 
 	{
-		vipOrders.enqueue(nOrder,2);
+		double money = nOrder->GetTotalMoney();
+		int arrivalTime = nOrder->GetArrTime();
+		int size = nOrder->GetOrdSize();
+		vipOrders.enqueue(nOrder,exp((money/size*arrivalTime))/arrivalTime);
 	}
 
 }
@@ -648,14 +651,11 @@ void Restaurant::moveFromInservToFinished()
 			if (c->GetCurrentOrder()->GetFinishTime() == currentTimeStep) //checking if the top cook has an order to be finished at this current time step
 			{
 				busyCooks.dequeue(c);					//if the cook is serving an order that has the same time as the current timestep then remove it from the queue of busy cooks
-				c->removeOrder();
 				finishedOrder = c->GetCurrentOrder();
-
 				c->removeOrder();
 				servingOrders.dequeue(finishedOrder);			//move the order from inservice list to the finished orders list
 				finishedOrders.enqueue(finishedOrder); 
 				switch (finishedOrder->GetType) 
-
 				{
 				case(TYPE_NRM):
 					numNormOrders++;
@@ -694,7 +694,6 @@ void Restaurant::moveFromInservToFinished()
 					}
 					break;
 				}
-				// if statement  can be replaced by relocate function below
 			}
 			else
 			{
@@ -708,7 +707,6 @@ void Restaurant::moveFromInservToFinished()
 		}
 	}
 }
-
 
 bool Restaurant::toRest(Cook* cookToMove)
 {
@@ -744,7 +742,6 @@ void Restaurant::checkEndBreakOrRest()
 
 			switch (restingCook->GetType()) 
 			{
-
 
 			case TYPE_NRM:
 				numberAvailNormalCooks++;
@@ -796,9 +793,7 @@ void Restaurant::checkEndBreakOrRest()
 
 		}
 
-		return;
-	}
 
 	}
-
+}
 
