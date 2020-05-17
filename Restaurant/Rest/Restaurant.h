@@ -69,6 +69,7 @@ public:
 	void addOrder(Order* nOrder);
 	void cancelEvent(int ID);
 	void Simulation();
+	void promote(int ID,int incMoney);
 	
 	
 
