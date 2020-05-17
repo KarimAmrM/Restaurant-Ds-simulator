@@ -96,31 +96,11 @@ public:
 	bool toBreak(Cook* cookToMove); // checks selected cook to be sent to break after reaching his limit
 
 	void checkEndBreakOrRest();//checks on-break and in rest cooks if they finished their break/rest
-	void promote(int, int);
-	// TODO: Add More Member Functions As Needed
-	//
-
-
-
-};
-
-#endif
+	void Promote(int ID, double incMoney);
+	void autoPromote();
 	
-
-
-	void FillDrawingList();
-
-	//
 	// TODO: Add More Member Functions As Needed
 	//
-
-
-/// ===================    DEMO-related functions. Should be removed in phases 1&2   ================= 
-
-	//void Just_A_Demo();	//just to show a demo and should be removed in phase1 1 & 2
-	//void AddtoDemoQueue(Order* po);	//adds an order to the demo queue
-
-/// ================================================================================================== 
 
 
 
