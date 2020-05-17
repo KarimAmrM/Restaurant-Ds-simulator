@@ -564,10 +564,10 @@ void Restaurant::Injury()
 		if (p <= injProb)
 		{
 			Cook* InjCook=nullptr; //a pointer to hold the injured cook
-			busyCooks.peekFront(InjCook); //dequeuing the first busy cook
+			busyCooks.peekFront(InjCook); 
 			if (InjCook->isInjured())	//if this cook is already injured
 				return;
-			InjCook->setisinjured(true); //changing the cook's status to injured
+			InjCook->setinjured(true); //changing the cook's status to injured
 			int passedTime = currentTimeStep - InjCook->GetCurrentOrder()->GetServTime();//calculating the time passed from the serving time to the current time step
 			int doneDishes = passedTime*InjCook->GetSpeed(); //calculating the number of done dishes until the current time step
 			int newSpeed = InjCook->GetSpeed() / 2; //decrement the cook's speed to half its value
@@ -777,7 +777,7 @@ void Restaurant::checkEndBreakOrRest()
 		{
 			onRestCooks.dequeue(restingCook);// meaning cook ended his rest and needs to be returned to the appropriate queue
 			restingCook->setSpeed(restingCook->GetSpeed() * 2);
-			restingCook->setisinjured(false);
+			restingCook->setinjured(false);
 			switch (restingCook->GetType()) 
 			{
 

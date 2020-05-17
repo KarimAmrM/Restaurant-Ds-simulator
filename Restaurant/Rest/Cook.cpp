@@ -91,12 +91,12 @@ void Cook::setBreakDuration(int bd)
 	BreakDuration = bd;
 }
 
-void Cook::setisfree(bool isFree)
+void Cook::setfree(bool isFree)
 {
 	Free = isFree;
 }
 
-void Cook::setisinjured(bool isInjured)
+void Cook::setinjured(bool isInjured)
 {
 	Injured = isInjured;
 }
@@ -137,7 +137,7 @@ void Cook::removeOrder()
 
 	CurrentOrder = NULL;
 	ordersCompleted++;
-	setisfree(true);
+	setfree(true);
 
 
 }
