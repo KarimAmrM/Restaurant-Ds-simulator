@@ -12,7 +12,9 @@ Cook::Cook(int id, ORD_TYPE r_Type, int s, int n, int bd,int rest)
 	Free = true;
 	CurrentOrder = NULL;
 	Injured = false;
+
 	excpectedReturn = 0;
+
 	restPeriod = rest;
 }
 
@@ -116,20 +118,47 @@ void Cook::AssignOrder(Order* o, int Stime)
 
 bool Cook::toBreak(int timeStep)
 {
+	/*if (ordersCompleted % NumberOfDishes == 0 && isInjured() && isFree()) // this cook got injured in the last order before taking his break
+	{
+		if (BreakDuration >= restPeriod)
+		{
+			excpetedReturn = BreakDuration;
+		}
+		else
+			excpetedReturn = restPeriod;
+					
+	}*/
 	if (ordersCompleted % NumberOfDishes == 0) 
 	{
+
 		excpectedReturn = timeStep + BreakDuration;
 		if (isInjured()) 
 		{
 			speed *= 2;
 		}
+
 		return true;
-	
+
 	}
 	return false;
 
+	
+
+
 
 }
+
+bool Cook::toRest(int timestep)
+{
+	if (isInjured() && isFree()) 
+	{
+		excpectedReturn = timestep + restPeriod;
+		return true;
+	}
+	return false;
+}
+
+
 
 void Cook::removeOrder()
 {
@@ -141,12 +170,11 @@ void Cook::removeOrder()
 
 
 }
-
-bool Cook::toRest(int timeStep)
+	bool Cook::toRest(int timeStep)
 {
 	if (isInjured())
 	{
-		excpectedReturn = timeStep+restPeriod;
+		excpectedReturn = timeStep + restPeriod;
 		return true;
 	}
 	else return false;
@@ -157,5 +185,8 @@ bool Cook::returnToAction(int timeStep)
 	if (timeStep == excpectedReturn) { return true; }
 	return false;
 }
+
+
+
 
 

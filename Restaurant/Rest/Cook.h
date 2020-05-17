@@ -10,11 +10,13 @@ class Cook
 	int speed;		//dishes it can prepare in one clock tick (in one timestep)
 	int NumberOfDishes; //number of dishes before break
 	int BreakDuration;  //time steps of the break;    
+
 	bool Free ; //flag to check either the cook is free or not
 	Order* CurrentOrder ; //the assigned order to the cook
 	bool Injured ;  //flag to check either the cook is injured or not
 	int ordersCompleted;
 	int excpectedReturn;
+
 	int restPeriod;
 
 public:
@@ -37,10 +39,12 @@ public:
 	void setisfree(bool isFree);
 	void setisinjured(bool isInjured);
 	void AssignOrder(Order* o, int Stime);//a function to assign an order to the cook
+
 	bool toBreak(int timeStep);
 	void removeOrder();
 	bool toRest(int timeStep);
 	bool returnToAction(int timeStep);
+
 
 
 };
