@@ -564,7 +564,7 @@ void Restaurant::Injury()
 		if (p <= injProb)
 		{
 			Cook* InjCook=nullptr; //a pointer to hold the injured cook
-			busyCooks.dequeue(InjCook); //dequeuing the first busy cook
+			busyCooks.peekFront(InjCook); //dequeuing the first busy cook
 			if (InjCook->isInjured())	//if this cook is already injured
 				return;
 			InjCook->setisinjured(true); //changing the cook's status to injured
