@@ -48,7 +48,7 @@ void Restaurant::RunSimulation()
 
 }
 
-void Restaurant::LoadFromFile()
+void Restaurant::loadFromFile()
 {
 	loadFile.open("2.txt");
 	if (!loadFile.is_open()) {
@@ -168,15 +168,39 @@ void Restaurant::LoadFromFile()
 						
 						break;
 		
-				case('P'): // to be completed in phase 2
+				case('P'): // promote event
 					int extraMoney;
 					loadFile >> eventTimeStep >> eventId >> extraMoney;
-						//Promotion event
+					nEvent = new promoteEvent(eventTimeStep, eventId, extraMoney);
+					addEvent(nEvent);
+
 					break;
 				default:
 					break;
 				}
 			}
+}
+
+void Restaurant::saveToFile()
+{
+	Order* order1=NULL;
+	Order* order2 = NULL;
+
+
+	
+	saveFile.open("saveFile.txt");
+
+	saveFile << "FT" << "     " << "ID" << "     " << "AT" << "     " << "WT" << "     " << "ST" <<endl;
+	
+	
+
+
+
+
+
+
+
+
 }
 
 void Restaurant::addEvent( Event* nEvent)
@@ -226,7 +250,7 @@ void Restaurant::cancelEvent(int ID)
 			count--;
 		}
 	}
-	nOrders--;
+	
 
 	while (!normalOrders.isEmpty()) //emptyting the queue to refill it again without the order with the canceled id 
 	{
@@ -243,7 +267,7 @@ void Restaurant::cancelEvent(int ID)
 
 void Restaurant::Simulation()
 {
-	LoadFromFile();
+	loadFromFile();
 	//continue simulation until there's no events nor any waiting/serving orders
 	while (!EventsQueue.isEmpty() || !vipOrders.isEmpty() || !veganOrders.isEmpty() || !normalOrders.isEmpty() || !servingOrders.isEmpty())
 	{
@@ -659,6 +683,7 @@ void Restaurant::moveFromInservToFinished()
 				finishedOrders.enqueue(finishedOrder);	//we add the order to the finished orders queue
 
 				//this switch case is to check on the type of the order alone as in some cases orders can be assigned to differnet cooks types
+				nOrders++;
 				switch (finishedOrder->GetType())		
 				{
 				case(TYPE_NRM):

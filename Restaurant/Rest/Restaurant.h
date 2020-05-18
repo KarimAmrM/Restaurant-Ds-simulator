@@ -10,6 +10,7 @@
 #include"../Data Structers/LinkedListStack.h"
 #include"../Data Structers/LinkedList.h"
 #include"../Data Structers\PriorityQueue.h"
+#include"../Events/promoteEvent.h"
 
 #include<stdlib.h>
 #include<time.h>
@@ -72,7 +73,8 @@ public:
 	
 	void ExecuteEvents(int TimeStep);	//executes all events at current timestep
 	void RunSimulation();
-	void LoadFromFile();
+	void loadFromFile();
+	void saveToFile();
 	void addEvent(Event* nEvent );
 	
 	void addOrder(Order* nOrder);
