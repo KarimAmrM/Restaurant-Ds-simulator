@@ -17,6 +17,7 @@ protected:
 	int ArrTime, ServTime, FinishTime, waitTime;	//arrival, service start, and finish times
 	int OrdSize;   //the number of dishes for the order
 	int assignedToCookAt;
+	bool urgent;
 	//
 	// TODO: Add More Data Members As Needed
 	//
@@ -57,6 +58,9 @@ public:
 
 	void orderAssigned(int);
 	void orderFinished(int);
+	
+	void setUrgent(bool);
+	bool isUrgent();
 	
 	//
 	// TODO: Add More Member Functions As Needed

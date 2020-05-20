@@ -16,6 +16,7 @@ class Cook
 	int ordersCompleted;
 	int excpectedReturn;
 	int restPeriod;
+	bool preparingUrgent;
 
 public:
 	Cook(int id, ORD_TYPE r_Type, int s, int n, int bd,int rest);
@@ -41,6 +42,7 @@ public:
 	void removeOrder(int timeStep);
 	bool toRest(int timeStep);
 	bool returnToAction(int timeStep);
+	bool preparedUrgent()const;
 
 
 };

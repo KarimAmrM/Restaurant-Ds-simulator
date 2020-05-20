@@ -14,6 +14,7 @@ Cook::Cook(int id, ORD_TYPE r_Type, int s, int n, int bd,int rest)
 	Injured = false;
 	excpectedReturn = 0;
 	restPeriod = rest;
+	preparingUrgent = false;
 }
 
 
@@ -110,6 +111,7 @@ void Cook::AssignOrder(Order* o, int Stime)
 	double CookingTime = ceil(CurrentOrder->GetOrdSize() / double(speed));//calculating the time taken by the order to be finished
 	int finishTime = CookingTime + Stime;                               //calculating the finish time
 	CurrentOrder->SetFinishTime(finishTime);
+	preparingUrgent = o->isUrgent();
 	
 }
 
@@ -153,8 +155,22 @@ bool Cook::toRest(int timeStep)
 
 bool Cook::returnToAction(int timeStep)
 {
-	if (timeStep == excpectedReturn) { return true; }
+	if (timeStep == excpectedReturn) 
+	{
+		preparingUrgent = false;
+		if (isInjured()) 
+		{ 
+			setinjured(false);
+			setSpeed(GetSpeed() * 2);
+		}
+		return true; 
+	}
 	return false;
+}
+
+bool Cook::preparedUrgent() const
+{
+	return preparingUrgent;
 }
 
 

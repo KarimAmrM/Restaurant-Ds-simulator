@@ -11,6 +11,7 @@ Order::Order(int id, ORD_TYPE r_Type, int s, int ar, double m)
 	waitTime = 0;
 	ServTime = 0;
 	FinishTime = 0;
+	urgent = false;
 }
 
 Order::~Order()
@@ -128,4 +129,14 @@ void Order::orderFinished(int timeStep)
 {
 	SetServTime(timeStep-assignedToCookAt);
 	setStatus(DONE);
+}
+
+void Order::setUrgent(bool flag)
+{
+	urgent =flag;
+}
+
+bool Order::isUrgent()
+{
+	return urgent;
 }

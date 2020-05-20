@@ -449,11 +449,11 @@ void Restaurant::FillDrawingList()
 	//To add Cooks it should call function  void GUI::AddToDrawingList(Cook* pCc);
 
 	int avaialbeCooksCount = 0;
-	Cook** availCooks = availableCooks.toArray(avaialbeCooksCount);
+	//Cook** availCooks = availableCooks.toArray(avaialbeCooksCount);
 	for (int i = 0; i < avaialbeCooksCount; i++) 
 	{
 		
-		pGUI->AddToDrawingList(availCooks[i]);
+		//pGUI->AddToDrawingList(availCooks[i]);
 		
 	}
 
@@ -661,6 +661,7 @@ void Restaurant::AssignUrgentOrder()
 	while (WaitingTime >= VIP_WT) //to handle the case of many orders at the same time step
 	{
 		numUrgentOrders++;
+		UrgentOrder->setUrgent(true);
 		bool assigned=assignToCook(UrgentOrder); //a boolean to check either the order is assigned to a cook or not 
 		if (!assigned) //in case there is no free cook
 		{
@@ -742,8 +743,8 @@ void Restaurant::moveFromInservToFinished()
 					numVganOrders++;					//incrementing the number of finished vegan orders
 					break;
 				}
-				
-				if (c->toBreak(currentTimeStep) && c->toRest(currentTimeStep))	// the cook is injured and has to go to break we send him rest
+				// the cook is injured and has to go to break we send him rest and he wasn't taken from rest
+				if (c->toBreak(currentTimeStep) && c->toRest(currentTimeStep)&&!c->preparedUrgent())	
 				{
 					switch (c->GetType())
 					{
@@ -776,8 +777,8 @@ void Restaurant::moveFromInservToFinished()
 						break;
 					}
 				}
-				
-				else if (!c->toBreak(currentTimeStep) && !c->toRest(currentTimeStep)) //the cook isn't injured nor going on break then send him in the appropriate queue
+						//cook isn't injured or going to break								// cook was injured and took an urgent order
+				else if (((!c->toBreak(currentTimeStep) && !c->toRest(currentTimeStep)))||(c->toRest(currentTimeStep)&&c->preparedUrgent())) 			
 				{
 					switch (c->GetType())
 					{
@@ -798,7 +799,7 @@ void Restaurant::moveFromInservToFinished()
 						break;
 					}
 				}
-				else if (!c->toBreak(currentTimeStep) && c->toRest(currentTimeStep)) //cook is injured but doesn't need to go on break
+				else if (!c->toBreak(currentTimeStep) && c->toRest(currentTimeStep)&&!c->preparedUrgent()) //cook is injured but doesn't need to go on break
 				{
 					switch (c->GetType())
 					{
@@ -872,8 +873,7 @@ void Restaurant::checkEndBreakOrRest()
 		while (restingCook->returnToAction(currentTimeStep))// keeps checking the first entry if cook is ready to return to his available queue
 		{
 			onRestCooks.dequeue(restingCook);// meaning cook ended his rest and needs to be returned to the appropriate queue
-			restingCook->setSpeed(restingCook->GetSpeed() * 2);
-			restingCook->setinjured(false);
+			
 			switch (restingCook->GetType()) 
 			{
 			case TYPE_NRM:
