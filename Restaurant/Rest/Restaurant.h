@@ -14,7 +14,7 @@
 
 #include<stdlib.h>
 #include<time.h>
-
+#include<iomanip>
 #include<fstream>
 
 
@@ -36,13 +36,13 @@ private:
 
 	//cooksQueues
 
-	PriorityQueue<Cook*>onBreakCooks;
+
 	Queue<Cook*>availableVipCooks;
 	Queue<Cook*>availableVeganCooks;
 	Queue<Cook*>availableNormalCooks;
-	Queue<Cook*>availableCooks; //to be removed 
 	Queue <Cook*>busyCooks;
 	PriorityQueue < Cook*> onRestCooks;
+	PriorityQueue<Cook*>onBreakCooks;
 	
 
 
@@ -51,17 +51,16 @@ private:
 
 	int normalCooks, veganCooks, vipCooks;// number of each cook
 
-	int nCooks;
+	int nCooks,numEvents;
 	int currentTimeStep;
-	int promoteLimit, numAutoPromoted;
-	int VIP_WT, numUrgentOrders;
-	int numEvents;
+	int promoteLimit, numAutoPromoted, VIP_WT;
 	int nOrders,numNormOrders,numVganOrders,numVipOreders;
-	float injProb;
+	float injProb, numUrgentOrders;
 	int numberAvailNormalCooks, numberAvailVipCooks, numberAvailVeganCooks;
 	int numberBusyVipCooks, numberBusyVeganCooks, numberBusyNormalCooks;
 	int numberInjured;
 	int totalMoney;
+	float totalWait, totalServe;
 	//
 	// TODO: Add More Data Members As Needed
 	//
@@ -92,9 +91,7 @@ public:
 	void AssignUrgentOrder();
 	void moveFromInservToFinished();
 
-	bool toRest(Cook* cookToMove); // checks selected cook  to be sent to rest after finishing his order
 
-	bool toBreak(Cook* cookToMove); // checks selected cook to be sent to break after reaching his limit
 
 	void checkEndBreakOrRest();//checks on-break and in rest cooks if they finished their break/rest
 

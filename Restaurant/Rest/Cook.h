@@ -38,7 +38,7 @@ public:
 	void setinjured(bool isInjured);
 	void AssignOrder(Order* o, int Stime);//a function to assign an order to the cook
 	bool toBreak(int timeStep);
-	void removeOrder();
+	void removeOrder(int timeStep);
 	bool toRest(int timeStep);
 	bool returnToAction(int timeStep);
 

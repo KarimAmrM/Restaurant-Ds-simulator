@@ -25,6 +25,10 @@ Restaurant::Restaurant()
 	numVganOrders = 0;
 	numVipOreders = 0;
 	numUrgentOrders = 0;
+	totalWait = 0;
+	totalServe = 0;
+	numAutoPromoted = 0;
+
 }
 
 void Restaurant::RunSimulation()
@@ -132,30 +136,23 @@ void Restaurant::loadFromFile()
 				
 				switch (eventType) 
 				{
-				
 				case('R'): // Change constructor of arrivalEvent to fill order's info
 					loadFile >>orderType>> eventTimeStep >> eventId >> orderSize >> orderPrice;
 					nOrders++;
 					if (orderType == 'N') 
 					{
-						
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_NRM,orderSize,orderPrice);
 						addEvent(nEvent);
-						
 					}
 					else if (orderType == 'G') 
 					{
-							
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VGAN,orderSize,orderPrice);
 						addEvent(nEvent);
-						
 					}
 					else if (orderType == 'V') 
 					{
-					
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_VIP,orderSize,orderPrice);
 						addEvent(nEvent);
-						
 					}
 					break;
 				case('X'): // Cancellation event
@@ -181,23 +178,68 @@ void Restaurant::loadFromFile()
 			}
 }
 
-void Restaurant::saveToFile()
-{
-	Order* order1=NULL;
-	Order* order2 = NULL;
+void Restaurant::saveToFile() {
+
+	Order** finishedOrdersArr;
+	Order* order;
+	int numFinishedOrders = 0;
+	
+	while (!finishedOrders.isEmpty()) //empty finished orders queue to an array to sort it 
+	{
+		finishedOrders.dequeue(order);
+		finishedOrdersArr[numFinishedOrders] = order;
+		numFinishedOrders++;
+	}
+
+
+	// modified insertion sort to sort order by arrival time if they have the same finish time
+	int i, j;
+	Order* key;
+	for (i = 1; i < numFinishedOrders; i++)
+	{
+			key = finishedOrdersArr[i];
+			j = i - 1;
+
+			//only sorts if orders have same finish time
+		while (j >= 0 && finishedOrdersArr[j]->GetArrTime() > key->GetArrTime() && finishedOrdersArr[j]->GetFinishTime() == key->GetFinishTime())
+		{
+				finishedOrdersArr[j + 1] = finishedOrdersArr[j];
+				j = j - 1;
+		}
+			finishedOrdersArr[j + 1] = key;
+	}
+	
+
 
 
 	
 	saveFile.open("saveFile.txt");
+	if (!saveFile)
+	{ 
+		pGUI->PrintMessage("out file failed!!error");
+		pGUI->waitForClick();
+		return;
+	}
 
 	saveFile << "FT" << "     " << "ID" << "     " << "AT" << "     " << "WT" << "     " << "ST" <<endl;
 	
-	
+	for (int i = 0; i < numFinishedOrders; i++) 
+	{
+		saveFile << finishedOrdersArr[i]->GetFinishTime() << "     " << finishedOrdersArr[i]->GetID() << "     " << finishedOrdersArr[i]->GetArrTime()
+			<< "     " << finishedOrdersArr[i]->getWaitTime() << "     " << finishedOrdersArr[i]->GetServTime() << endl;
+	}
+	saveFile << "...................................................." << endl;
+
+	saveFile << nOrders << "  " << "[Normal:" << numNormOrders << ", " << "Vegan:" << numVganOrders << ", " << "VIP:" << numVipOreders << "]" << endl;
+
+	saveFile << nCooks << "  " << "[Normal:" << normalCooks << ", " << "Vegan:" << veganCooks << ", " << "VIP:" << vipCooks <<", "<<"injured: "<<numberInjured <<"]" << endl;
+
+	saveFile << "Average wait= " << totalWait / nOrders << ", " << "Average serve= " << totalServe / nOrders << endl;
+
+	saveFile << "UrgentOrders: " << numUrgentOrders << ",  " << "Auto-promoted: " << setprecision(2)<<fixed<<(numAutoPromoted / numNormOrders) * 100;
 
 
-
-
-
+	saveFile.close();
 
 
 
@@ -678,12 +720,16 @@ void Restaurant::moveFromInservToFinished()
 			{
 				busyCooks.dequeue(c);					//if the cook is serving an order that has the same time as the current timestep then remove it from the queue of busy cooks
 				finishedOrder = c->GetCurrentOrder();	//setting the order of the cook to the finsihed order
-				c->removeOrder();						//removing the order from the cook
+				c->removeOrder(currentTimeStep);						//removing the order from the cook
 				servingOrders.dequeue(finishedOrder);	//move the order from inservice list to the finished orders list
 				finishedOrders.enqueue(finishedOrder);	//we add the order to the finished orders queue
 
 				//this switch case is to check on the type of the order alone as in some cases orders can be assigned to differnet cooks types
 				nOrders++;
+				totalServe += finishedOrder->GetServTime();
+				totalWait += finishedOrder->getWaitTime();
+
+
 				switch (finishedOrder->GetType())		
 				{
 				case(TYPE_NRM):
@@ -696,34 +742,77 @@ void Restaurant::moveFromInservToFinished()
 					numVganOrders++;					//incrementing the number of finished vegan orders
 					break;
 				}
-
-				//while this switch case is for cooks
-				switch (c->GetType())			
+				
+				if (c->toBreak(currentTimeStep) && c->toRest(currentTimeStep))	// the cook is injured and has to go to break we send him rest
 				{
-				case TYPE_NRM:
-					if (!toRest(c)&&!toBreak(c))	//if the cook doesnt go to rest	or to break	
+					switch (c->GetType())
 					{
-						availableNormalCooks.enqueue(c);  //then we enqueue him in the queue of available cooks according to his spechilaty in this case normal cooks
-						numberAvailNormalCooks++;			//incremintg the number of available cooks type normal
+					case TYPE_NRM:
 						numberBusyNormalCooks--;			//decremting the number of busy cooks
-					}
-					break;
-				case TYPE_VIP:								//same procedure but for VIP
-					if (!toRest(c) && !toBreak(c))
-					{
-						availableVipCooks.enqueue(c);		////then we enqueue him in the queue of available cooks according to his spechilaty in this case VIP cooks
-						numberAvailVipCooks++;				//incremintg the number of available cooks type VIP
+						break;
+					case TYPE_VIP:								//same procedure but for VIP
 						numberBusyVipCooks--;				//decremting the number of busy cooks
-					}
-					break;
-				case TYPE_VGAN:							//same procedure but for VEGAN
-					if (!toRest(c) && !toBreak(c))
-					{
-						availableVeganCooks.enqueue(c);			//then we enqueue him in the queue of available cooks according to his spechilaty in this case VEGAN cooks
-						numberAvailVeganCooks++;				//incremintg the number of available cooks type vegan
+						break;
+					case TYPE_VGAN:							//same procedure but for VEGAN
 						numberBusyVeganCooks--;					//decremting the number of busy cooks
+						break;
 					}
-					break;
+					onRestCooks.enqueue(c, -c->getExcpetedReturn());  //we enqueue him in the queue of resting cooks 
+				
+				}
+				else if (c->toBreak(currentTimeStep) && !c->toRest(currentTimeStep)) // cook should go on break and he isn't injured 
+				{
+					onBreakCooks.enqueue(c, -c->getExcpetedReturn());
+					switch (c->GetType())
+					{
+					case TYPE_NRM:
+						numberBusyNormalCooks--;			//decremting the number of busy cooks
+						break;
+					case TYPE_VIP:								//same procedure but for VIP
+						numberBusyVipCooks--;				//decremting the number of busy cooks
+						break;
+					case TYPE_VGAN:							//same procedure but for VEGAN
+						numberBusyVeganCooks--;					//decremting the number of busy cooks
+						break;
+					}
+				}
+				
+				else if (!c->toBreak(currentTimeStep) && !c->toRest(currentTimeStep)) //the cook isn't injured nor going on break then send him in the appropriate queue
+				{
+					switch (c->GetType())
+					{
+					case TYPE_NRM:
+							availableNormalCooks.enqueue(c);  //then we enqueue him in the queue of available cooks according to his spechilaty in this case normal cooks
+							numberAvailNormalCooks++;
+							numberBusyNormalCooks--;			//decremting the number of busy cooks
+						break;
+					case TYPE_VIP:								//same procedure but for VIP
+							availableVipCooks.enqueue(c);		////then we enqueue him in the queue of available cooks according to his spechilaty in this case VIP cooks
+							numberAvailVipCooks++;				//incremintg the number of available cooks type VIP
+							numberBusyVipCooks--;				//decremting the number of busy cooks
+						break;
+					case TYPE_VGAN:							//same procedure but for VEGAN
+							availableVeganCooks.enqueue(c);			//then we enqueue him in the queue of available cooks according to his spechilaty in this case VEGAN cooks
+							numberAvailVeganCooks++;				//incremintg the number of available cooks type vegan
+							numberBusyVeganCooks--;					//decremting the number of busy cooks
+						break;
+					}
+				}
+				else if (!c->toBreak(currentTimeStep) && c->toRest(currentTimeStep)) //cook is injured but doesn't need to go on break
+				{
+					switch (c->GetType())
+					{
+					case TYPE_NRM:
+						numberBusyNormalCooks--;			//decremting the number of busy cooks
+						break;
+					case TYPE_VIP:								//same procedure but for VIP
+						numberBusyVipCooks--;				//decremting the number of busy cooks
+						break;
+					case TYPE_VGAN:							//same procedure but for VEGAN
+						numberBusyVeganCooks--;					//decremting the number of busy cooks
+						break;
+					}
+					onRestCooks.enqueue(c, -c->getExcpetedReturn());  //then we enqueue him in the queue of resting cooks 
 				}
 			}
 
@@ -740,26 +829,8 @@ void Restaurant::moveFromInservToFinished()
 	}
 }
 
-bool Restaurant::toRest(Cook* cookToMove)
-{
-	if(cookToMove->toRest(currentTimeStep))
-	{
-		onRestCooks.enqueue(cookToMove,-cookToMove->getExcpetedReturn());// puts the cook in a priorty queue, cooks are sorted in an ascending order in regard to their return time
-		return true;
-	}
-	return false;
-}
 
-bool Restaurant::toBreak(Cook* cookToMove)
-{
 
-	if (cookToMove->toBreak(currentTimeStep))
-	{
-		onBreakCooks.enqueue(cookToMove,-cookToMove->getExcpetedReturn());// puts the cook in a priorty queue, cooks are sorted in an ascending order in regard to their return time
-		return true;
-	}
-	return false;
-}
 
 void Restaurant::checkEndBreakOrRest()
 {
@@ -805,7 +876,6 @@ void Restaurant::checkEndBreakOrRest()
 			restingCook->setinjured(false);
 			switch (restingCook->GetType()) 
 			{
-
 			case TYPE_NRM:
 				numberAvailNormalCooks++;
 				availableNormalCooks.enqueue(restingCook);
@@ -818,14 +888,10 @@ void Restaurant::checkEndBreakOrRest()
 				numberAvailVeganCooks++;
 				availableVeganCooks.enqueue(restingCook);
 				break;
-
 			}
 			onRestCooks.peek(restingCook);
 			if (!restingCook) break;// to avoid accessing null pointer
-
 		}
-
-
 	}
 }
 
@@ -859,7 +925,6 @@ void Restaurant::Promote(int ID, double incMoney)
 
 void Restaurant::autoPromote()
 {
-	
 	while (!normalOrders.isEmpty())
 	{
 		Order* O1;
@@ -868,6 +933,7 @@ void Restaurant::autoPromote()
 
 		if (c >= promoteLimit)
 		{
+			numAutoPromoted++;
 			normalOrders.dequeue(O1);
 			vipOrders.enqueue(O1, exp((O1->GetTotalMoney() / O1->GetOrdSize() * O1->GetArrTime())) / O1->GetArrTime());
 
@@ -876,9 +942,4 @@ void Restaurant::autoPromote()
 		else
 			break;
 	}
-		
-	
-
-
-
 }

@@ -8,6 +8,9 @@ Order::Order(int id, ORD_TYPE r_Type, int s, int ar, double m)
 	OrdSize = s;
 	ArrTime = ar;
 	totalMoney = m;
+	waitTime = 0;
+	ServTime = 0;
+	FinishTime = 0;
 }
 
 Order::~Order()
@@ -102,4 +105,27 @@ void Order::SetOrdSize(int OS)
 int Order::GetOrdSize() const
 {
 	return OrdSize;
+}
+
+int Order::getWaitTime()
+{
+	return waitTime;
+}
+
+void Order::setWaitTime(int wait)
+{
+	waitTime = wait;
+}
+
+void Order::orderAssigned(int timeStep)
+{
+	assignedToCookAt = timeStep;
+	setWaitTime(timeStep - ArrTime);
+	setStatus(SRV);
+}
+
+void Order::orderFinished(int timeStep)
+{
+	SetServTime(timeStep-assignedToCookAt);
+	setStatus(DONE);
 }

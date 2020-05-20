@@ -105,9 +105,8 @@ void Cook::AssignOrder(Order* o, int Stime)
 {
 	if (CurrentOrder) return;
 	CurrentOrder = o;
-	CurrentOrder->setStatus(SRV);
 	Free = false;
-	CurrentOrder->SetServTime(Stime);
+	CurrentOrder->orderAssigned(Stime);
 	double CookingTime = ceil(CurrentOrder->GetOrdSize() / double(speed));//calculating the time taken by the order to be finished
 	int finishTime = CookingTime + Stime;                               //calculating the finish time
 	CurrentOrder->SetFinishTime(finishTime);
@@ -121,7 +120,7 @@ bool Cook::toBreak(int timeStep)
 		excpectedReturn = timeStep + BreakDuration;
 		if (isInjured()) 
 		{
-			speed *= 2;
+			excpectedReturn = timeStep + restPeriod;
 		}
 		return true;
 	
@@ -131,10 +130,10 @@ bool Cook::toBreak(int timeStep)
 
 }
 
-void Cook::removeOrder()
+void Cook::removeOrder(int timeStep)
 {
 	if (!CurrentOrder) return;
-
+	CurrentOrder->orderFinished(timeStep);
 	CurrentOrder = NULL;
 	ordersCompleted++;
 	setfree(true);

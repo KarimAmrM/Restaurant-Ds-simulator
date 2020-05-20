@@ -14,9 +14,9 @@ protected:
 
 	double totalMoney;	//Total order money
 
-	int ArrTime, ServTime, FinishTime;	//arrival, service start, and finish times
+	int ArrTime, ServTime, FinishTime, waitTime;	//arrival, service start, and finish times
 	int OrdSize;   //the number of dishes for the order
-
+	int assignedToCookAt;
 	//
 	// TODO: Add More Data Members As Needed
 	//
@@ -51,6 +51,13 @@ public:
 
 	void SetOrdSize(int OS);
 	int GetOrdSize() const;
+
+	int getWaitTime();
+	void setWaitTime(int);
+
+	void orderAssigned(int);
+	void orderFinished(int);
+	
 	//
 	// TODO: Add More Member Functions As Needed
 	//
