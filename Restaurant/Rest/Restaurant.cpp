@@ -448,14 +448,32 @@ void Restaurant::FillDrawingList()
 	//To add orders it should call function  void GUI::AddToDrawingList(Order* pOrd);
 	//To add Cooks it should call function  void GUI::AddToDrawingList(Cook* pCc);
 
-	int avaialbeCooksCount = 0;
-	//Cook** availCooks = availableCooks.toArray(avaialbeCooksCount);
-	for (int i = 0; i < avaialbeCooksCount; i++) 
+	int avaialbeVipCooksCount = 0;
+	Cook** availableVipCooksArr = availableVipCooks.toArray(avaialbeVipCooksCount);
+	for (int i = 0; i < avaialbeVipCooksCount; i++)
+	{
+
+		pGUI->AddToDrawingList(availableVipCooksArr[i]);
+
+	}
+
+	int avaialbeNormCooksCount = 0;
+	Cook** availableNormCooksArr = availableNormalCooks.toArray(avaialbeNormCooksCount);
+	for (int i = 0; i < avaialbeNormCooksCount; i++) 
 	{
 		
-		//pGUI->AddToDrawingList(availCooks[i]);
+		pGUI->AddToDrawingList(availableNormCooksArr[i]);
 		
 	}
+	int avaialbeVeganCooksCount = 0;
+	Cook** availableVeganCooksArr = availableVeganCooks.toArray(avaialbeVipCooksCount);
+	for (int i = 0; i < avaialbeVipCooksCount; i++)
+	{
+
+		pGUI->AddToDrawingList(availableVipCooksArr[i]);
+
+	}
+	
 
 	int busyCooksCount = 0;
 	Cook** busyCooksarr = busyCooks.toArray(busyCooksCount);
