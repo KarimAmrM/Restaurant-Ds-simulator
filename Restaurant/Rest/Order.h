@@ -59,6 +59,8 @@ public:
 	void orderAssigned(int);
 	void orderFinished(int);
 	
+	int getOrderAssignedAt();
+
 	void setUrgent(bool);
 	bool isUrgent();
 	

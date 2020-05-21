@@ -28,6 +28,9 @@ Restaurant::Restaurant()
 	totalWait = 0;
 	totalServe = 0;
 	numAutoPromoted = 0;
+	numberBusyNormalCooks = 0;
+	numberBusyVipCooks = 0;
+	numberBusyVeganCooks = 0;
 
 }
 
@@ -359,28 +362,28 @@ void Restaurant::Simulation()
 		}
 
 		FillDrawingList();
-		pGUI->UpdateInterface();
+	//	pGUI->UpdateInterface();
 
 		//printing data info
 		
-		string currentTimePrinted = to_string(currentTimeStep);
+		/*string currentTimePrinted = to_string(currentTimeStep);
 		string vipWaitingOrdersPrinted = to_string(waitVipNumber());
 		string normalWaitingOrdersPrinted = to_string(waitNormalNumber());
 		string veganWaitingOrdersPrinted = to_string(waitVeganNumber());
-		string vipCooksNumberPrinted = to_string(vipCooks);
-		string normalCooksNumberPrinted = to_string(normalCooks);
-		string veganCooksNumberPrinted = to_string(veganCooks);
+		string vipCooksNumberPrinted = to_string(numberAvailVipCooks);
+		string normalCooksNumberPrinted = to_string(numberAvailNormalCooks);
+		string veganCooksNumberPrinted = to_string(numberAvailVeganCooks);
+		
 
-
-		pGUI->PrintMessage("Current time step : " + currentTimePrinted + '\n' + "Current waiting VIP orders : " + vipWaitingOrdersPrinted + '\n' + "Current waiting vegan orders : " + veganWaitingOrdersPrinted + '\n'
+		pGUI->PrintMessage("Current time step : " + currentTimePrinted +""+ '\n' + "Current waiting VIP orders : " + vipWaitingOrdersPrinted + '\n' + "Current waiting vegan orders : " + veganWaitingOrdersPrinted + '\n'
 			+ "Current waiting vegan orders : " + veganWaitingOrdersPrinted + '\n' + "Current available VIP cooks : " + vipCooksNumberPrinted + '\n'
-			+ "Current available normal cooks : " + normalCooksNumberPrinted + '\n' + "Current available vegan cooks : " + veganCooksNumberPrinted + '\n' + "Click to continue.");
-
+			+ "Current available normal cooks : " + normalCooksNumberPrinted + '\n' + "Current available vegan cooks : " + veganCooksNumberPrinted + '\n' +"Click to continue.");
+			*/
 
 		pGUI->waitForClick();
 
 
-		pGUI->ResetDrawingList();
+		//pGUI->ResetDrawingList();
 
 
 		currentTimeStep++;
@@ -447,70 +450,113 @@ void Restaurant::FillDrawingList()
 	//It should get orders from orders lists/queues/stacks/whatever (same for Cooks)
 	//To add orders it should call function  void GUI::AddToDrawingList(Order* pOrd);
 	//To add Cooks it should call function  void GUI::AddToDrawingList(Cook* pCc);
+	string currentTimePrinted;
+	string vipWaitingOrdersPrinted;
+	string normalWaitingOrdersPrinted;
+	string veganWaitingOrdersPrinted;
+	string vipCooksNumberPrinted;
+	string normalCooksNumberPrinted;
+	string veganCooksNumberPrinted;
+	string orderAssignedToCook;
+	string totalOrders;
+	string numNormalOrders, numVeganOrders, numVipOrders;
 
+	//available vip cooks
 	int avaialbeVipCooksCount = 0;
 	Cook** availableVipCooksArr = availableVipCooks.toArray(avaialbeVipCooksCount);
 	for (int i = 0; i < avaialbeVipCooksCount; i++)
 	{
-
 		pGUI->AddToDrawingList(availableVipCooksArr[i]);
-
 	}
-
+	//available normal cooks
 	int avaialbeNormCooksCount = 0;
 	Cook** availableNormCooksArr = availableNormalCooks.toArray(avaialbeNormCooksCount);
 	for (int i = 0; i < avaialbeNormCooksCount; i++) 
 	{
-		
 		pGUI->AddToDrawingList(availableNormCooksArr[i]);
-		
 	}
+	//available vegan cooks
 	int avaialbeVeganCooksCount = 0;
-	Cook** availableVeganCooksArr = availableVeganCooks.toArray(avaialbeVipCooksCount);
-	for (int i = 0; i < avaialbeVipCooksCount; i++)
+	Cook** availableVeganCooksArr = availableVeganCooks.toArray(avaialbeVeganCooksCount);
+	for (int i = 0; i < avaialbeVeganCooksCount; i++)
 	{
-
-		pGUI->AddToDrawingList(availableVipCooksArr[i]);
-
+		pGUI->AddToDrawingList(availableVeganCooksArr[i]);
 	}
-	
-
+	// cooks serving 
 	int busyCooksCount = 0;
-	Cook** busyCooksarr = busyCooks.toArray(busyCooksCount);
+	Cook** busyCooksArr = busyCooks.toArray(busyCooksCount);
 	for (int i = 0; i < busyCooksCount; i++)
 	{
+		if (busyCooksArr[i]->GetCurrentOrder()->getOrderAssignedAt() == currentTimeStep - 1) 
+		{
+		
+			string cookType;
+			string cookId;
+			string orderType;
+			string orderId;
 
-		pGUI->AddToDrawingList(busyCooksarr[i]);
+			switch (busyCooksArr[i]->GetType()) 
+			{
+			case TYPE_VIP:
+				cookType = "V";
+				break;
+			case TYPE_NRM:
+				cookType = "N";
+				break;
+			case TYPE_VGAN:
+				cookType = "G";
+				break;
+			}
+			cookId = to_string(busyCooksArr[i]->GetID());
+			switch (busyCooksArr[i]->GetCurrentOrder()->GetType())
+			{
+			case TYPE_VIP:
+				orderType = "V";
+				break;
+			case TYPE_NRM:
+				orderType = "N";
+				break;
+			case TYPE_VGAN:
+				orderType = "G";
+				break;
+			}
+			orderId = to_string(busyCooksArr[i]->GetCurrentOrder()->GetID());
+			orderAssignedToCook += cookType + cookId + orderType + orderId + "   ";
+
+		
+		}
+		
 
 	}
 
-	//Create 3 arrs to merge into one array
 	
+	//waiting orders
 	int nVipOrders = 0 ;
 	Order** vipOrdersArr = vipOrders.toArray(nVipOrders);
 	int nNormalOrders = 0;
 	Order** normalOrderArr = normalOrders.toArray(nNormalOrders);
 	int nVeganOrders = 0;
 	Order** veganOrderArr = veganOrders.toArray(nVeganOrders);
-	int sum = nVeganOrders + nVipOrders + nNormalOrders;
-	Order** orders = new Order * [sum];
+	
+	
 
 	for (int i = 0; i < nVipOrders; i++)
 	{
-		orders[i] = vipOrdersArr[i];
+		pGUI->AddToDrawingList(vipOrdersArr[i]);
 	}
 
-	for (int i = nVipOrders; i < nVipOrders + nNormalOrders; i++)
+	for (int i = 0; i < nVeganOrders; i++)
 	{
-		orders[i] = normalOrderArr[i-nVipOrders];
+		pGUI->AddToDrawingList(veganOrderArr[i]);
 	}
 
-	for (int i = nVipOrders + nNormalOrders; i < sum; i++)
+	for (int i = 0; i < nNormalOrders; i++)
 	{
-		orders[i] = veganOrderArr[i-nVipOrders-nNormalOrders];
+		pGUI->AddToDrawingList(normalOrderArr[i]);
 	}
+	
 	// Sort array by arrival time
-	int i,  j;
+	/*int i,  j;
 	Order* key;
 
 	for (i = 1; i < sum; i++)
@@ -524,31 +570,53 @@ void Restaurant::FillDrawingList()
 			j = j - 1;
 		}
 		orders[j + 1] = key;
-	}
+	}*/
 	// add waiting order list to drawing list
-	for (int i = 0; i < sum; i++) 
-	{
-		pGUI->AddToDrawingList(orders[i]);
-	}
 	
+	// in service orders
 	int servedOrd=0;
 	Order** served = servingOrders.toArray(servedOrd);
-
 	for (int i = 0; i < servedOrd; i++)
 	{
-		
-		pGUI->AddToDrawingList(served[i]);
-			
+		pGUI->AddToDrawingList(served[i]);	
 	}
+	// done orders
 	int finished=0;
 	Order** finsihedArr = finishedOrders.toArray(finished);
-
-	for (int i = 0; i < finished; i++) {
-	
-	
+	for (int i = 0; i < finished; i++) 
+	{
 		pGUI->AddToDrawingList(finsihedArr[i]);
-	
 	}
+
+
+	 currentTimePrinted = to_string(currentTimeStep);
+	 vipWaitingOrdersPrinted = to_string(waitVipNumber());
+	 normalWaitingOrdersPrinted = to_string(waitNormalNumber());
+	 veganWaitingOrdersPrinted = to_string(waitVeganNumber());
+	 vipCooksNumberPrinted = to_string(numberAvailVipCooks);
+	 normalCooksNumberPrinted = to_string(numberAvailNormalCooks);
+	 veganCooksNumberPrinted = to_string(numberAvailVeganCooks);
+	 numNormalOrders = to_string(numNormOrders);
+	 numVipOrders = to_string(numVipOreders);
+	 numVeganOrders = to_string(numVganOrders);
+	
+	 if (orderAssignedToCook == "") 
+	 {
+		 orderAssignedToCook = "No orders assigned last time step!.";
+	 }
+	  
+	 pGUI->PrintMessage("Current time step : " + currentTimePrinted + "                                         " + orderAssignedToCook + '\n'
+		 + "Current waiting VIP orders : " + vipWaitingOrdersPrinted + "                         " + "Current Done VIP orders: " + numVipOrders + '\n'
+		 + "Current waiting vegan orders : " + veganWaitingOrdersPrinted +"                    " +"Current Done vegan orders: "+numVeganOrders + '\n'
+		+ "Current waiting normal orders : " + normalWaitingOrdersPrinted +"                   "+"Current Done normal orders: " +numNormalOrders+'\n'
+		+ "Current available VIP cooks : " + vipCooksNumberPrinted + '\n'
+		+ "Current available normal cooks : " + normalCooksNumberPrinted + '\n' 
+		+ "Current available vegan cooks : " + veganCooksNumberPrinted + '\n' 
+		+ "Click to continue."+'\n');
+
+	orderAssignedToCook = "";
+	pGUI->UpdateInterface();
+	pGUI->ResetDrawingList();
 }
 
 bool Restaurant::assignToCook(Order*orderToAssigned)

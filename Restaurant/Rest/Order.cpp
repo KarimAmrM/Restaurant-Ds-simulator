@@ -131,6 +131,11 @@ void Order::orderFinished(int timeStep)
 	setStatus(DONE);
 }
 
+int Order::getOrderAssignedAt()
+{
+	return assignedToCookAt;
+}
+
 void Order::setUrgent(bool flag)
 {
 	urgent =flag;
