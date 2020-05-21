@@ -725,12 +725,12 @@ void Restaurant::moveFromInservToFinished()
 				servingOrders.dequeue(finishedOrder);	//move the order from inservice list to the finished orders list
 				finishedOrders.enqueue(finishedOrder);	//we add the order to the finished orders queue
 
-				//this switch case is to check on the type of the order alone as in some cases orders can be assigned to differnet cooks types
+				
 				nOrders++;
 				totalServe += finishedOrder->GetServTime();
 				totalWait += finishedOrder->getWaitTime();
 
-
+				//this switch case is to check on the type of the order alone as in some cases orders can be assigned to differnet cooks types
 				switch (finishedOrder->GetType())		
 				{
 				case(TYPE_NRM):
@@ -826,6 +826,49 @@ void Restaurant::moveFromInservToFinished()
 				servingOrders.dequeue(tempOrder);
 				servingOrders.enqueue(tempOrder);
 			}
+		}
+	}
+}
+
+void Restaurant::assigningOrders()		//This function is responisble for calling the assignorder function in every modes
+{
+	Order* movingOrder = nullptr;
+
+	while (!vipOrders.isEmpty())
+	{
+		vipOrders.peek(movingOrder); //starting with the vip orders
+
+		if (assignToCook(movingOrder))			//if this orders is assigned to a cook 
+		{
+			vipOrders.dequeue(movingOrder);			//then we dequeue it and continute to the next order
+		}
+		else
+		{
+			return;						//if the function return false then there are no available cooks of each type thats why we return
+		}
+	}
+	while (!normalOrders.isEmpty())
+	{
+		normalOrders.peekFront(movingOrder);
+		if (assignToCook(movingOrder))
+		{
+			normalOrders.dequeue(movingOrder);			//then we dequeue it and continue to the next order
+		}
+		else
+		{
+			break;				//here we break beacuse vegan cooks are not respoisnble for normal orders 
+		}
+	}
+	while (!veganOrders.isEmpty())
+	{
+		veganOrders.peekFront(movingOrder);
+		if (assignToCook(movingOrder))
+		{
+			veganOrders.dequeue(movingOrder);			//then we dequeue it and continue to the next order
+		}
+		else
+		{
+			return;
 		}
 	}
 }
