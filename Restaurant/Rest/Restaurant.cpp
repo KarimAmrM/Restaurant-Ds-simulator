@@ -662,7 +662,7 @@ void Restaurant::Injury()
 
 }
 
-void Restaurant::AssignUrgentOrder()
+/*void Restaurant::AssignUrgentOrder()
 {
 	Order* UrgentOrder = nullptr; //a pointer to hold the urgent order
 	vipOrders.peek(UrgentOrder); 
@@ -714,8 +714,93 @@ void Restaurant::AssignUrgentOrder()
 	}
 
 
-}
+}*/
 
+
+
+void Restaurant::AssignUrgentOrder()
+{
+	if (vipOrders.isEmpty())
+	{
+		return; //if there is no vip order
+	}
+
+	Order* UrgentOrder = nullptr;
+	int count = 0;
+	Order** VipOrders = vipOrders.toArray(count);
+	for (int i = 0; i < count; i++)
+	{
+
+		if (VipOrders[i]->getWaitTime() > VIP_WT)
+		{
+			VipOrders[i]->setUrgent(true);
+			numUrgentOrders++;
+		}
+	}
+
+	for (int i = 0; i < count; i++)
+	{
+		if (VipOrders[i]->isUrgent())
+		{
+			 UrgentOrder = VipOrders[i];
+			bool assigned = assignToCook(UrgentOrder);
+			if (!assigned) //in case there is no free cook
+			{
+				if (!onBreakCooks.isEmpty()) //searching for on break cook to assign the order to
+				{
+					Cook* UrgentCook = nullptr; //a pointer to hold the cook
+					onBreakCooks.dequeue(UrgentCook); //dequeuing the cook from the on break cooks queue
+					busyCooks.enqueue(UrgentCook); //enqueuing the cook in the busy cooks queue
+					servingOrders.enqueue(UrgentOrder); //enqueuing the order in the serving orders queue
+					UrgentCook->AssignOrder(UrgentOrder, currentTimeStep); //assigning the order to the cook
+					assigned = true; //setting the order to assigned
+				}
+				else if (!onRestCooks.isEmpty()) //if there is no on break cook, we start to search for on rest cook
+				{
+					Cook* UrgentCook = nullptr; //a pointer to hold the cook
+					onRestCooks.dequeue(UrgentCook); //dequeuing the cook from the on rest cooks queue
+					busyCooks.enqueue(UrgentCook); //enqueuing the cook in the busy cooks queue
+					servingOrders.enqueue(UrgentOrder); //enqueuing the order in the serving orders queue
+					UrgentCook->AssignOrder(UrgentOrder, currentTimeStep); //assigning the order to the cook
+					assigned = true;  //setting the order to assigned
+				}
+
+			}
+			if (!assigned)
+			{
+				return;
+			}
+			else
+			{
+				int position = i;
+				for (int i = position; i < count; i++)
+				{
+
+
+					VipOrders[i] = VipOrders[i + 1];
+
+				}
+				count--;
+			}
+		}
+	}
+	while (!vipOrders.isEmpty()) //emptyting the queue to refill it again with changed type and money
+	{
+		Order* dummy;
+		vipOrders.dequeue(dummy);
+	}
+
+
+	for (int i = 0; i < count; i++)//refilling the queue again 
+	{
+		double money = VipOrders[i]->GetTotalMoney();
+		int arrivalTime = VipOrders[i]->GetArrTime();
+		int size = VipOrders[i]->GetOrdSize();
+		numWaitingVip++;
+		vipOrders.enqueue(VipOrders[i], exp((money / size * arrivalTime)) / arrivalTime);
+	}
+
+}
 
 void Restaurant::moveFromInservToFinished()  
 {
