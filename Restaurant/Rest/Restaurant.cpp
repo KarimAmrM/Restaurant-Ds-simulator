@@ -1008,6 +1008,7 @@ void Restaurant::InteractiveMode()
 {
 	
 	currentTimeStep++;
+	
 	while (!(vipOrders.isEmpty() && veganOrders.isEmpty() && normalOrders.isEmpty() && servingOrders.isEmpty() && EventsQueue.isEmpty()))
 	{
 		ExecuteEvents(currentTimeStep);
@@ -1021,6 +1022,7 @@ void Restaurant::InteractiveMode()
 		FillDrawingList();
 		pGUI->waitForClick();
 		currentTimeStep++;
+		waitingTimeIncrementer();
 	}
 	
 
@@ -1029,6 +1031,7 @@ void Restaurant::Step_by_StepMode()
 {
 	
 	currentTimeStep++;
+	
 	while (!(vipOrders.isEmpty() && veganOrders.isEmpty() && normalOrders.isEmpty() && servingOrders.isEmpty() && EventsQueue.isEmpty()))
 	{
 		ExecuteEvents(currentTimeStep);
@@ -1041,6 +1044,7 @@ void Restaurant::Step_by_StepMode()
 		Sleep(1000);
 		FillDrawingList();
 		currentTimeStep++;
+		waitingTimeIncrementer();
 	}
 	pGUI->waitForClick();
 	
@@ -1060,7 +1064,43 @@ void Restaurant::SilentMode()
 		checkEndBreakOrRest();
 		assigningOrders();
 		currentTimeStep++;
+		waitingTimeIncrementer();
 	}
 	
 
 }
+
+void Restaurant::waitingTimeIncrementer()
+{
+	int countVip = 0, countVegan = 0, countNormal=0;
+
+	if (!vipOrders.isEmpty())
+	{
+		Order** vipArray = vipOrders.toArray(countVip);
+		for (int i = 0; i < countVip; i++)
+		{
+			vipArray[i]->setWaitTime(currentTimeStep - vipArray[i]->GetArrTime());
+		}
+	}
+
+	if (!veganOrders.isEmpty())
+	{
+		Order** veganArray = veganOrders.toArray(countVip);
+		for (int i = 0; i < countVip; i++)
+		{
+			veganArray[i]->setWaitTime(currentTimeStep - veganArray[i]->GetArrTime());
+		}
+	}
+
+	if (!normalOrders.isEmpty())
+	{
+		Order** normalArray = normalOrders.toArray(countVip);
+		for (int i = 0; i < countVip; i++)
+		{
+			normalArray[i]->setWaitTime(currentTimeStep - normalArray[i]->GetArrTime());
+		}
+	}
+
+}
+
+ 
