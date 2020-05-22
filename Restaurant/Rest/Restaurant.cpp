@@ -725,10 +725,11 @@ void Restaurant::AssignUrgentOrder()
 		return; //if there is no vip order
 	}
 
-	Order* UrgentOrder = nullptr;
+	Order* UrgentOrder = nullptr; //a pointer to hold the urgent order
 	int count = 0;
-	Order** VipOrders = vipOrders.toArray(count);
-	for (int i = 0; i < count; i++)
+	Order** VipOrders = vipOrders.toArray(count); //converting the vip orders queue into an array to search for urgent orders
+
+	for (int i = 0; i < count; i++) //searching for urgent orders
 	{
 
 		if (VipOrders[i]->getWaitTime() > VIP_WT)
@@ -742,8 +743,8 @@ void Restaurant::AssignUrgentOrder()
 	{
 		if (VipOrders[i]->isUrgent())
 		{
-			 UrgentOrder = VipOrders[i];
-			bool assigned = assignToCook(UrgentOrder);
+			UrgentOrder = VipOrders[i];
+			bool assigned = assignToCook(UrgentOrder); //a boolean to check either the order is assigned to a cook or not
 			if (!assigned) //in case there is no free cook
 			{
 				if (!onBreakCooks.isEmpty()) //searching for on break cook to assign the order to
@@ -768,23 +769,20 @@ void Restaurant::AssignUrgentOrder()
 			}
 			if (!assigned)
 			{
-				return;
+				return;   //in case the order isn't assigned, there is no need to check the next order
 			}
 			else
 			{
 				int position = i;
 				for (int i = position; i < count; i++)
 				{
-
-
 					VipOrders[i] = VipOrders[i + 1];
-
 				}
 				count--;
 			}
 		}
 	}
-	while (!vipOrders.isEmpty()) //emptyting the queue to refill it again with changed type and money
+	while (!vipOrders.isEmpty()) //emptyting the queue to refill it again after removing urgent orders
 	{
 		Order* dummy;
 		vipOrders.dequeue(dummy);
