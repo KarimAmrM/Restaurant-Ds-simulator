@@ -729,20 +729,16 @@ void Restaurant::AssignUrgentOrder()
 	int count = 0;
 	Order** VipOrders = vipOrders.toArray(count); //converting the vip orders queue into an array to search for urgent orders
 
-	for (int i = 0; i < count; i++) //searching for urgent orders
-	{
-
-		if (VipOrders[i]->getWaitTime() > VIP_WT)
-		{
-			VipOrders[i]->setUrgent(true);
-			numUrgentOrders++;
-		}
-	}
+	int waitingTime = 0;
 
 	for (int i = 0; i < count; i++)
 	{
-		if (VipOrders[i]->isUrgent())
+		waitingTime = currentTimeStep - VipOrders[i]->GetArrTime(); // calculating the waiting time of the order
+		if (waitingTime>=VIP_WT)
 		{
+		    VipOrders[i]->setUrgent(true);
+		    numUrgentOrders++;
+			
 			UrgentOrder = VipOrders[i];
 			bool assigned = assignToCook(UrgentOrder); //a boolean to check either the order is assigned to a cook or not
 			if (!assigned) //in case there is no free cook
