@@ -16,7 +16,7 @@ int randomize(int max, int min) // generates random number between range{min to 
 Restaurant::Restaurant() 
 {
 	pGUI = NULL;
-	currentTimeStep = 1;
+	currentTimeStep = 0;
 	nOrders = 0;
 	nCooks = 0;
 	numberInjured = 0;
@@ -31,6 +31,7 @@ Restaurant::Restaurant()
 	numberBusyNormalCooks = 0;
 	numberBusyVipCooks = 0;
 	numberBusyVeganCooks = 0;
+	loadFromFile();
 
 }
 
@@ -42,16 +43,17 @@ void Restaurant::RunSimulation()
 	switch (mode)	//Add a function for each mode in next phases
 	{
 	case MODE_INTR:
+		InteractiveMode();
 		break;
 	case MODE_STEP:
+		Step_by_StepMode();
 		break;
 	case MODE_SLNT:
-		break;
-	case MODE_DEMO:
-		Simulation();
+		SilentMode();
 		break;
 
-	};
+
+	}
 
 }
 
@@ -64,7 +66,7 @@ void Restaurant::loadFromFile()
 		return;
 	}
 
-	int normalSpeedMin,nomralSpeedMax, veganSpeedMax,veganSpeedMin ,vipSpeedMin,vipSpeedMax;// speed of each cook
+	float normalSpeedMin,normalSpeedMax, veganSpeedMax,veganSpeedMin ,vipSpeedMin,vipSpeedMax;// speed of each cook
 	
 	int orderBeforeBreak, normalBreaksMin,normalBreaksMax, veganBreaksMin,veganBreaksMax, vipBreaksMin,vipBreaksMax, restPeriod;// orders before break and number of breaks
 
@@ -81,14 +83,15 @@ void Restaurant::loadFromFile()
 	numberAvailNormalCooks = normalCooks;
 	numberAvailVipCooks = vipCooks;
 	numberAvailVeganCooks = veganCooks;
-	loadFile >> normalSpeedMin>>nomralSpeedMax >> veganSpeedMin>>veganSpeedMax >> vipSpeedMin>>vipSpeedMax;
+	loadFile >> normalSpeedMin>>normalSpeedMax >> veganSpeedMin>>veganSpeedMax >> vipSpeedMin>>vipSpeedMax;
 	loadFile >> orderBeforeBreak >> normalBreaksMin>>normalBreaksMax >> veganBreaksMin >>veganBreaksMax>> vipBreaksMin>>vipBreaksMax;
 	loadFile >> injProb >> restPeriod;
 	loadFile >> promoteLimit >> VIP_WT >> numEvents;
 
 
 	nCooks = normalCooks + veganCooks + vipCooks;
-	int cookBreak, cookSpeed;//to be generated randomly 
+	int cookBreak;
+	float cookSpeed;//to be generated randomly 
 	cookBreak = 0;
 	cookSpeed = 0;
 
@@ -99,9 +102,10 @@ void Restaurant::loadFromFile()
 				//ids from 1 to normalCooks , id=i+1
 				
 				cookBreak = randomize(normalBreaksMax, normalBreaksMin);
-				cookSpeed = randomize(normalBreaksMax, normalSpeedMin);
+				cookSpeed = normalSpeedMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (normalSpeedMax - normalSpeedMin)));
+			
 
-				Cook* nrmCook = new Cook(i + 1, TYPE_NRM, cookSpeed, orderBeforeBreak, cookBreak,restPeriod);
+				Cook* nrmCook = new Cook(i + 1, TYPE_NRM, cookSpeed, orderBeforeBreak,cookBreak,restPeriod);
 				availableNormalCooks.enqueue(nrmCook);
 			}
 		
@@ -110,8 +114,9 @@ void Restaurant::loadFromFile()
 				//fill cook list 
 				//ids from normalCooks+1 to veganCooks, id=normalCooks+i+1
 				
-				cookBreak = randomize(veganBreaksMax, veganBreaksMin);
-				cookSpeed = randomize(veganSpeedMax, veganSpeedMin);
+			cookBreak = randomize(veganBreaksMax, veganBreaksMin);
+				
+				cookSpeed = veganSpeedMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (veganSpeedMax - veganSpeedMin)));
 
 				Cook* vgnCook = new Cook(normalCooks + i + 1, TYPE_VGAN, cookSpeed, orderBeforeBreak, cookBreak,restPeriod);
 				availableVeganCooks.enqueue(vgnCook);
@@ -125,7 +130,7 @@ void Restaurant::loadFromFile()
 				//ids from veganCooks+1 to vipCooks, id=veganCooks+1+i
 
 				cookBreak = randomize(vipBreaksMax, vipBreaksMin);
-				cookSpeed = randomize(vipSpeedMax, vipSpeedMin);
+				cookSpeed = vipSpeedMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (vipSpeedMax -vipSpeedMin)));
 
 				Cook* vipCook = new Cook(i + normalCooks + veganCooks +1, TYPE_VIP, cookSpeed, orderBeforeBreak, cookBreak,restPeriod);
 				availableVipCooks.enqueue(vipCook);
@@ -141,7 +146,7 @@ void Restaurant::loadFromFile()
 				{
 				case('R'): // Change constructor of arrivalEvent to fill order's info
 					loadFile >>orderType>> eventTimeStep >> eventId >> orderSize >> orderPrice;
-					nOrders++;
+					
 					if (orderType == 'N') 
 					{
 						Event* nEvent = new ArrivalEvent(eventTimeStep, eventId, TYPE_NRM,orderSize,orderPrice);
@@ -187,12 +192,8 @@ void Restaurant::saveToFile() {
 	Order* order;
 	int numFinishedOrders = 0;
 	
-	while (!finishedOrders.isEmpty()) //empty finished orders queue to an array to sort it 
-	{
-		finishedOrders.dequeue(order);
-		finishedOrdersArr[numFinishedOrders] = order;
-		numFinishedOrders++;
-	}
+	finishedOrdersArr=finishedOrders.toArray(numFinishedOrders);
+
 
 
 	// modified insertion sort to sort order by arrival time if they have the same finish time
@@ -233,9 +234,9 @@ void Restaurant::saveToFile() {
 	}
 	saveFile << "...................................................." << endl;
 
-	saveFile << nOrders << "  " << "[Normal:" << numNormOrders << ", " << "Vegan:" << numVganOrders << ", " << "VIP:" << numVipOreders << "]" << endl;
+	saveFile <<"Orders: " <<nOrders << "  " << "[Normal:" << numNormOrders << ", " << "Vegan:" << numVganOrders << ", " << "VIP:" << numVipOreders << "]" << endl;
 
-	saveFile << nCooks << "  " << "[Normal:" << normalCooks << ", " << "Vegan:" << veganCooks << ", " << "VIP:" << vipCooks <<", "<<"injured: "<<numberInjured <<"]" << endl;
+	saveFile <<"Cooks: " <<nCooks << "  " << "[Normal:" << normalCooks << ", " << "Vegan:" << veganCooks << ", " << "VIP:" << vipCooks <<", "<<"injured: "<<numberInjured <<"]" << endl;
 
 	saveFile << "Average wait= " << totalWait / nOrders << ", " << "Average serve= " << totalServe / nOrders << endl;
 
@@ -310,89 +311,6 @@ void Restaurant::cancelEvent(int ID)
 	}
 }
 
-void Restaurant::Simulation()
-{
-	loadFromFile();
-	//continue simulation until there's no events nor any waiting/serving orders
-	while (!EventsQueue.isEmpty() || !vipOrders.isEmpty() || !veganOrders.isEmpty() || !normalOrders.isEmpty() || !servingOrders.isEmpty())
-	{
-		ExecuteEvents(currentTimeStep);
-
-		Order* O1, * O2, * O3;
-		// check each order queue if there's an order move it to serving list
-		if (vipOrders.peek(O1))
-		{
-			servingOrders.enqueue(O1);
-			O1->setStatus(SRV);
-			vipOrders.dequeue(O1);
-		}
-		if (veganOrders.peekFront(O2))
-		{
-			servingOrders.enqueue(O2);
-			O2->setStatus(SRV);
-			veganOrders.dequeue(O2);
-		}
-		if (normalOrders.peekFront(O3))
-		{
-			servingOrders.enqueue(O3);
-			O3->setStatus(SRV);
-			normalOrders.dequeue(O3);
-		}
-		// check every 5 time steps and move 3 orders to finished 
-		if (currentTimeStep % 5 == 0)
-		{
-			if (servingOrders.peekFront(O1))
-			{
-				finishedOrders.enqueue(O1);
-				O1->setStatus(DONE);
-				servingOrders.dequeue(O1);
-			}
-			if (servingOrders.peekFront(O2))
-			{
-				finishedOrders.enqueue(O2);
-				O2->setStatus(DONE);
-				servingOrders.dequeue(O2);
-			}
-			if (servingOrders.peekFront(O3))
-			{
-				finishedOrders.enqueue(O3);
-				O3->setStatus(DONE);
-				servingOrders.dequeue(O3);
-			}
-		}
-
-		FillDrawingList();
-	//	pGUI->UpdateInterface();
-
-		//printing data info
-		
-		/*string currentTimePrinted = to_string(currentTimeStep);
-		string vipWaitingOrdersPrinted = to_string(waitVipNumber());
-		string normalWaitingOrdersPrinted = to_string(waitNormalNumber());
-		string veganWaitingOrdersPrinted = to_string(waitVeganNumber());
-		string vipCooksNumberPrinted = to_string(numberAvailVipCooks);
-		string normalCooksNumberPrinted = to_string(numberAvailNormalCooks);
-		string veganCooksNumberPrinted = to_string(numberAvailVeganCooks);
-		
-
-		pGUI->PrintMessage("Current time step : " + currentTimePrinted +""+ '\n' + "Current waiting VIP orders : " + vipWaitingOrdersPrinted + '\n' + "Current waiting vegan orders : " + veganWaitingOrdersPrinted + '\n'
-			+ "Current waiting vegan orders : " + veganWaitingOrdersPrinted + '\n' + "Current available VIP cooks : " + vipCooksNumberPrinted + '\n'
-			+ "Current available normal cooks : " + normalCooksNumberPrinted + '\n' + "Current available vegan cooks : " + veganCooksNumberPrinted + '\n' +"Click to continue.");
-			*/
-
-		pGUI->waitForClick();
-
-
-		//pGUI->ResetDrawingList();
-
-
-		currentTimeStep++;
-
-
-	}
-
-
-}
 
 
 //calling these functions when printing the info of the number of waiting orders . 
@@ -439,6 +357,7 @@ void Restaurant::ExecuteEvents(int CurrentTimeStep)
 
 Restaurant::~Restaurant()
 {
+		saveToFile();
 		if (pGUI)
 			delete pGUI;
 }
@@ -578,8 +497,10 @@ void Restaurant::FillDrawingList()
 	Order** served = servingOrders.toArray(servedOrd);
 	for (int i = 0; i < servedOrd; i++)
 	{
+		cout << served[i]->GetFinishTime() << "   ";
 		pGUI->AddToDrawingList(served[i]);	
 	}
+	cout << endl;
 	// done orders
 	int finished=0;
 	Order** finsihedArr = finishedOrders.toArray(finished);
@@ -720,7 +641,7 @@ void Restaurant::Injury()
 			if (InjCook->isInjured())	//if this cook is already injured
 				return;
 			InjCook->setinjured(true); //changing the cook's status to injured
-			int passedTime = currentTimeStep - InjCook->GetCurrentOrder()->GetServTime();//calculating the time passed from the serving time to the current time step
+			int passedTime = currentTimeStep - InjCook->GetCurrentOrder()->getOrderAssignedAt();//calculating the time passed from the serving time to the current time step
 			int doneDishes = passedTime*InjCook->GetSpeed(); //calculating the number of done dishes until the current time step
 			int newSpeed = InjCook->GetSpeed() / 2; //decrement the cook's speed to half its value
 			InjCook->setSpeed(newSpeed); // setting the new speed
@@ -797,13 +718,13 @@ void Restaurant::moveFromInservToFinished()
 
 	Cook* c;  //a place holder to hold the dequeued cooks from either queues
 	Order* finishedOrder; //to move the orders between the queues
-
+	int sum = numberBusyNormalCooks + numberBusyVeganCooks + numberBusyVipCooks;
 	if (!busyCooks.isEmpty())    //first we check the queue of the busy cooks that are serving orders without being injured
 	{
-		for (int i = 0; i < numberBusyNormalCooks + numberBusyVeganCooks + numberBusyVipCooks; i++)
+		for (int i = 0; i <sum; i++)
 		{
 			busyCooks.peekFront(c);
-			if (c->GetCurrentOrder()->GetFinishTime() == currentTimeStep) //checking if the top cook has an order to be finished at this current time step
+			if (c->GetCurrentOrder()->GetFinishTime() <= currentTimeStep) //checking if the top cook has an order to be finished at this current time step
 			{
 				busyCooks.dequeue(c);					//if the cook is serving an order that has the same time as the current timestep then remove it from the queue of busy cooks
 				finishedOrder = c->GetCurrentOrder();	//setting the order of the cook to the finsihed order
@@ -990,9 +911,10 @@ void Restaurant::checkEndBreakOrRest()
 				break;
 
 			}
-			onBreakCooks.peek(restingCook);
-			if (!restingCook) break;// to avoid accessing null pointer
+			
 
+			if (onBreakCooks.isEmpty())break;
+			onBreakCooks.peek(restingCook);
 		}
 	}
 	if (!onRestCooks.isEmpty())
@@ -1019,7 +941,7 @@ void Restaurant::checkEndBreakOrRest()
 				break;
 			}
 			onRestCooks.peek(restingCook);
-			if (!restingCook) break;// to avoid accessing null pointer
+			if (onRestCooks.isEmpty()) break;// to avoid accessing null pointer
 		}
 	}
 }
@@ -1030,13 +952,24 @@ void Restaurant::Promote(int ID, double incMoney)
 	Order** O = normalOrders.toArray(count); //converting the normal orders cook queue to an arry to find the element with the matched id
 	for (int i = 0; i < count; i++)
 	{
+
 		if (O[i]->GetID() == ID)
 		{
 			O[i]->SetType(TYPE_VIP);
 			O[i]->SetTotalMoney(O[i]->GetTotalMoney() + incMoney);
+			vipOrders.enqueue(O[i], exp((O[i]->GetTotalMoney() / O[i]->GetOrdSize() * O[i]->GetArrTime())) / O[i]->GetArrTime());
+			int pos = i;
+			for (int i = 0; i < count; i++) //removing the element 
+			{
+				if (i >= pos)
+				{
+					O[i] = O[i + 1];
+				}
+			}
+			count--;
 		}
 	}
-	
+
 	while (!normalOrders.isEmpty()) //emptyting the queue to refill it again with changed type and money
 	{
 		Order* dummy;
@@ -1049,7 +982,6 @@ void Restaurant::Promote(int ID, double incMoney)
 		normalOrders.enqueue(O[i]);
 	}
 }
-
 
 
 void Restaurant::autoPromote()
@@ -1071,4 +1003,64 @@ void Restaurant::autoPromote()
 		else
 			break;
 	}
+}
+void Restaurant::InteractiveMode()
+{
+	
+	currentTimeStep++;
+	while (!(vipOrders.isEmpty() && veganOrders.isEmpty() && normalOrders.isEmpty() && servingOrders.isEmpty() && EventsQueue.isEmpty()))
+	{
+		ExecuteEvents(currentTimeStep);
+		Injury();
+		AssignUrgentOrder();
+		autoPromote();
+		moveFromInservToFinished();
+		checkEndBreakOrRest();
+		assigningOrders();
+	
+		FillDrawingList();
+		pGUI->waitForClick();
+		currentTimeStep++;
+	}
+	
+
+}
+void Restaurant::Step_by_StepMode()
+{
+	
+	currentTimeStep++;
+	while (!(vipOrders.isEmpty() && veganOrders.isEmpty() && normalOrders.isEmpty() && servingOrders.isEmpty() && EventsQueue.isEmpty()))
+	{
+		ExecuteEvents(currentTimeStep);
+		Injury();
+		AssignUrgentOrder();
+		autoPromote();
+		moveFromInservToFinished();
+		checkEndBreakOrRest();
+		assigningOrders();
+		Sleep(1000);
+		FillDrawingList();
+		currentTimeStep++;
+	}
+	pGUI->waitForClick();
+	
+
+}
+void Restaurant::SilentMode()
+{
+	currentTimeStep++;
+	
+	while (!(vipOrders.isEmpty() && veganOrders.isEmpty() && normalOrders.isEmpty() && servingOrders.isEmpty() && EventsQueue.isEmpty()))
+	{
+		ExecuteEvents(currentTimeStep);
+		Injury();
+		AssignUrgentOrder();
+		autoPromote();
+		moveFromInservToFinished();
+		checkEndBreakOrRest();
+		assigningOrders();
+		currentTimeStep++;
+	}
+	
+
 }

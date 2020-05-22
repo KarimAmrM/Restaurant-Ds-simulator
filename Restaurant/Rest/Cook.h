@@ -7,7 +7,7 @@ class Cook
 {
 	int ID;
 	ORD_TYPE type;	//for each order type there is a corresponding type (VIP, Normal, Vegan)
-	int speed;		//dishes it can prepare in one clock tick (in one timestep)
+	float speed;		//dishes it can prepare in one clock tick (in one timestep)
 	int NumberOfDishes; //number of dishes before break
 	int BreakDuration;  //time steps of the break;    
 	bool Free ; //flag to check either the cook is free or not

@@ -78,7 +78,7 @@ public:
 	
 	void addOrder(Order* nOrder);
 	void cancelEvent(int ID);
-	void Simulation();
+	
 
 	//functions for printing info on the status bar 
 	int waitVipNumber();
@@ -100,7 +100,9 @@ public:
 	
 	// TODO: Add More Member Functions As Needed
 	//
-
+	void InteractiveMode();
+	void Step_by_StepMode();
+	void SilentMode();
 
 
 };
