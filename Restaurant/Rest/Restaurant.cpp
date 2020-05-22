@@ -31,6 +31,7 @@ Restaurant::Restaurant()
 	numberBusyNormalCooks = 0;
 	numberBusyVipCooks = 0;
 	numberBusyVeganCooks = 0;
+	numWaitingVip = 0;
 	loadFromFile();
 
 }
@@ -261,6 +262,7 @@ void Restaurant::addOrder(Order* nOrder)
 	if (nOrder->GetType()==TYPE_NRM) 
 	{
 		normalOrders.enqueue(nOrder);
+
 	}
 	else if (nOrder->GetType() == TYPE_VGAN)
 	{
@@ -272,6 +274,7 @@ void Restaurant::addOrder(Order* nOrder)
 		double money = nOrder->GetTotalMoney();
 		int arrivalTime = nOrder->GetArrTime();
 		int size = nOrder->GetOrdSize();
+		numWaitingVip++;
 		vipOrders.enqueue(nOrder,exp((money/size*arrivalTime))/arrivalTime);
 	}
 
@@ -555,6 +558,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			  totalMoney = totalMoney + orderToAssigned->GetTotalMoney();	//adding the money of the order to the total money 
 			  numberAvailVipCooks--;										//decrementing the available number of vip cooks
 			  numberBusyVipCooks++;											//incremting the Number of busy cooks
+			  numWaitingVip--;
 			  return true;
 		}
 		else if (!availableNormalCooks.isEmpty())   //if there are no available vip then check for normal cooks then repating the same procedures 
@@ -566,6 +570,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			totalMoney = totalMoney + orderToAssigned->GetTotalMoney();
 			numberAvailNormalCooks--;
 			numberBusyNormalCooks++;
+			numWaitingVip--;
 			return true;
 		}
 		else if (!availableVeganCooks.isEmpty())  //if both vip queues and normal queues are empty then check for vegan cooks then repateing the same procedures 
@@ -577,6 +582,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			totalMoney = totalMoney + orderToAssigned->GetTotalMoney();
 			numberAvailVeganCooks--;
 			numberBusyVeganCooks++;
+			numWaitingVip--;
 			return true;
 		}
 		return false;
