@@ -10,10 +10,5 @@ int main()
 	pRest->RunSimulation();
 	
 	delete pRest;
-
-	
-	
-	
-
 	return 0;
 }
