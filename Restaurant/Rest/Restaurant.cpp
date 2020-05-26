@@ -108,9 +108,10 @@ void Restaurant::loadFromFile()
 				cookBreak = randomize(normalBreaksMax, normalBreaksMin);
 				cookSpeed = normalSpeedMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (normalSpeedMax - normalSpeedMin)));
 			
-
+				
 				Cook* nrmCook = new Cook(i + 1, TYPE_NRM, cookSpeed, orderBeforeBreak,cookBreak,restPeriod);
 				availableNormalCooks.enqueue(nrmCook);
+				cout << "Cook " << nrmCook->GetID() << " speed = " << cookSpeed << " and his break = " << cookBreak << endl;
 			}
 		
 			for (int i = 0; i < veganCooks; i++)
@@ -124,7 +125,7 @@ void Restaurant::loadFromFile()
 
 				Cook* vgnCook = new Cook(normalCooks + i + 1, TYPE_VGAN, cookSpeed, orderBeforeBreak, cookBreak,restPeriod);
 				availableVeganCooks.enqueue(vgnCook);
-
+				cout << "Cook " << vgnCook->GetID() << " speed = " << cookSpeed << " and his break = " << cookBreak << endl;
 			}
 			for (int i = 0; i < vipCooks; i++) 
 			{
@@ -138,6 +139,7 @@ void Restaurant::loadFromFile()
 
 				Cook* vipCook = new Cook(i + normalCooks + veganCooks +1, TYPE_VIP, cookSpeed, orderBeforeBreak, cookBreak,restPeriod);
 				availableVipCooks.enqueue(vipCook);
+				cout << "Cook " << vipCook->GetID() << " speed = " << cookSpeed << " and his break = " << cookBreak << endl;
 			}
 
 			
@@ -228,8 +230,11 @@ void Restaurant::saveToFile() {
 		pGUI->waitForClick();
 		return;
 	}
+	
+	
+	
 
-	saveFile << "FT" << "     " << "ID" << "     " << "AT" << "     " << "WT" << "     " << "ST" <<endl;
+	saveFile << "FT " << "   " << " ID" << "   " << " AT" << "   " << " WT" << "    " << " ST" <<endl;
 	
 	for (int i = 0; i < numFinishedOrders; i++) 
 	{
