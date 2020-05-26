@@ -57,8 +57,6 @@ void Restaurant::RunSimulation()
 
 		SilentMode();
 		break;
-
-
 	}
 
 }
