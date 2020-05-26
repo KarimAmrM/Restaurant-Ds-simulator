@@ -32,24 +32,29 @@ Restaurant::Restaurant()
 	numberBusyVipCooks = 0;
 	numberBusyVeganCooks = 0;
 	numWaitingVip = 0;
-	loadFromFile();
+	
 
 }
 
 void Restaurant::RunSimulation()
 {
 	pGUI = new GUI;
+	
 	PROG_MODE	mode = pGUI->getGUIMode();
+	
 		
 	switch (mode)	//Add a function for each mode in next phases
 	{
 	case MODE_INTR:
+		
 		InteractiveMode();
 		break;
 	case MODE_STEP:
+		
 		Step_by_StepMode();
 		break;
 	case MODE_SLNT:
+
 		SilentMode();
 		break;
 
@@ -60,7 +65,7 @@ void Restaurant::RunSimulation()
 
 void Restaurant::loadFromFile()
 {
-	loadFile.open("2.txt");
+	loadFile.open(loadFileName+".txt");
 	if (!loadFile.is_open()) {
 		pGUI->PrintMessage("Load file doesn't exist in default directory! ");
 		pGUI->waitForClick();
@@ -262,12 +267,12 @@ void Restaurant::addOrder(Order* nOrder)
 	if (nOrder->GetType()==TYPE_NRM) 
 	{
 		normalOrders.enqueue(nOrder);
-
+		cout << "Order " << nOrder->GetID() << " added to normal orders queue"<<endl;
 	}
 	else if (nOrder->GetType() == TYPE_VGAN)
 	{
 		veganOrders.enqueue(nOrder);
-
+		cout << "Order " << nOrder->GetID() << " added to vegan orders queue" << endl;
 	}
 	else if (nOrder->GetType() == TYPE_VIP) 
 	{
@@ -276,6 +281,7 @@ void Restaurant::addOrder(Order* nOrder)
 		int size = nOrder->GetOrdSize();
 		numWaitingVip++;
 		vipOrders.enqueue(nOrder,exp((money/size*arrivalTime))/arrivalTime);
+		cout << "Order " << nOrder->GetID() << " added to vip orders queue" << endl;
 	}
 
 }
@@ -288,6 +294,7 @@ void Restaurant::cancelEvent(int ID)
 	{
 		if (O[i]->GetID() == ID)
 		{
+			cout << "order " << O[i]->GetID() << " is cancelled"<<endl;
 			int pos = i;
 			for (int i = 0; i < count; i++) //removing the element 
 			{
@@ -360,7 +367,7 @@ void Restaurant::ExecuteEvents(int CurrentTimeStep)
 
 Restaurant::~Restaurant()
 {
-		saveToFile();
+		
 		if (pGUI)
 			delete pGUI;
 }
@@ -500,10 +507,10 @@ void Restaurant::FillDrawingList()
 	Order** served = servingOrders.toArray(servedOrd);
 	for (int i = 0; i < servedOrd; i++)
 	{
-		cout << served[i]->GetFinishTime() << "   ";
+		//cout << served[i]->GetFinishTime() << "   ";
 		pGUI->AddToDrawingList(served[i]);	
 	}
-	cout << endl;
+	//cout << endl;
 	// done orders
 	int finished=0;
 	Order** finsihedArr = finishedOrders.toArray(finished);
@@ -559,6 +566,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			  numberAvailVipCooks--;										//decrementing the available number of vip cooks
 			  numberBusyVipCooks++;											//incremting the Number of busy cooks
 			  numWaitingVip--;
+			  cout << "order " << orderToAssigned->GetID() << " is assigned to " << cookToAssign->GetID()<<" order finish time is "<<orderToAssigned->GetFinishTime()<<endl;
 			  return true;
 		}
 		else if (!availableNormalCooks.isEmpty())   //if there are no available vip then check for normal cooks then repating the same procedures 
@@ -571,6 +579,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			numberAvailNormalCooks--;
 			numberBusyNormalCooks++;
 			numWaitingVip--;
+			cout << "order " << orderToAssigned->GetID() << " is assigned to " << cookToAssign->GetID() << " order finish time is " << orderToAssigned->GetFinishTime() << endl;
 			return true;
 		}
 		else if (!availableVeganCooks.isEmpty())  //if both vip queues and normal queues are empty then check for vegan cooks then repateing the same procedures 
@@ -583,6 +592,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			numberAvailVeganCooks--;
 			numberBusyVeganCooks++;
 			numWaitingVip--;
+			cout << "order " << orderToAssigned->GetID() << " is assigned to " << cookToAssign->GetID() << " order finish time is " << orderToAssigned->GetFinishTime() << endl;
 			return true;
 		}
 		return false;
@@ -598,6 +608,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			totalMoney = totalMoney + orderToAssigned->GetTotalMoney();
 			numberAvailNormalCooks--;
 			numberBusyNormalCooks++;
+			cout << "order " << orderToAssigned->GetID() << " is assigned to cook " << cookToAssign->GetID() << " and order finish time is " << orderToAssigned->GetFinishTime() << endl;
 			return true;
 		}
 		else if (!availableVipCooks.isEmpty()) //checking for vip available cooks first then repeating the same steps
@@ -609,6 +620,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			totalMoney = totalMoney + orderToAssigned->GetTotalMoney();
 			numberAvailVipCooks--;
 			numberBusyVipCooks++;
+			cout << "order " << orderToAssigned->GetID() << " is assigned to cook " << cookToAssign->GetID() << " and order finish time is " << orderToAssigned->GetFinishTime() << endl;
 			return true;
 		}
 		return false;
@@ -624,6 +636,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			totalMoney = totalMoney + orderToAssigned->GetTotalMoney();
 			numberAvailVeganCooks--;
 			numberBusyVeganCooks++;
+			cout << "order " << orderToAssigned->GetID() << " is assigned to cook " << cookToAssign->GetID() << " and order finish time is " << orderToAssigned->GetFinishTime() << endl;
 			return true;
 		}
 		return false;
@@ -656,6 +669,7 @@ void Restaurant::Injury()
 			int newFinishTime = currentTimeStep +newCookingTime; //calculating the new finish time of the cook's order
 			InjCook->GetCurrentOrder()->SetFinishTime(newFinishTime); // setting the new finish time of the cook's order
 			numberInjured++;
+			cout << "cook " << InjCook->GetID() << " injured and his order new finish time is " << InjCook->GetCurrentOrder()->GetFinishTime() << endl;
 		}
 
 	}
@@ -740,6 +754,7 @@ void Restaurant::AssignUrgentOrder()
 		    numUrgentOrders++;
 			
 			UrgentOrder = VipOrders[i];
+			cout << "Order " << UrgentOrder->GetID() << " is urgent order ";
 			bool assigned = assignToCook(UrgentOrder); //a boolean to check either the order is assigned to a cook or not
 			if (!assigned) //in case there is no free cook
 			{
@@ -751,6 +766,7 @@ void Restaurant::AssignUrgentOrder()
 					servingOrders.enqueue(UrgentOrder); //enqueuing the order in the serving orders queue
 					UrgentCook->AssignOrder(UrgentOrder, currentTimeStep); //assigning the order to the cook
 					assigned = true; //setting the order to assigned
+					cout << "and assigned to " << UrgentCook->GetID()<<" whose is in break"<<endl;
 				}
 				else if (!onRestCooks.isEmpty()) //if there is no on break cook, we start to search for on rest cook
 				{
@@ -760,6 +776,7 @@ void Restaurant::AssignUrgentOrder()
 					servingOrders.enqueue(UrgentOrder); //enqueuing the order in the serving orders queue
 					UrgentCook->AssignOrder(UrgentOrder, currentTimeStep); //assigning the order to the cook
 					assigned = true;  //setting the order to assigned
+					cout << "and assigned to " << UrgentCook->GetID() << " whose is in Rest"<<endl;
 				}
 
 			}
@@ -817,7 +834,7 @@ void Restaurant::moveFromInservToFinished()
 				servingOrders.dequeue(finishedOrder);	//move the order from inservice list to the finished orders list
 				finishedOrders.enqueue(finishedOrder);	//we add the order to the finished orders queue
 
-				
+				cout << "Order " << finishedOrder->GetID() << " is finished ";
 				nOrders++;
 				totalServe += finishedOrder->GetServTime();
 				totalWait += finishedOrder->getWaitTime();
@@ -851,7 +868,7 @@ void Restaurant::moveFromInservToFinished()
 						break;
 					}
 					onRestCooks.enqueue(c, -c->getExcpetedReturn());  //we enqueue him in the queue of resting cooks 
-				
+					cout << "and the preparing cook " << c->GetID() << " is sent to rest and should return at "<<c->getExcpetedReturn()<<endl;
 				}
 				else if (c->toBreak(currentTimeStep) && !c->toRest(currentTimeStep)) // cook should go on break and he isn't injured 
 				{
@@ -868,6 +885,7 @@ void Restaurant::moveFromInservToFinished()
 						numberBusyVeganCooks--;					//decremting the number of busy cooks
 						break;
 					}
+					cout << "and the preparing cook " << c->GetID() << " is sent to break and should return at " << c->getExcpetedReturn() << endl;
 				}
 						//cook isn't injured or going to break								// cook was injured and took an urgent order
 				else if (((!c->toBreak(currentTimeStep) && !c->toRest(currentTimeStep)))||(c->toRest(currentTimeStep)&&c->preparedUrgent())) 			
@@ -878,16 +896,19 @@ void Restaurant::moveFromInservToFinished()
 							availableNormalCooks.enqueue(c);  //then we enqueue him in the queue of available cooks according to his spechilaty in this case normal cooks
 							numberAvailNormalCooks++;
 							numberBusyNormalCooks--;			//decremting the number of busy cooks
+							cout << "and the preparing cook " << c->GetID() << " is sent to normal cooks" << endl;
 						break;
 					case TYPE_VIP:								//same procedure but for VIP
 							availableVipCooks.enqueue(c);		////then we enqueue him in the queue of available cooks according to his spechilaty in this case VIP cooks
 							numberAvailVipCooks++;				//incremintg the number of available cooks type VIP
 							numberBusyVipCooks--;				//decremting the number of busy cooks
+							cout << "and the preparing cook " << c->GetID() << " is sent to vip cooks" << endl;
 						break;
 					case TYPE_VGAN:							//same procedure but for VEGAN
 							availableVeganCooks.enqueue(c);			//then we enqueue him in the queue of available cooks according to his spechilaty in this case VEGAN cooks
 							numberAvailVeganCooks++;				//incremintg the number of available cooks type vegan
 							numberBusyVeganCooks--;					//decremting the number of busy cooks
+							cout << "and the preparing cook " << c->GetID() << " is sent to vegan cooks" << endl;
 						break;
 					}
 				}
@@ -906,6 +927,7 @@ void Restaurant::moveFromInservToFinished()
 						break;
 					}
 					onRestCooks.enqueue(c, -c->getExcpetedReturn());  //then we enqueue him in the queue of resting cooks 
+					cout << "and the preparing cook " << c->GetID() << " is sent to rest and should return at " << c->getExcpetedReturn() << endl;
 				}
 			}
 
@@ -985,14 +1007,17 @@ void Restaurant::checkEndBreakOrRest()
 			case TYPE_NRM:
 				numberAvailNormalCooks++;
 				availableNormalCooks.enqueue(restingCook);
+				cout << "cook " << restingCook->GetID() << " ended his break and returned to nomral cooks" << endl;
 				break;
 			case TYPE_VIP:
 				numberAvailVipCooks++;
 				availableVipCooks.enqueue(restingCook);
+				cout << "cook " << restingCook->GetID() << " ended his break and returned to vip cooks" << endl;
 				break;
 			case TYPE_VGAN:
 				numberAvailVeganCooks++;
 				availableVeganCooks.enqueue(restingCook);
+				cout << "cook " << restingCook->GetID() << " ended his break and returned to vegan cooks" << endl;
 				break;
 
 			}
@@ -1015,14 +1040,17 @@ void Restaurant::checkEndBreakOrRest()
 			case TYPE_NRM:
 				numberAvailNormalCooks++;
 				availableNormalCooks.enqueue(restingCook);
+				cout << "cook " << restingCook->GetID() << " ended his rest and returned to nomral cooks" << endl;
 				break;
 			case TYPE_VIP:
 				numberAvailVipCooks++;
 				availableVipCooks.enqueue(restingCook);
+				cout << "cook " << restingCook->GetID() << " ended his rest and returned to vip cooks" << endl;
 				break;
 			case TYPE_VGAN:
 				numberAvailVeganCooks++;
 				availableVeganCooks.enqueue(restingCook);
+				cout << "cook " << restingCook->GetID() << " ended his rest and returned to vegan cooks" << endl;
 				break;
 			}
 			onRestCooks.peek(restingCook);
@@ -1052,6 +1080,7 @@ void Restaurant::Promote(int ID, double incMoney)
 				}
 			}
 			count--;
+			cout << "Order " << O[i]->GetID() << " is promoted to vip" << endl;
 		}
 	}
 
@@ -1082,7 +1111,7 @@ void Restaurant::autoPromote()
 			numAutoPromoted++;
 			normalOrders.dequeue(O1);
 			vipOrders.enqueue(O1, exp((O1->GetTotalMoney() / O1->GetOrdSize() * O1->GetArrTime())) / O1->GetArrTime());
-
+			cout << "Order " << O1->GetID() << " is promoted to vip" << endl;
 
 		}
 		else
@@ -1091,11 +1120,14 @@ void Restaurant::autoPromote()
 }
 void Restaurant::InteractiveMode()
 {
-	
+	pGUI->PrintMessage("Choose load file name (test cases) from 1 to 6: ");
+	loadFileName = pGUI->GetString();
+	loadFromFile();
 	currentTimeStep++;
 	
 	while (!(vipOrders.isEmpty() && veganOrders.isEmpty() && normalOrders.isEmpty() && servingOrders.isEmpty() && EventsQueue.isEmpty()))
 	{
+		cout <<"Ts:" <<currentTimeStep << endl;
 		ExecuteEvents(currentTimeStep);
 		Injury();
 		AssignUrgentOrder();
@@ -1110,15 +1142,18 @@ void Restaurant::InteractiveMode()
 		waitingTimeIncrementer();
 	}
 	
-
+	saveToFile();
 }
 void Restaurant::Step_by_StepMode()
 {
-	
+	pGUI->PrintMessage("Choose load file name (test cases) from 1 to 6: ");
+	loadFileName = pGUI->GetString();
+	loadFromFile();
 	currentTimeStep++;
 	
 	while (!(vipOrders.isEmpty() && veganOrders.isEmpty() && normalOrders.isEmpty() && servingOrders.isEmpty() && EventsQueue.isEmpty()))
 	{
+		cout <<"Ts:" << currentTimeStep << endl;
 		ExecuteEvents(currentTimeStep);
 		Injury();
 		AssignUrgentOrder();
@@ -1133,14 +1168,18 @@ void Restaurant::Step_by_StepMode()
 	}
 	pGUI->waitForClick();
 	
-
+	saveToFile();
 }
 void Restaurant::SilentMode()
 {
+	pGUI->PrintMessage("Choose load file name (test cases) from 1 to 6: ");
+	loadFileName = pGUI->GetString();
+	loadFromFile();
 	currentTimeStep++;
 	
 	while (!(vipOrders.isEmpty() && veganOrders.isEmpty() && normalOrders.isEmpty() && servingOrders.isEmpty() && EventsQueue.isEmpty()))
 	{
+		cout << "Ts:" <<currentTimeStep << endl;
 		ExecuteEvents(currentTimeStep);
 		Injury();
 		AssignUrgentOrder();
@@ -1152,7 +1191,7 @@ void Restaurant::SilentMode()
 		waitingTimeIncrementer();
 	}
 	
-
+	saveToFile();
 }
 
 void Restaurant::waitingTimeIncrementer()

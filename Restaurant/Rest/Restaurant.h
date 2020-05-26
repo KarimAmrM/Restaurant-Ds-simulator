@@ -48,6 +48,7 @@ private:
 
 	ifstream  loadFile;
 	ofstream saveFile;
+	string loadFileName;
 
 	int normalCooks, veganCooks, vipCooks;// number of each cook
 
