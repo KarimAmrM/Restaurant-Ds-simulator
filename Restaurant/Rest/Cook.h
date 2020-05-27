@@ -19,11 +19,11 @@ class Cook
 	bool preparingUrgent;
 
 public:
-	Cook(int id, ORD_TYPE r_Type, int s, int n, int bd,int rest);
+	Cook(int id, ORD_TYPE r_Type, float s, int n, int bd,int rest);
 	virtual ~Cook();
 	int GetID() const;
 	ORD_TYPE GetType() const;
-	int GetSpeed() const;
+	float GetSpeed() const;
 	int GetNumberOfDishes() const;
 	int GetBreakDuration() const;
 	int getExcpetedReturn()const;
@@ -32,7 +32,7 @@ public:
 	Order* GetCurrentOrder();
 	void setID(int);
 	void setType(ORD_TYPE);
-	void setSpeed(int s);
+	void setSpeed(float s);
 	void setNumberOfDishes(int n);
 	void setBreakDuration(int bd);
 	void setfree(bool isFree);

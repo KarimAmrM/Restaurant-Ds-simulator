@@ -1,7 +1,7 @@
 #include "Cook.h"
 #include <math.h>
 
-Cook::Cook(int id, ORD_TYPE r_Type, int s, int n, int bd,int rest)
+Cook::Cook(int id, ORD_TYPE r_Type, float s, int n, int bd,int rest)
 {
 	ID = id;
 	type = r_Type;
@@ -34,7 +34,7 @@ ORD_TYPE Cook::GetType() const
 	return type;
 }
 
-int Cook::GetSpeed() const
+float Cook::GetSpeed() const
 {
 	return speed;
 }
@@ -78,7 +78,7 @@ void Cook::setType(ORD_TYPE t)
 	type = t;
 }
 
-void Cook::setSpeed(int s)
+void Cook::setSpeed(float s)
 {
 	speed = s > 0 ? s : 0;
 }
@@ -108,7 +108,7 @@ void Cook::AssignOrder(Order* o, int Stime)
 	CurrentOrder = o;
 	Free = false;
 	CurrentOrder->orderAssigned(Stime);
-	double CookingTime = ceil(CurrentOrder->GetOrdSize() / double(speed));//calculating the time taken by the order to be finished
+	double CookingTime = ceil(CurrentOrder->GetOrdSize() / speed);//calculating the time taken by the order to be finished
 	int finishTime = CookingTime + Stime;                               //calculating the finish time
 	CurrentOrder->SetFinishTime(finishTime);
 	preparingUrgent = o->isUrgent();

@@ -62,6 +62,7 @@ private:
 	int numberInjured;
 	int totalMoney;
 	float totalWait, totalServe;
+	int totalNormalOrders;
 	//
 	// TODO: Add More Data Members As Needed
 	//
