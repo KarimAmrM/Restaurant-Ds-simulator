@@ -270,7 +270,7 @@ void Restaurant::addOrder(Order* nOrder)
 	if (nOrder->GetType()==TYPE_NRM) 
 	{
 		normalOrders.enqueue(nOrder);
-		cout << "Order " << nOrder->GetID() << " added to normal orders queue"<<endl;
+		cout << "Order " << nOrder->GetID() << " added to normal orders queue"<< "Order is auto promoted to vip at " <<currentTimeStep+promoteLimit <<endl;
 	}
 	else if (nOrder->GetType() == TYPE_VGAN)
 	{
@@ -284,7 +284,7 @@ void Restaurant::addOrder(Order* nOrder)
 		int size = nOrder->GetOrdSize();
 		numWaitingVip++;
 		vipOrders.enqueue(nOrder,exp((money/size*arrivalTime))/arrivalTime);
-		cout << "Order " << nOrder->GetID() << " added to vip orders queue" << endl;
+		cout << "Order " << nOrder->GetID() << " added to vip orders queue" <<"Must be promoted to urgent after : " <<currentTimeStep+promoteLimit << endl;
 	}
 
 }
@@ -569,7 +569,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			  numberAvailVipCooks--;										//decrementing the available number of vip cooks
 			  numberBusyVipCooks++;											//incremting the Number of busy cooks
 			  numWaitingVip--;
-			  cout << "order " << orderToAssigned->GetID() << " is assigned to " << cookToAssign->GetID()<<" order finish time is "<<orderToAssigned->GetFinishTime()<<endl;
+			  cout << "order " << orderToAssigned->GetID() << " is assigned to " << cookToAssign->GetID()<<" order finish time is "<<orderToAssigned->GetFinishTime() <<endl;
 			  return true;
 		}
 		else if (!availableNormalCooks.isEmpty())   //if there are no available vip then check for normal cooks then repating the same procedures 
@@ -750,14 +750,13 @@ void Restaurant::AssignUrgentOrder()
 
 	for (int i = 0; i < count; i++)
 	{
-		waitingTime = currentTimeStep - VipOrders[i]->GetArrTime(); // calculating the waiting time of the order
+		waitingTime = VipOrders[i]->getWaitTime(); // calculating the waiting time of the order
 		if (waitingTime>=VIP_WT)
 		{
 		    VipOrders[i]->setUrgent(true);
 		    numUrgentOrders++;
-			
-			UrgentOrder = VipOrders[i];
 			cout << "Order " << UrgentOrder->GetID() << " is urgent order ";
+			UrgentOrder = VipOrders[i];
 			bool assigned = assignToCook(UrgentOrder); //a boolean to check either the order is assigned to a cook or not
 			if (!assigned) //in case there is no free cook
 			{
@@ -1074,7 +1073,9 @@ void Restaurant::Promote(int ID, double incMoney)
 			O[i]->SetType(TYPE_VIP);
 			O[i]->SetTotalMoney(O[i]->GetTotalMoney() + incMoney);
 			vipOrders.enqueue(O[i], exp((O[i]->GetTotalMoney() / O[i]->GetOrdSize() * O[i]->GetArrTime())) / O[i]->GetArrTime());
+			O[i]->setWaitTime(0);
 			int pos = i;
+			cout << "Order " << O[i]->GetID() << " is promoted to vip manually" << endl;
 			for (int i = 0; i < count; i++) //removing the element 
 			{
 				if (i >= pos)
@@ -1083,7 +1084,7 @@ void Restaurant::Promote(int ID, double incMoney)
 				}
 			}
 			count--;
-			cout << "Order " << O[i]->GetID() << " is promoted to vip" << endl;
+			
 		}
 	}
 
@@ -1114,7 +1115,8 @@ void Restaurant::autoPromote()
 			numAutoPromoted++;
 			normalOrders.dequeue(O1);
 			vipOrders.enqueue(O1, exp((O1->GetTotalMoney() / O1->GetOrdSize() * O1->GetArrTime())) / O1->GetArrTime());
-			cout << "Order " << O1->GetID() << " is promoted to vip" << endl;
+			O1->setWaitTime(0);
+			cout << "Order " << O1->GetID() << " is promoted to vip automatically" <<"Order must be urgent at "<<currentTimeStep+VIP_WT <<endl;
 
 		}
 		else
@@ -1153,7 +1155,7 @@ void Restaurant::Step_by_StepMode()
 	loadFileName = pGUI->GetString();
 	loadFromFile();
 	currentTimeStep++;
-	
+	waitingTimeIncrementer();
 	while (!(vipOrders.isEmpty() && veganOrders.isEmpty() && normalOrders.isEmpty() && servingOrders.isEmpty() && EventsQueue.isEmpty()))
 	{
 		cout <<"Ts:" << currentTimeStep << endl;
@@ -1206,25 +1208,25 @@ void Restaurant::waitingTimeIncrementer()
 		Order** vipArray = vipOrders.toArray(countVip);
 		for (int i = 0; i < countVip; i++)
 		{
-			vipArray[i]->setWaitTime(currentTimeStep - vipArray[i]->GetArrTime());
+				vipArray[i]->setWaitTime(vipArray[i]->getWaitTime()+1);
 		}
 	}
 
 	if (!veganOrders.isEmpty())
 	{
-		Order** veganArray = veganOrders.toArray(countVip);
-		for (int i = 0; i < countVip; i++)
+		Order** veganArray = veganOrders.toArray(countVegan);
+		for (int i = 0; i < countVegan; i++)
 		{
-			veganArray[i]->setWaitTime(currentTimeStep - veganArray[i]->GetArrTime());
+			veganArray[i]->setWaitTime(currentTimeStep - veganArray[i]->GetArrTime()+1);
 		}
 	}
 
 	if (!normalOrders.isEmpty())
 	{
-		Order** normalArray = normalOrders.toArray(countVip);
-		for (int i = 0; i < countVip; i++)
+		Order** normalArray = normalOrders.toArray(countNormal);
+		for (int i = 0; i < countNormal; i++)
 		{
-			normalArray[i]->setWaitTime(currentTimeStep - normalArray[i]->GetArrTime());
+			normalArray[i]->setWaitTime(currentTimeStep - normalArray[i]->GetArrTime()+1);
 		}
 	}
 

@@ -1,15 +1,5 @@
-FT     ID     AT     WT     ST
-11     1     7     0     4
-11     3     9     0     2
-13     2     9     2     2
-20     4     12     0     8
-24     5     19     0     5
-30     6     25     0     5
-32     7     28     2     2
-35     8     30     0     5
-43     9     31     0     12
+FT     ID    AT    WT     ST
 ....................................................
-Orders: 9  [Normal:4, Vegan:3, VIP:2]
-Cooks: 3  [Normal:1, Vegan:1, VIP:1, injured: 0]
-Average wait= 0.444444, Average serve= 5
-UrgentOrders: 0,  Auto-promoted: 0
+Orders: 0  [Normal:0, Vegan:0, VIP:0]
+Cooks: 7  [Normal:2, Vegan:3, VIP:2, injured: 0]
+Average wait= -nan(ind), Average serve= -nan(ind)
