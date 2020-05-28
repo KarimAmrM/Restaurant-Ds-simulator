@@ -5,11 +5,13 @@
 #include "..\Events\ArrivalEvent.h"
 
 
-int randomize(int max, int min) // generates random number between range{min to max}
+unsigned int randomize(unsigned int max, unsigned int min) // generates random number between range{min to max}
 {
 
-	srand(time(NULL));
-	return  (rand() % (max - min + 1)) + min;
+	
+	return(min + rand() / (RAND_MAX / (max - min + 1) + 1));
+
+	
 
 }
 
@@ -34,7 +36,7 @@ Restaurant::Restaurant()
 	numWaitingVip = 0;
 	totalNormalOrders=0;
 
-
+	srand(time(NULL));
 }
 
 void Restaurant::RunSimulation()
@@ -71,9 +73,9 @@ void Restaurant::loadFromFile()
 		return;
 	}
 
-	float normalSpeedMin,normalSpeedMax, veganSpeedMax,veganSpeedMin ,vipSpeedMin,vipSpeedMax;// speed of each cook
+	unsigned int normalSpeedMin,normalSpeedMax, veganSpeedMax,veganSpeedMin ,vipSpeedMin,vipSpeedMax;// speed of each cook
 	
-	int orderBeforeBreak, normalBreaksMin,normalBreaksMax, veganBreaksMin,veganBreaksMax, vipBreaksMin,vipBreaksMax, restPeriod;// orders before break and number of breaks
+	unsigned int orderBeforeBreak, normalBreaksMin,normalBreaksMax, veganBreaksMin,veganBreaksMax, vipBreaksMin,vipBreaksMax, restPeriod;// orders before break and number of breaks
 
 	//float injProb;
 		
@@ -96,10 +98,10 @@ void Restaurant::loadFromFile()
 
 	nCooks = normalCooks + veganCooks + vipCooks;
 	int cookBreak;
-	float cookSpeed;//to be generated randomly 
+	int cookSpeed;//to be generated randomly 
 	cookBreak = 0;
 	cookSpeed = 0;
-
+	Cook* nrmCook, *vgnCook, *vipCook;
 			for (int i = 0; i < normalCooks; i++) 
 			{
 				//create cook 
@@ -107,10 +109,10 @@ void Restaurant::loadFromFile()
 				//ids from 1 to normalCooks , id=i+1
 				
 				cookBreak = randomize(normalBreaksMax, normalBreaksMin);
-				cookSpeed = normalSpeedMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (normalSpeedMax - normalSpeedMin)));
-			
+				//cookSpeed = normalSpeedMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (normalSpeedMax - normalSpeedMin)));
+				cookSpeed = randomize(normalSpeedMax, normalSpeedMin);
 				
-				Cook* nrmCook = new Cook(i + 1, TYPE_NRM, cookSpeed, orderBeforeBreak,cookBreak,restPeriod);
+				nrmCook = new Cook(i + 1, TYPE_NRM, cookSpeed, orderBeforeBreak,cookBreak,restPeriod);
 				availableNormalCooks.enqueue(nrmCook);
 				cout << "Cook " << nrmCook->GetID() << " speed = " << nrmCook->GetSpeed() << " and his break = " << nrmCook->GetBreakDuration() << endl;
 			}
@@ -122,9 +124,9 @@ void Restaurant::loadFromFile()
 				
 			cookBreak = randomize(veganBreaksMax, veganBreaksMin);
 				
-				cookSpeed = veganSpeedMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (veganSpeedMax - veganSpeedMin)));
-
-				Cook* vgnCook = new Cook(normalCooks + i + 1, TYPE_VGAN, cookSpeed, orderBeforeBreak, cookBreak,restPeriod);
+				//cookSpeed = veganSpeedMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (veganSpeedMax - veganSpeedMin)));
+			cookSpeed = randomize(veganSpeedMax, veganSpeedMin);
+				 vgnCook = new Cook(normalCooks + i + 1, TYPE_VGAN, cookSpeed, orderBeforeBreak, cookBreak,restPeriod);
 				availableVeganCooks.enqueue(vgnCook);
 				cout << "Cook " << vgnCook->GetID() << " speed = " << cookSpeed << " and his break = " << cookBreak << endl;
 			}
@@ -136,9 +138,9 @@ void Restaurant::loadFromFile()
 				//ids from veganCooks+1 to vipCooks, id=veganCooks+1+i
 
 				cookBreak = randomize(vipBreaksMax, vipBreaksMin);
-				cookSpeed = vipSpeedMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (vipSpeedMax -vipSpeedMin)));
-
-				Cook* vipCook = new Cook(i + normalCooks + veganCooks +1, TYPE_VIP, cookSpeed, orderBeforeBreak, cookBreak,restPeriod);
+				//cookSpeed = vipSpeedMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (vipSpeedMax -vipSpeedMin)));
+				cookSpeed = randomize(vipSpeedMax, vipSpeedMin);
+				 vipCook = new Cook(i + normalCooks + veganCooks +1, TYPE_VIP, cookSpeed, orderBeforeBreak, cookBreak,restPeriod);
 				availableVipCooks.enqueue(vipCook);
 				cout << "Cook " << vipCook->GetID() << " speed = " << cookSpeed << " and his break = " << cookBreak << endl;
 			}
@@ -272,7 +274,7 @@ void Restaurant::addOrder(Order* nOrder)
 	{
 		normalOrders.enqueue(nOrder);
 		totalNormalOrders++;
-		cout << "Order " << nOrder->GetID() << " added to normal orders queue"<< "Order is auto promoted to vip at " <<currentTimeStep+promoteLimit <<endl;
+		cout << "Order " << nOrder->GetID() << " added to normal orders queue"<< " Order is auto promoted to vip at " <<currentTimeStep+promoteLimit <<endl;
 	}
 	else if (nOrder->GetType() == TYPE_VGAN)
 	{
@@ -286,7 +288,7 @@ void Restaurant::addOrder(Order* nOrder)
 		int size = nOrder->GetOrdSize();
 		numWaitingVip++;
 		vipOrders.enqueue(nOrder,exp((money/size*arrivalTime))/arrivalTime);
-		cout << "Order " << nOrder->GetID() << " added to vip orders queue" <<"Must be promoted to urgent after : " <<currentTimeStep+promoteLimit << endl;
+		cout << "Order " << nOrder->GetID() << " added to vip orders queue" <<" and Must be promoted to urgent after : " <<currentTimeStep+promoteLimit << endl;
 	}
 
 }
@@ -372,9 +374,41 @@ void Restaurant::ExecuteEvents(int CurrentTimeStep)
 
 Restaurant::~Restaurant()
 {
-		
-		if (pGUI)
-			delete pGUI;
+
+	if (pGUI)
+		delete pGUI;
+	Cook* traversePtr;
+	while (!availableNormalCooks.isEmpty()) 
+	{
+		availableNormalCooks.dequeue(traversePtr);
+		delete traversePtr;
+	
+	}
+	while (!availableVipCooks.isEmpty())
+	{
+		availableVipCooks.dequeue(traversePtr);
+		delete traversePtr;
+
+	}
+	while (!availableVeganCooks.isEmpty())
+	{
+		availableVeganCooks.dequeue(traversePtr);
+		delete traversePtr;
+
+	}
+	while (!onBreakCooks.isEmpty())
+	{
+		onBreakCooks.dequeue(traversePtr);
+		delete traversePtr;
+
+	}
+	while (!onRestCooks.isEmpty())
+	{
+		onRestCooks.dequeue(traversePtr);
+		delete traversePtr;
+
+	}
+	traversePtr = NULL;
 }
 
 void Restaurant::FillDrawingList()
@@ -671,7 +705,7 @@ void Restaurant::Injury()
 			InjCook->setinjured(true); //changing the cook's status to injured
 			int passedTime = currentTimeStep - InjCook->GetCurrentOrder()->getOrderAssignedAt();//calculating the time passed from the serving time to the current time step
 			int doneDishes = passedTime*InjCook->GetSpeed(); //calculating the number of done dishes until the current time step
-			int newSpeed = InjCook->GetSpeed() / 2; //decrement the cook's speed to half its value
+			int newSpeed = InjCook->GetSpeed() / float(2); //decrement the cook's speed to half its value
 			InjCook->setSpeed(newSpeed); // setting the new speed
 			int remainingDishes = InjCook->GetCurrentOrder()->GetOrdSize() - doneDishes; //calculating the number of the remaining dishes
 			int newCookingTime = ceil(remainingDishes / float(newSpeed)); //calculating the new cooking time of the cook's order

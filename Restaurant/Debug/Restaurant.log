@@ -1,98 +1,18 @@
-﻿  CMUgraphics.cpp
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(751,1): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133): message : see declaration of 'strcpy'
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1164,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1171,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1202,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1210,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1357,23): warning C4018: '>': signed/unsigned mismatch
-  colors.cpp
-  image.cpp
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\image.cpp(115,29): warning C4018: '<': signed/unsigned mismatch
-  keyqueue.cpp
-  mousequeue.cpp
-  windowinput.cpp
-  ArrayList.cpp
-  LinkedList.cpp
-  LinkedListStack.cpp
-  ListAdt.cpp
-  PriorityQueue.cpp
-  PriorNode.cpp
-  StackADT.cpp
-  Demo_Main.cpp
-  CancelationEvent.cpp
-  Event.cpp
-  ArrivalEvent.cpp
-  promoteEvent.cpp
-  GUI.cpp
-  Cook.cpp
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Cook.cpp(112,17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-  Generating Code...
-  Compiling...
-  Order.cpp
-  Restaurant.cpp
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(11,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(199,9): warning C4101: 'order': unreferenced local variable
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(288,57): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(570,30): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(583,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(596,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(614,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(626,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(643,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(673,19): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(674,17): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(675,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(677,23): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(820,69): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(1082,99): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(1118,91): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-  Generating Code...
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(653): warning C4715: 'Restaurant::assignToCook': not all control paths return a value
-  jpegload.c
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\jpegload.c(23,1): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(208): message : see declaration of 'fopen'
-  jcomapi.c
-  jcparam.c
-  jdapimin.c
-  jdapistd.c
-  jdatasrc.c
-  jdcoefct.c
-  jdcolor.c
-  jddctmgr.c
-  jdhuff.c
-  jdinput.c
-  jdmainct.c
-  jdmarker.c
-  jdmaster.c
-  jdmerge.c
-  jdphuff.c
-  jdpostct.c
-  jdsample.c
-  jdtrans.c
-  jerror.c
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\jpeg\jerror.c(169,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\jpeg\jerror.c(171,1): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(1774): message : see declaration of 'sprintf'
-  Generating Code...
-  Compiling...
-  jidctflt.c
-  jidctfst.c
-  jidctint.c
-  jidctred.c
-  jmemmgr.c
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\jpeg\jmemmgr.c(1103,1): warning C4996: 'getenv': This function or variable may be unsafe. Consider using _dupenv_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdlib.h(1191): message : see declaration of 'getenv'
-C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\jpeg\jmemmgr.c(1106,1): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\stdio.h(2263): message : see declaration of 'sscanf'
-  jmemnobs.c
-  jquant1.c
-  jquant2.c
-  jutils.c
-  Generating Code...
-  Restaurant.vcxproj -> C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Debug\Restaurant.exe
+﻿  Restaurant.cpp
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(39,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(201,9): warning C4101: 'order': unreferenced local variable
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(290,57): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(604,30): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(617,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(630,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(648,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(660,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(677,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(708,17): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(709,22): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(711,23): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(854,69): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(1116,99): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(1152,91): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(687): warning C4715: 'Restaurant::assignToCook': not all control paths return a value
+  Restaurant.vcxproj -> C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Debug\Restaurant.exe

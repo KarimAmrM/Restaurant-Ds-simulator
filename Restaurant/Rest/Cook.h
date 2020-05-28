@@ -7,7 +7,7 @@ class Cook
 {
 	int ID;
 	ORD_TYPE type;	//for each order type there is a corresponding type (VIP, Normal, Vegan)
-	float speed;		//dishes it can prepare in one clock tick (in one timestep)
+	int speed;		//dishes it can prepare in one clock tick (in one timestep)
 	int NumberOfDishes; //number of dishes before break
 	int BreakDuration;  //time steps of the break;    
 	bool Free ; //flag to check either the cook is free or not
@@ -19,11 +19,11 @@ class Cook
 	bool preparingUrgent;
 
 public:
-	Cook(int id, ORD_TYPE r_Type, float s, int n, int bd,int rest);
+	Cook(int id, ORD_TYPE r_Type, int s, int n, int bd,int rest);
 	virtual ~Cook();
 	int GetID() const;
 	ORD_TYPE GetType() const;
-	float GetSpeed() const;
+	int GetSpeed() const;
 	int GetNumberOfDishes() const;
 	int GetBreakDuration() const;
 	int getExcpetedReturn()const;
