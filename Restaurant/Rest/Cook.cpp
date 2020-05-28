@@ -1,7 +1,7 @@
 #include "Cook.h"
 #include <math.h>
 
-Cook::Cook(int id, ORD_TYPE r_Type, int s, int n, int bd,int rest)
+Cook::Cook(int id, ORD_TYPE r_Type, float s, int n, int bd,int rest)
 {
 	ID = id;
 	type = r_Type;
@@ -34,7 +34,7 @@ ORD_TYPE Cook::GetType() const
 	return type;
 }
 
-int Cook::GetSpeed() const
+float Cook::GetSpeed() const
 {
 	return speed;
 }

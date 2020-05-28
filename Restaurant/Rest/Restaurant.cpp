@@ -97,8 +97,8 @@ void Restaurant::loadFromFile()
 
 
 	nCooks = normalCooks + veganCooks + vipCooks;
-	int cookBreak;
-	int cookSpeed;//to be generated randomly 
+	unsigned int cookBreak;
+	unsigned int cookSpeed;//to be generated randomly 
 	cookBreak = 0;
 	cookSpeed = 0;
 	Cook* nrmCook, *vgnCook, *vipCook;
