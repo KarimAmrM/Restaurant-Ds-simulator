@@ -12,7 +12,7 @@ GUI::GUI()
 	DrawingColors[TYPE_NRM] =  RED;	//normal-order color
 	DrawingColors[TYPE_VGAN] = DARKBLUE;		//vegan-order color
 	DrawingColors[TYPE_VIP] = 	VIOLET;		//VIP-order color					
-
+	DrawingColors[TYPE_URG] = BLACK;
 	ClearStatusBar();
 	ClearDrawingArea(); 
 	DrawRestArea();  
@@ -251,10 +251,15 @@ void GUI::UpdateInterface()
 */
 void GUI::AddToDrawingList(Order* pOrd)
 {
-	
-	DrawingItem *pDitem=new DrawingItem;
+
+	DrawingItem* pDitem = new DrawingItem;
 	pDitem->ID = pOrd->GetID();
-	pDitem->clr = DrawingColors[pOrd->GetType()];
+	if(pOrd->isUrgent())
+		pDitem->clr = DrawingColors[TYPE_URG];
+	else
+		pDitem->clr = DrawingColors[pOrd->GetType()];
+
+
 	ORD_STATUS order_status = pOrd->getStatus();
 	GUI_REGION reg;
 

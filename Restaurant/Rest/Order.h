@@ -18,6 +18,7 @@ protected:
 	int OrdSize;   //the number of dishes for the order
 	int assignedToCookAt;
 	bool urgent;
+	bool promoted;
 	//
 	// TODO: Add More Data Members As Needed
 	//
@@ -63,6 +64,8 @@ public:
 
 	void setUrgent(bool);
 	bool isUrgent();
+	void setPromoted(bool isPromoted);
+	bool isPromoted();
 	
 	//
 	// TODO: Add More Member Functions As Needed

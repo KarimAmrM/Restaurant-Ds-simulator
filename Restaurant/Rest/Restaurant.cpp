@@ -289,7 +289,7 @@ void Restaurant::addOrder(Order* nOrder)
 		int size = nOrder->GetOrdSize();
 		numWaitingVip++;
 		vipOrders.enqueue(nOrder,exp((money/size*arrivalTime))/arrivalTime);
-		cout << "Order " << nOrder->GetID() << " added to vip orders queue" <<" and Must be promoted to urgent after : " <<currentTimeStep+promoteLimit << endl;
+		cout << "Order " << nOrder->GetID() << " added to vip orders queue" <<" and Must be promoted to urgent after : " <<currentTimeStep+VIP_WT << endl;
 	}
 
 }
@@ -794,8 +794,11 @@ void Restaurant::AssignUrgentOrder()
 		waitingTime = VipOrders[i]->getWaitTime(); // calculating the waiting time of the order  
 		if (waitingTime>=VIP_WT)																	
 		{
-		    VipOrders[i]->setUrgent(true);
-		    numUrgentOrders++;
+			if (!VipOrders[i]->isUrgent())
+			{
+				VipOrders[i]->setUrgent(true);
+				numUrgentOrders++;
+			}
 			UrgentOrder = VipOrders[i];
 			bool assigned = assignToCook(UrgentOrder); //a boolean to check either the order is assigned to a cook or not
 			cout << "Order " << UrgentOrder->GetID() << " is urgent order ";
@@ -1172,7 +1175,11 @@ void Restaurant::autoPromote()
 
 		if (c >= promoteLimit)
 		{
-			numAutoPromoted++;
+			if (!O1->isPromoted())
+			{
+				O1->setPromoted(true);
+				numAutoPromoted++;
+			}
 			normalOrders.dequeue(O1);
 			O1->SetType(TYPE_VIP);
 			vipOrders.enqueue(O1, exp((O1->GetTotalMoney() / O1->GetOrdSize() * O1->GetArrTime())) / O1->GetArrTime());

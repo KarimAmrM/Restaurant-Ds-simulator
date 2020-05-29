@@ -12,6 +12,7 @@ Order::Order(int id, ORD_TYPE r_Type, int s, int ar, double m)
 	ServTime = 0;
 	FinishTime = 0;
 	urgent = false;
+	promoted = false;
 }
 
 Order::~Order()
@@ -144,4 +145,14 @@ void Order::setUrgent(bool flag)
 bool Order::isUrgent()
 {
 	return urgent;
+}
+
+void Order::setPromoted(bool isPromoted)
+{
+	promoted = isPromoted;
+}
+
+bool Order::isPromoted()
+{
+	return promoted;
 }
