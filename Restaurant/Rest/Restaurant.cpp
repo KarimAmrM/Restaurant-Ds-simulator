@@ -5,11 +5,11 @@
 #include "..\Events\ArrivalEvent.h"
 
 
-unsigned int randomize(unsigned int max, unsigned int min) // generates random number between range{min to max}
+ int randomize( int max,  int min) // generates random number between range{min to max}
 {
 
 	
-	return(min + rand() / (RAND_MAX / (max - min + 1) + 1));
+	return(rand() % (max - min + 1)) + min;
 
 	
 
@@ -97,8 +97,8 @@ void Restaurant::loadFromFile()
 
 
 	nCooks = normalCooks + veganCooks + vipCooks;
-	unsigned int cookBreak;
-	unsigned int cookSpeed;//to be generated randomly 
+	 int cookBreak;
+ int cookSpeed;//to be generated randomly 
 	cookBreak = 0;
 	cookSpeed = 0;
 	Cook* nrmCook, *vgnCook, *vipCook;
@@ -189,10 +189,11 @@ void Restaurant::loadFromFile()
 					addEvent(nEvent);
 
 					break;
-				default:
-					break;
+				
+				
 				}
 			}
+
 }
 
 void Restaurant::saveToFile() {
@@ -705,10 +706,10 @@ void Restaurant::Injury()
 			InjCook->setinjured(true); //changing the cook's status to injured
 			int passedTime = currentTimeStep - InjCook->GetCurrentOrder()->getOrderAssignedAt();//calculating the time passed from the serving time to the current time step
 			int doneDishes = passedTime*InjCook->GetSpeed(); //calculating the number of done dishes until the current time step
-			int newSpeed = InjCook->GetSpeed() / float(2); //decrement the cook's speed to half its value
+			float newSpeed = InjCook->GetSpeed() /2; //decrement the cook's speed to half its value
 			InjCook->setSpeed(newSpeed); // setting the new speed
 			int remainingDishes = InjCook->GetCurrentOrder()->GetOrdSize() - doneDishes; //calculating the number of the remaining dishes
-			int newCookingTime = ceil(remainingDishes / float(newSpeed)); //calculating the new cooking time of the cook's order
+			int newCookingTime = ceil(remainingDishes / newSpeed); //calculating the new cooking time of the cook's order
 			int newFinishTime = currentTimeStep +newCookingTime; //calculating the new finish time of the cook's order
 			InjCook->GetCurrentOrder()->SetFinishTime(newFinishTime); // setting the new finish time of the cook's order
 			numberInjured++;
@@ -808,6 +809,19 @@ void Restaurant::AssignUrgentOrder()
 					servingOrders.enqueue(UrgentOrder); //enqueuing the order in the serving orders queue
 					UrgentCook->AssignOrder(UrgentOrder, currentTimeStep); //assigning the order to the cook
 					assigned = true; //setting the order to assigned
+					switch (UrgentCook->GetType())
+					{
+					case TYPE_NRM:
+						numberBusyNormalCooks++;			//decremting the number of busy cooks
+						break;
+					case TYPE_VIP:								//same procedure but for VIP
+						numberBusyVipCooks++;				//decremting the number of busy cooks
+						break;
+					case TYPE_VGAN:							//same procedure but for VEGAN
+						numberBusyVeganCooks++;					//decremting the number of busy cooks
+						break;
+					}
+					
 					cout << "and assigned to " << UrgentCook->GetID()<<" whose is in break"<<endl;
 				}
 				else if (!onRestCooks.isEmpty()) //if there is no on break cook, we start to search for on rest cook
@@ -818,6 +832,18 @@ void Restaurant::AssignUrgentOrder()
 					servingOrders.enqueue(UrgentOrder); //enqueuing the order in the serving orders queue
 					UrgentCook->AssignOrder(UrgentOrder, currentTimeStep); //assigning the order to the cook
 					assigned = true;  //setting the order to assigned
+					switch (UrgentCook->GetType())
+					{
+					case TYPE_NRM:
+						numberBusyNormalCooks++;			//decremting the number of busy cooks
+						break;
+					case TYPE_VIP:								//same procedure but for VIP
+						numberBusyVipCooks++;				//decremting the number of busy cooks
+						break;
+					case TYPE_VGAN:							//same procedure but for VEGAN
+						numberBusyVeganCooks++;					//decremting the number of busy cooks
+						break;
+					}
 					cout << "and assigned to " << UrgentCook->GetID() << " whose is in Rest"<<endl;
 				}
 
