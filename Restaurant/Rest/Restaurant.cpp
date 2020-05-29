@@ -289,7 +289,7 @@ void Restaurant::addOrder(Order* nOrder)
 		int size = nOrder->GetOrdSize();
 		numWaitingVip++;
 		vipOrders.enqueue(nOrder,exp((money/size*arrivalTime))/arrivalTime);
-		cout << "Order " << nOrder->GetID() << " added to vip orders queue" <<" and Must be promoted to urgent after : " <<currentTimeStep+promoteLimit << endl;
+		cout << "Order " << nOrder->GetID() << " added to vip orders queue" <<" and Must be promoted to urgent after : " <<currentTimeStep+VIP_WT << endl;
 	}
 
 }

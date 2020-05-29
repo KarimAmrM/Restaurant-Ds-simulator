@@ -9,8 +9,9 @@ enum ORD_TYPE	//types of orders
 	TYPE_NRM,	//normal order
 	TYPE_VGAN,	//vegan
 	TYPE_VIP,	//VIP
+	TYPE_URG,
 	TYPE_CNT	//Number of types
-
+	
 };
 
 enum ORD_STATUS	//order status
