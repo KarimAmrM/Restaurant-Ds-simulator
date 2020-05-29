@@ -490,7 +490,7 @@ void Restaurant::FillDrawingList()
 				break;
 			}
 			orderId = to_string(busyCooksArr[i]->GetCurrentOrder()->GetID());
-			orderAssignedToCook += cookType + cookId + orderType + orderId + "   ";
+			orderAssignedToCook += cookType + cookId +"("+ orderType + orderId + ")"+"   ";
 
 		
 		}
