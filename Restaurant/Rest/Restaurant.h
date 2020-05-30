@@ -63,9 +63,7 @@ private:
 	int totalMoney;
 	float totalWait, totalServe;
 	int totalNormalOrders;
-	//
-	// TODO: Add More Data Members As Needed
-	//
+	
 
 public:
 	
@@ -100,12 +98,11 @@ public:
 	void Promote(int ID, double incMoney);
 	void autoPromote();
 	
-	// TODO: Add More Member Functions As Needed
-	//
+	
 	void InteractiveMode();
 	void Step_by_StepMode();
 	void SilentMode();
-	void waitingTimeIncrementer();
+
 
 };
 

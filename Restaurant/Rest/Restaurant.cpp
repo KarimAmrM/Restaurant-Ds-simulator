@@ -77,7 +77,7 @@ void Restaurant::loadFromFile()
 	
 	unsigned int orderBeforeBreak, normalBreaksMin,normalBreaksMax, veganBreaksMin,veganBreaksMax, vipBreaksMin,vipBreaksMax, restPeriod;// orders before break and number of breaks
 
-	//float injProb;
+
 		
 
 	char eventType, orderType;
@@ -98,7 +98,7 @@ void Restaurant::loadFromFile()
 
 	nCooks = normalCooks + veganCooks + vipCooks;
 	 int cookBreak;
- int cookSpeed;//to be generated randomly 
+	int cookSpeed;//to be generated randomly 
 	cookBreak = 0;
 	cookSpeed = 0;
 	Cook* nrmCook, *vgnCook, *vipCook;
@@ -109,7 +109,7 @@ void Restaurant::loadFromFile()
 				//ids from 1 to normalCooks , id=i+1
 				
 				cookBreak = randomize(normalBreaksMax, normalBreaksMin);
-				//cookSpeed = normalSpeedMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (normalSpeedMax - normalSpeedMin)));
+			
 				cookSpeed = randomize(normalSpeedMax, normalSpeedMin);
 				
 				nrmCook = new Cook(i + 1, TYPE_NRM, cookSpeed, orderBeforeBreak,cookBreak,restPeriod);
@@ -124,7 +124,7 @@ void Restaurant::loadFromFile()
 				
 			cookBreak = randomize(veganBreaksMax, veganBreaksMin);
 				
-				//cookSpeed = veganSpeedMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (veganSpeedMax - veganSpeedMin)));
+			
 			cookSpeed = randomize(veganSpeedMax, veganSpeedMin);
 				 vgnCook = new Cook(normalCooks + i + 1, TYPE_VGAN, cookSpeed, orderBeforeBreak, cookBreak,restPeriod);
 				availableVeganCooks.enqueue(vgnCook);
@@ -138,7 +138,7 @@ void Restaurant::loadFromFile()
 				//ids from veganCooks+1 to vipCooks, id=veganCooks+1+i
 
 				cookBreak = randomize(vipBreaksMax, vipBreaksMin);
-				//cookSpeed = vipSpeedMin + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (vipSpeedMax -vipSpeedMin)));
+				
 				cookSpeed = randomize(vipSpeedMax, vipSpeedMin);
 				 vipCook = new Cook(i + normalCooks + veganCooks +1, TYPE_VIP, cookSpeed, orderBeforeBreak, cookBreak,restPeriod);
 				availableVipCooks.enqueue(vipCook);
@@ -153,7 +153,7 @@ void Restaurant::loadFromFile()
 				
 				switch (eventType) 
 				{
-				case('R'): // Change constructor of arrivalEvent to fill order's info
+				case('R'): 
 					loadFile >>orderType>> eventTimeStep >> eventId >> orderSize >> orderPrice;
 					
 					if (orderType == 'N') 
@@ -238,22 +238,22 @@ void Restaurant::saveToFile() {
 	
 	
 
-	saveFile << "FT " << "   " << " ID" << "   " << " AT" << "   " << " WT" << "    " << " ST" <<endl;
+	saveFile << "FT" << '\t' << "ID" << '\t' << "AT" << '\t' << "WT" << '\t' << "ST" <<endl;
 	
 	for (int i = 0; i < numFinishedOrders; i++) 
 	{
-		saveFile << finishedOrdersArr[i]->GetFinishTime() << "     " << finishedOrdersArr[i]->GetID() << "     " << finishedOrdersArr[i]->GetArrTime()
-			<< "     " << finishedOrdersArr[i]->getWaitTime() << "     " << finishedOrdersArr[i]->GetServTime() << endl;
+		saveFile << finishedOrdersArr[i]->GetFinishTime() << '\t' << finishedOrdersArr[i]->GetID() << '\t' << finishedOrdersArr[i]->GetArrTime()
+			<< '\t' << finishedOrdersArr[i]->getWaitTime() << '\t' << finishedOrdersArr[i]->GetServTime() << endl;
 	}
-	saveFile << "...................................................." << endl;
+	saveFile << "................................................" << endl;
 
-	saveFile <<"Orders: " <<nOrders << "  " << "[Normal:" << numNormOrders << ", " << "Vegan:" << numVganOrders << ", " << "VIP:" << numVipOreders << "]" << endl;
+	saveFile <<"Orders: " <<nOrders << '\t' << "[Normal:" << numNormOrders << ", " << "Vegan:" << numVganOrders << ", " << "VIP:" << numVipOreders << "]" << endl;
 
-	saveFile <<"Cooks: " <<nCooks << "  " << "[Normal:" << normalCooks << ", " << "Vegan:" << veganCooks << ", " << "VIP:" << vipCooks <<", "<<"injured: "<<numberInjured <<"]" << endl;
+	saveFile <<"Cooks: " <<nCooks << '\t' << "[Normal:" << normalCooks << ", " << "Vegan:" << veganCooks << ", " << "VIP:" << vipCooks <<", "<<"injured: "<<numberInjured <<"]" << endl;
 
 	saveFile << "Average wait= " << totalWait / nOrders << ", " << "Average serve= " << totalServe / nOrders << endl;
 
-	saveFile << "UrgentOrders: " << numUrgentOrders << ",  " << "Auto-promoted: " << setprecision(2)<<fixed<<(numAutoPromoted / float(totalNormalOrders)) * 100;
+	saveFile << "UrgentOrders: " << numUrgentOrders << ",  " << "Auto-promoted: " << setprecision(2)<<fixed<<(numAutoPromoted / float(totalNormalOrders)) * 100<<"%";
 
 
 	saveFile.close();
@@ -571,6 +571,7 @@ void Restaurant::FillDrawingList()
 	 numVipOrders = to_string(numVipOreders);
 	 numVeganOrders = to_string(numVganOrders);
 	
+	
 	 if (orderAssignedToCook == "") 
 	 {
 		 orderAssignedToCook = "No orders assigned last time step!.";
@@ -583,7 +584,7 @@ void Restaurant::FillDrawingList()
 		+ "Current available VIP cooks : " + vipCooksNumberPrinted + '\n'
 		+ "Current available normal cooks : " + normalCooksNumberPrinted + '\n' 
 		+ "Current available vegan cooks : " + veganCooksNumberPrinted + '\n' 
-		+ "Click to continue."+'\n');
+		);
 
 	orderAssignedToCook = "";
 	pGUI->UpdateInterface();
@@ -700,6 +701,7 @@ void Restaurant::Injury()
 		if (p <= injProb)
 		{
 			Cook* InjCook=nullptr; //a pointer to hold the injured cook
+			Order* currentOrder=NULL;
 			busyCooks.peekFront(InjCook); 
 			if (InjCook->isInjured())	//if this cook is already injured
 				return;
@@ -712,6 +714,10 @@ void Restaurant::Injury()
 			int newCookingTime = ceil(remainingDishes / newSpeed); //calculating the new cooking time of the cook's order
 			int newFinishTime = currentTimeStep +newCookingTime; //calculating the new finish time of the cook's order
 			InjCook->GetCurrentOrder()->SetFinishTime(newFinishTime); // setting the new finish time of the cook's order
+			busyCooks.dequeue(InjCook);
+			busyCooks.enqueue(InjCook);
+			servingOrders.dequeue(currentOrder);
+			servingOrders.enqueue(currentOrder);
 			numberInjured++;
 			cout << "cook " << InjCook->GetID() << " injured and his order new finish time is " << InjCook->GetCurrentOrder()->GetFinishTime() << endl;
 		}
@@ -720,59 +726,6 @@ void Restaurant::Injury()
 
 }
 
-/*void Restaurant::AssignUrgentOrder()
-{
-	Order* UrgentOrder = nullptr; //a pointer to hold the urgent order
-	vipOrders.peek(UrgentOrder); 
-	if (UrgentOrder == nullptr)
-	{
-		return; //if there is no vip order
-	}
-	int WaitingTime = currentTimeStep - UrgentOrder->GetArrTime();//calculating the waiting time of the order
-	while (WaitingTime >= VIP_WT) //to handle the case of many orders at the same time step
-	{
-		numUrgentOrders++;
-		UrgentOrder->setUrgent(true);
-		bool assigned=assignToCook(UrgentOrder); //a boolean to check either the order is assigned to a cook or not 
-		if (!assigned) //in case there is no free cook
-		{
-			if (!onBreakCooks.isEmpty()) //searching for on break cook to assign the order to
-			{
-				Cook* UrgentCook = nullptr; //a pointer to hold the cook
-				onBreakCooks.dequeue(UrgentCook); //dequeuing the cook from the on break cooks queue
-				busyCooks.enqueue(UrgentCook); //enqueuing the cook in the busy cooks queue
-				servingOrders.enqueue(UrgentOrder); //enqueuing the order in the serving orders queue
-				UrgentCook->AssignOrder(UrgentOrder,currentTimeStep); //assigning the order to the cook
-				assigned = true; //setting the order to assigned
-			}
-			else if (!onRestCooks.isEmpty()) //if there is no on break cook, we start to search for on rest cook
-			{
-				Cook* UrgentCook = nullptr; //a pointer to hold the cook
-				onRestCooks.dequeue(UrgentCook); //dequeuing the cook from the on rest cooks queue
-				busyCooks.enqueue(UrgentCook); //enqueuing the cook in the busy cooks queue
-				servingOrders.enqueue(UrgentOrder); //enqueuing the order in the serving orders queue
-				UrgentCook->AssignOrder(UrgentOrder, currentTimeStep); //assigning the order to the cook
-				assigned = true;  //setting the order to assigned
-			}
-
-		}
-		if (!assigned)
-		{
-			return; //in case the order isn't assigned, there is no need to check the next order
-		}
-		vipOrders.peek(UrgentOrder);
-		if (!UrgentOrder)
-		{
-			return; //if there is no next order
-		}
-		else
-		{
-			WaitingTime = currentTimeStep - UrgentOrder->GetArrTime(); //if there is next order, calculate the waiting time of this order
-		}
-	}
-
-
-}*/
 
 
 
@@ -1212,7 +1165,7 @@ void Restaurant::InteractiveMode()
 		FillDrawingList();
 		pGUI->waitForClick();
 		currentTimeStep++;
-		//waitingTimeIncrementer();
+		
 	}
 	
 	saveToFile();
@@ -1223,7 +1176,7 @@ void Restaurant::Step_by_StepMode()
 	loadFileName = pGUI->GetString();
 	loadFromFile();
 	currentTimeStep++;
-	//waitingTimeIncrementer();
+
 	while (!(vipOrders.isEmpty() && veganOrders.isEmpty() && normalOrders.isEmpty() && servingOrders.isEmpty() && EventsQueue.isEmpty()))
 	{
 		cout <<"Ts:" << currentTimeStep << endl;
@@ -1237,7 +1190,7 @@ void Restaurant::Step_by_StepMode()
 		Sleep(1000);
 		FillDrawingList();
 		currentTimeStep++;
-		waitingTimeIncrementer();
+		
 	}
 	pGUI->waitForClick();
 	
@@ -1261,43 +1214,12 @@ void Restaurant::SilentMode()
 		checkEndBreakOrRest();
 		assigningOrders();
 		currentTimeStep++;
-		//waitingTimeIncrementer();
+		
 	}
 	
 	saveToFile();
 }
 
-void Restaurant::waitingTimeIncrementer()
-{
-	int countVip = 0, countVegan = 0, countNormal=0;
 
-	if (!vipOrders.isEmpty())
-	{
-		Order** vipArray = vipOrders.toArray(countVip);
-		for (int i = 0; i < countVip; i++)
-		{
-				vipArray[i]->setWaitTime(vipArray[i]->getWaitTime()+1);
-		}
-	}
-
-	if (!veganOrders.isEmpty())
-	{
-		Order** veganArray = veganOrders.toArray(countVegan);
-		for (int i = 0; i < countVegan; i++)
-		{
-			veganArray[i]->setWaitTime(currentTimeStep - veganArray[i]->GetArrTime()+1);
-		}
-	}
-
-	if (!normalOrders.isEmpty())
-	{
-		Order** normalArray = normalOrders.toArray(countNormal);
-		for (int i = 0; i < countNormal; i++)
-		{
-			normalArray[i]->setWaitTime(currentTimeStep - normalArray[i]->GetArrTime()+1);
-		}
-	}
-
-}
 
  
