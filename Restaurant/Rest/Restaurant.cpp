@@ -227,7 +227,7 @@ void Restaurant::saveToFile() {
 
 
 	
-	saveFile.open("saveFile.txt");
+	saveFile.open("Out_"+loadFileName+".txt");
 	if (!saveFile)
 	{ 
 		pGUI->PrintMessage("out file failed!!error");
@@ -703,8 +703,13 @@ void Restaurant::Injury()
 			Cook* InjCook=nullptr; //a pointer to hold the injured cook
 			Order* currentOrder=NULL;
 			busyCooks.peekFront(InjCook); 
-			if (InjCook->isInjured())	//if this cook is already injured
+			if (InjCook->isInjured()) {	//if this cook is already injured
+				busyCooks.dequeue(InjCook);
+				busyCooks.enqueue(InjCook);
+				servingOrders.dequeue(currentOrder);
+				servingOrders.enqueue(currentOrder);
 				return;
+			}
 			InjCook->setinjured(true); //changing the cook's status to injured
 			int passedTime = currentTimeStep - InjCook->GetCurrentOrder()->getOrderAssignedAt();//calculating the time passed from the serving time to the current time step
 			int doneDishes = passedTime*InjCook->GetSpeed(); //calculating the number of done dishes until the current time step
@@ -768,13 +773,13 @@ void Restaurant::AssignUrgentOrder()
 					switch (UrgentCook->GetType())
 					{
 					case TYPE_NRM:
-						numberBusyNormalCooks++;			//decremting the number of busy cooks
+						numberBusyNormalCooks++;			//incremting the number of busy cooks
 						break;
 					case TYPE_VIP:								//same procedure but for VIP
-						numberBusyVipCooks++;				//decremting the number of busy cooks
+						numberBusyVipCooks++;				//incremting the number of busy cooks
 						break;
 					case TYPE_VGAN:							//same procedure but for VEGAN
-						numberBusyVeganCooks++;					//decremting the number of busy cooks
+						numberBusyVeganCooks++;					//incremting the number of busy cooks
 						break;
 					}
 					
@@ -791,13 +796,13 @@ void Restaurant::AssignUrgentOrder()
 					switch (UrgentCook->GetType())
 					{
 					case TYPE_NRM:
-						numberBusyNormalCooks++;			//decremting the number of busy cooks
+						numberBusyNormalCooks++;			//incremting the number of busy cooks
 						break;
 					case TYPE_VIP:								//same procedure but for VIP
-						numberBusyVipCooks++;				//decremting the number of busy cooks
+						numberBusyVipCooks++;				//incremting the number of busy cooks
 						break;
 					case TYPE_VGAN:							//same procedure but for VEGAN
-						numberBusyVeganCooks++;					//decremting the number of busy cooks
+						numberBusyVeganCooks++;					//incremting the number of busy cooks
 						break;
 					}
 					cout << "and assigned to " << UrgentCook->GetID() << " whose is in Rest"<<endl;

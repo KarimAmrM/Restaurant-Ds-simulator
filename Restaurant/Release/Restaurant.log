@@ -1,0 +1,73 @@
+﻿  CMUgraphics.cpp
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(215,47): error C2440: '=': cannot convert from 'const char [20]' to 'LPCWSTR'
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(215,29): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(218,1): error C2664: 'HWND CreateWindowExW(DWORD,LPCWSTR,LPCWSTR,DWORD,int,int,int,int,HWND,HMENU,HINSTANCE,LPVOID)': cannot convert argument 2 from 'const char [20]' to 'LPCWSTR'
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(218,1): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\um\winuser.h(4436,1): message : see declaration of 'CreateWindowExW'
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(447,41): error C2664: 'BOOL SetWindowTextW(HWND,LPCWSTR)': cannot convert argument 2 from 'const char *' to 'LPCWSTR'
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(447,31): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\um\winuser.h(8902,1): message : see declaration of 'SetWindowTextW'
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(751,34): error C2664: 'char *strcpy(char *,const char *)': cannot convert argument 1 from 'WCHAR [32]' to 'char *'
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(751,12): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\string.h(133,1): message : see declaration of 'strcpy'
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1148,4): error C2664: 'BOOL TextOutW(HDC,int,int,LPCWSTR,int)': cannot convert argument 4 from 'const char *' to 'LPCWSTR'
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1148,31): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\um\wingdi.h(5101,25): message : see declaration of 'TextOutW'
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1164,2): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1171,2): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1183,7): error C2664: 'BOOL GetTextExtentPoint32W(HDC,LPCWSTR,int,LPSIZE)': cannot convert argument 2 from 'const char *' to 'LPCWSTR'
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1183,39): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\um\wingdi.h(4219,1): message : see declaration of 'GetTextExtentPoint32W'
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1202,2): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1210,2): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1357,23): warning C4018: '>': signed/unsigned mismatch
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1438,144): error C2664: 'int MessageBoxW(HWND,LPCWSTR,LPCWSTR,UINT)': cannot convert argument 2 from 'const char [63]' to 'LPCWSTR'
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1438,32): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\um\winuser.h(9153,1): message : see declaration of 'MessageBoxW'
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1457,127): error C2664: 'int MessageBoxW(HWND,LPCWSTR,LPCWSTR,UINT)': cannot convert argument 2 from 'const char [46]' to 'LPCWSTR'
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1457,32): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\um\winuser.h(9153,1): message : see declaration of 'MessageBoxW'
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1462,144): error C2664: 'int MessageBoxW(HWND,LPCWSTR,LPCWSTR,UINT)': cannot convert argument 2 from 'const char [63]' to 'LPCWSTR'
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\CMUgraphics.cpp(1462,32): message : Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\um\winuser.h(9153,1): message : see declaration of 'MessageBoxW'
+  colors.cpp
+  image.cpp
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\CMUgraphicsLib\image.cpp(115,29): warning C4018: '<': signed/unsigned mismatch
+  keyqueue.cpp
+  mousequeue.cpp
+  windowinput.cpp
+  ArrayList.cpp
+  LinkedList.cpp
+  LinkedListStack.cpp
+  ListAdt.cpp
+  PriorityQueue.cpp
+  PriorNode.cpp
+  StackADT.cpp
+  Demo_Main.cpp
+  CancelationEvent.cpp
+  Event.cpp
+  ArrivalEvent.cpp
+  promoteEvent.cpp
+  GUI.cpp
+  Cook.cpp
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Cook.cpp(112,17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  Compiling...
+  Order.cpp
+  Restaurant.cpp
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(39,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(115,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(129,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(143,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(202,9): warning C4101: 'order': unreferenced local variable
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(291,57): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(606,30): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(619,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(632,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(650,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(662,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(679,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(710,19): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(714,23): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(836,69): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(1098,99): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(1138,91): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
