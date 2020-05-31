@@ -103,7 +103,7 @@ public:
 	void InteractiveMode();
 	void Step_by_StepMode();
 	void SilentMode();
-
+	void waitingTimeIncrementer();
 
 };
 

@@ -1,25 +1,20 @@
-﻿  Demo_Main.cpp
-  ArrivalEvent.cpp
-  CancelationEvent.cpp
-  promoteEvent.cpp
-  Restaurant.cpp
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(39,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(115,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(129,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(143,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(202,9): warning C4101: 'order': unreferenced local variable
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(291,57): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(606,30): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(619,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(632,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(650,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(662,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(679,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(715,19): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(719,23): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(841,69): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(1103,99): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(1143,91): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-  Generating Code...
-C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(689): warning C4715: 'Restaurant::assignToCook': not all control paths return a value
-  Restaurant.vcxproj -> C:\Users\Fastoraaa\Documents\GitHub\Restaurant-Ds-simulator\Debug\Restaurant.exe
+﻿  Restaurant.cpp
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(39,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(115,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(129,57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(143,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(202,9): warning C4101: 'order': unreferenced local variable
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(291,57): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(606,30): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(619,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(632,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(650,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(662,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(679,28): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(714,19): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(718,23): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(840,69): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(1099,99): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(1139,91): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Restaurant\Rest\Restaurant.cpp(688): warning C4715: 'Restaurant::assignToCook': not all control paths return a value
+  Restaurant.vcxproj -> C:\Users\Gadollyo\Documents\GitHub\Restaurant-Ds-simulator\Debug\Restaurant.exe

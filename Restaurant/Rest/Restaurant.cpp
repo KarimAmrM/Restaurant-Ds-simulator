@@ -636,7 +636,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			cout << "order " << orderToAssigned->GetID() << " is assigned to " << cookToAssign->GetID() << " order finish time is " << orderToAssigned->GetFinishTime() << endl;
 			return true;
 		}
-		orderToAssigned->setWaitTime(orderToAssigned->getWaitTime() + 1);
+
 		return false;
 	}
 	else if (orderToAssigned->GetType() == TYPE_NRM) //if the order is normal 
@@ -665,7 +665,7 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			cout << "order " << orderToAssigned->GetID() << " is assigned to cook " << cookToAssign->GetID() << " and order finish time is " << orderToAssigned->GetFinishTime() << endl;
 			return true;
 		}
-		orderToAssigned->setWaitTime(orderToAssigned->getWaitTime() + 1);
+	
 		return false;
 	}
 	else if (orderToAssigned->GetType() == TYPE_VGAN) 
@@ -683,7 +683,6 @@ bool Restaurant::assignToCook(Order*orderToAssigned)
 			return true;
 		}
 
-		orderToAssigned->setWaitTime(orderToAssigned->getWaitTime() + 1);
 		return false;
 	}
 }
@@ -812,7 +811,7 @@ void Restaurant::AssignUrgentOrder()
 			if (!assigned)
 			{
 				cout << endl;
-				return;   //in case the order isn't assigned, there is no need to check the next order
+				
 			}
 			else
 			{
@@ -1017,9 +1016,6 @@ void Restaurant::assigningOrders()		//This function is responisble for calling t
 	}
 }
 
-
-
-
 void Restaurant::checkEndBreakOrRest()
 {
 	Cook* restingCook;
@@ -1166,9 +1162,9 @@ void Restaurant::InteractiveMode()
 		moveFromInservToFinished();
 		checkEndBreakOrRest();
 		assigningOrders();
-	
 		FillDrawingList();
 		pGUI->waitForClick();
+		waitingTimeIncrementer();
 		currentTimeStep++;
 		
 	}
@@ -1195,7 +1191,7 @@ void Restaurant::Step_by_StepMode()
 		Sleep(1000);
 		FillDrawingList();
 		currentTimeStep++;
-		
+		waitingTimeIncrementer();
 	}
 	pGUI->waitForClick();
 	
@@ -1219,12 +1215,42 @@ void Restaurant::SilentMode()
 		checkEndBreakOrRest();
 		assigningOrders();
 		currentTimeStep++;
-		
+		waitingTimeIncrementer();
 	}
-	
 	saveToFile();
 }
 
+void Restaurant::waitingTimeIncrementer()
+{
+	int countVip = 0, countVegan = 0, countNormal = 0;
+
+	if (!vipOrders.isEmpty())
+	{
+		Order** vipArray = vipOrders.toArray(countVip);
+		for (int i = 0; i < countVip; i++)
+		{
+			vipArray[i]->setWaitTime(vipArray[i]->getWaitTime() + 1);
+		}
+	}
+
+	if (!veganOrders.isEmpty())
+	{
+		Order** veganArray = veganOrders.toArray(countVegan);
+		for (int i = 0; i < countVegan; i++)
+		{
+			veganArray[i]->setWaitTime(veganArray[i]->getWaitTime() + 1);
+		}
+	}
+
+	if (!normalOrders.isEmpty())
+	{
+		Order** normalArray = normalOrders.toArray(countNormal);
+		for (int i = 0; i < countNormal; i++)
+		{
+			normalArray[i]->setWaitTime(normalArray[i]->getWaitTime() + 1);
+		}
+	}
+}
 
 
  
